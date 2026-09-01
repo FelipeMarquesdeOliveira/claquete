@@ -16,9 +16,18 @@ function ClaqueteMark() {
 }
 
 const STEPS = [
-  'Monte o clube e chame a galera pelo código.',
-  'A cada rodada, um curador escolhe o filme da semana.',
-  'Todos dão nota. Quem escolhe melhor, lidera a temporada.',
+  {
+    title: 'Monte seu clube',
+    detail: 'Chame de 3 a 6 amigos por um código.',
+  },
+  {
+    title: 'Toda semana, um escolhe',
+    detail: 'O app define de quem é a vez — sem enquete.',
+  },
+  {
+    title: 'Todo mundo dá nota',
+    detail: 'Quem escolhe melhor ganha a temporada.',
+  },
 ];
 
 export default function Home() {
@@ -41,9 +50,12 @@ export default function Home() {
         <View style={styles.card}>
           <Text style={styles.cardLabel}>COMO FUNCIONA</Text>
           {STEPS.map((step, i) => (
-            <View key={i} style={styles.step}>
+            <View key={step.title} style={styles.step}>
               <Text style={styles.stepNumber}>{i + 1}</Text>
-              <Text style={styles.stepText}>{step}</Text>
+              <View style={styles.stepBody}>
+                <Text style={styles.stepTitle}>{step.title}</Text>
+                <Text style={styles.stepDetail}>{step.detail}</Text>
+              </View>
             </View>
           ))}
         </View>
@@ -94,7 +106,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     padding: spacing.lg,
-    gap: spacing.md,
+    gap: spacing.lg,
   },
   cardLabel: { ...typography.label, color: colors.primary },
   step: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
@@ -104,7 +116,9 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     width: 22,
   },
-  stepText: { ...typography.body, color: colors.text, flex: 1 },
+  stepBody: { flex: 1 },
+  stepTitle: { ...typography.subtitle, fontSize: 15, color: colors.text },
+  stepDetail: { ...typography.caption, color: colors.textMuted, marginTop: 3 },
   footer: {
     ...typography.caption,
     color: colors.textMuted,
