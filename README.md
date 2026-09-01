@@ -81,6 +81,7 @@ A descrição de cada tela, o fluxo de navegação e as demais imagens estão no
 | 03 | [**Pitch**](docs/03-pitch.pdf) | Modelo de negócio, monetização e diferencial competitivo | [`03-pitch.md`](docs/markdown/03-pitch.md) |
 | 04 | [**Telas**](docs/04-telas.pdf) | Telas conceituais e fluxo de navegação | [`04-telas.md`](docs/markdown/04-telas.md) |
 | 05 | [**Equipe**](docs/05-equipe.pdf) | Integrantes e papéis de cada um no projeto | [`05-equipe.md`](docs/markdown/05-equipe.md) |
+| 06 | [**Roteiro do pitch**](docs/06-roteiro-pitch.pdf) | Roteiro de apresentação, slide a slide, com tempos e perguntas prováveis | [`06-roteiro-pitch.md`](docs/markdown/06-roteiro-pitch.md) |
 
 ### 🎤 Pitch deck
 
@@ -145,7 +146,7 @@ claquete/
 │   ├── pdf/                       # Estilo de impressão dos documentos
 │   └── mockup-3d/                 # Cena 3D que gera os mockups de aparelho
 └── docs/
-    ├── 01-escopo.pdf … 05-equipe.pdf # Documentação (entrega)
+    ├── 01-escopo.pdf … 06-roteiro-pitch.pdf   # Documentação (entrega)
     ├── markdown/                     # Fonte da documentação
     ├── pitch-deck/                   # Deck em PDF, PPTX e imagens
     └── telas/                        # Telas conceituais e mockups
