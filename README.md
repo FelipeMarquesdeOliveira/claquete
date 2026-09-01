@@ -59,8 +59,11 @@ O detalhe completo está em [docs/01-escopo.md](docs/01-escopo.md).
 
 ## 📱 Telas conceituais
 
-As telas desta etapa são conceituais (não funcionais) e estão documentadas em
-[docs/04-telas.md](docs/04-telas.md).
+🎬 **[Ver as telas conceituais do Claquete](https://claude.ai/code/artifact/cd8d30a8-913f-499c-a325-f4fbdea29648)**
+
+Seis telas em formato de celular, com a identidade visual já aplicada. As telas
+desta etapa são conceituais (não funcionais) — a descrição de cada uma e o
+fluxo de navegação estão em [docs/04-telas.md](docs/04-telas.md).
 
 ## 📚 Documentação
 
