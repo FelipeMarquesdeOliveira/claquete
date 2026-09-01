@@ -92,3 +92,52 @@ strong { font-weight: 700; color: #F5F5F7; }
 
 .row { display: flex; gap: 24px; }
 .grow { flex-grow: 1; }
+
+/* --------------------------------------------------------------- celular -- */
+
+.phone {
+  padding: 11px;
+  border-radius: 44px;
+  background: linear-gradient(150deg, #33333F 0%, #191920 60%, #101016 100%);
+  box-shadow: 0 34px 80px rgba(0, 0, 0, 0.65);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.phone::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 148px;
+  width: 3px;
+  height: 74px;
+  border-radius: 3px;
+  background: #33333F;
+}
+
+.phone img {
+  display: block;
+  border-radius: 34px;
+}
+
+/* etiqueta de anotacao apontando para a tela */
+.nota-produto {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.nota-produto .bolinha {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: #FFC53D;
+  color: #0E0E12;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
