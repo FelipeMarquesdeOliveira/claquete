@@ -175,6 +175,9 @@ Os pôsteres usados nas telas conceituais vêm do
 **[The Movie Database (TMDB)](https://www.themoviedb.org)**. Este produto usa a
 API do TMDB, mas não é endossado nem certificado pelo TMDB.
 
+O gabarito de aparelho usado nos mockups vem do projeto
+**[PommePlate](https://github.com/ephread/PommePlate)**, sob licença CC0 1.0.
+
 ## 📄 Licença
 
 Distribuído sob a licença MIT. Veja [LICENSE](LICENSE).

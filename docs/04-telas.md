@@ -111,6 +111,14 @@ chamada já está prevista em [`src/services`](../src/services).
 
 > Este produto usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.
 
+Os mockups em [`docs/telas/mockups/`](telas/mockups) encaixam essas telas dentro
+de um aparelho, usando o gabarito do projeto
+[PommePlate](https://github.com/ephread/PommePlate) (licença **CC0 1.0**,
+domínio público). Quem gera é
+[`scripts/generate-device-mockups.py`](../scripts/generate-device-mockups.py):
+ele compõe a tela na área exata do visor, redesenha o notch, aplica a projeção
+em perspectiva e adiciona a sombra.
+
 ## 7. O que ainda não foi desenhado
 
 Telas previstas para o CP5 e o CP6, fora do escopo desta entrega:

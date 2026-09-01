@@ -38,9 +38,11 @@ function stage() {
   for (const [name, path] of Object.entries(FONTS)) {
     copyFileSync(resolve(ROOT, 'node_modules/@expo-google-fonts', path), resolve(WORK, name));
   }
-  for (const shot of readdirSync(resolve(ROOT, 'docs/telas'))) {
-    if (shot.endsWith('.png')) {
-      copyFileSync(resolve(ROOT, 'docs/telas', shot), resolve(WORK, shot));
+  for (const pasta of ['docs/telas', 'docs/telas/mockups']) {
+    for (const arquivo of readdirSync(resolve(ROOT, pasta))) {
+      if (arquivo.endsWith('.png')) {
+        copyFileSync(resolve(ROOT, pasta, arquivo), resolve(WORK, arquivo));
+      }
     }
   }
 }
