@@ -111,13 +111,11 @@ chamada já está prevista em [`src/services`](../src/services).
 
 > Este produto usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.
 
-Os mockups em [`docs/telas/mockups/`](telas/mockups) encaixam essas telas dentro
-de um aparelho, usando o gabarito do projeto
-[PommePlate](https://github.com/ephread/PommePlate) (licença **CC0 1.0**,
-domínio público). Quem gera é
-[`scripts/generate-device-mockups.py`](../scripts/generate-device-mockups.py):
-ele compõe a tela na área exata do visor, redesenha o notch, aplica a projeção
-em perspectiva e adiciona a sombra.
+Os mockups em [`docs/telas/mockups/`](telas/mockups) mostram essas telas dentro
+de um aparelho **renderizado em 3D** — com espessura, trilho metálico refletindo
+a luz, botões laterais e sombra de contato. A cena está em
+[`scripts/mockup-3d/`](../scripts/mockup-3d) e usa as medidas físicas do
+iPhone X, com a tela entrando como textura.
 
 ## 7. O que ainda não foi desenhado
 
