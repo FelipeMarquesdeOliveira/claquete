@@ -42,3 +42,4 @@ yarn-error.*
 
 # PDF build (temporario)
 .pdf-build/
+.deck-build/
