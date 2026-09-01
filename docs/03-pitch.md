@@ -53,7 +53,7 @@ O modelo é **freemium com assinatura**, apoiado por duas fontes secundárias.
 | Retrospectiva da temporada | — | ✅ Card compartilhável |
 | Exportar histórico | — | ✅ |
 
-### 3.2 A jogada de crescimento: quem paga libera o clube
+### 3.2 O mecanismo de crescimento: quem assina libera o clube
 
 Um único assinante Pro **libera os recursos para todo o clube dele**.
 
@@ -108,8 +108,8 @@ notificação é útil porque tem consequência real — se o curador não escol
 grupo fica sem sessão.
 
 **3. Competição saudável como motor.**
-Letterboxd registra o que você achou. O Claquete transforma isso em disputa
-entre pessoas que se conhecem — e zoação entre amigos é o combustível de
+O Letterboxd registra a opinião individual. O Claquete a converte em disputa
+entre pessoas que se conhecem — e a rivalidade entre amigos é o combustível de
 retenção mais barato que existe.
 
 **4. Feito para o grupo brasileiro.**

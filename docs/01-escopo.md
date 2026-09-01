@@ -37,7 +37,7 @@ Três mecanismos explicam por que isso trava:
 
 | Mecanismo | O que acontece |
 |---|---|
-| **Poder de veto distribuído** | Em um grupo de 5 pessoas, qualquer um pode vetar. Quanto mais gente, menor a chance de um título passar por todos os filtros — e a decisão nunca fecha. |
+| **Poder de veto distribuído** | Em um grupo de 5 pessoas, qualquer um pode vetar. Quanto maior o grupo, menor a probabilidade de um título atravessar todos os filtros — e a decisão nunca se fecha. |
 | **Difusão de responsabilidade** | Como escolher é tarefa de "todo mundo", não é tarefa de ninguém. Sem dono, a decisão não tem prazo nem cobrança. |
 | **Medo de errar a escolha** | Quem sugere carrega o risco social de indicar um filme ruim. O incentivo racional é não sugerir nada. |
 
@@ -57,7 +57,7 @@ O resultado é sempre o mesmo: **a sessão não acontece e cada um assiste sozin
 ### 2.2 A solução já existe fora do digital
 
 Clubes do livro resolveram esse mesmo problema há mais de dois séculos com uma
-regra quase idiota de simples: **turno de escolha**. Não se vota o próximo
+regra de simplicidade desconcertante: **turno de escolha**. Não se vota o próximo
 livro — cada mês uma pessoa escolhe, e o grupo lê. A regra elimina o veto,
 cria um dono e dá prazo.
 
@@ -79,9 +79,8 @@ cria um dono e dá prazo.
 ### 3.2 Personas
 
 **Marina, 23 — a organizadora frustrada**
-Estudante, mora com mais três pessoas. É sempre ela que puxa o "bora ver um
-filme". Cansou de ser a única a propor, montar a lista e ainda ouvir "esse
-não". *Quer dividir a responsabilidade da escolha sem perder o ritual.*
+Estudante, mora com mais três pessoas. É sempre ela quem propõe a sessão,
+monta a lista de opções e ainda ouve "esse não". *Quer dividir a responsabilidade da escolha sem perder o ritual.*
 
 **Léo, 27 — o crítico do grupo**
 Assiste a três filmes por semana e tem opinião sobre todos. Já usa Letterboxd
@@ -109,7 +108,7 @@ dois se lembrar de propor.*
 |---|---|---|
 | 🎬 **Ritual** | Uma rodada por semana, com data marcada e curador definido | Cria recorrência sem depender da boa vontade de ninguém |
 | ⚖️ **Regra justa** | Rodízio automático de quem escolhe, sem votação prévia | Elimina o veto cruzado e o medo de sugerir |
-| 🏆 **Placar** | A média das notas vira ponto do curador, com pódio de temporada | Transforma a escolha em disputa — e disputa traz a galera de volta |
+| 🏆 **Placar** | A média das notas vira ponto do curador, com pódio de temporada | Converte a escolha em disputa — e disputa traz o grupo de volta |
 
 ### 4.2 Decisão de produto: notas fechadas
 

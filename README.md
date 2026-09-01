@@ -27,7 +27,7 @@ A ideia é simples e vem de um formato que funciona há décadas fora do digital
 o **clube do livro**. Ninguém escolhe em comitê. Cada semana, **uma pessoa** é
 a curadora e decide o filme de todo mundo. Depois que o grupo assiste, cada
 integrante dá sua nota — e a média não vai para o filme, vai para **quem
-escolheu**. No fim da temporada, o app coroa quem tem o melhor gosto do grupo.
+escolheu**. No fim da temporada, o aplicativo premia quem tem o melhor gosto do grupo.
 
 > Projeto desenvolvido para a disciplina **Mobile Development & IoT** (3º ano de
 > Engenharia de Software — FIAP), como entrega contínua dos Checkpoints 4, 5 e 6.
@@ -36,34 +36,41 @@ escolheu**. No fim da temporada, o app coroa quem tem o melhor gosto do grupo.
 
 Escolher filme em grupo é um problema de decisão coletiva com poder de veto:
 cinco pessoas, cinco vetos, nenhuma decisão. O resultado é sempre o mesmo —
-meia hora rolando catálogo, ninguém decide, e cada um acaba assistindo sozinho.
+meia hora percorrendo catálogos, ninguém decide, e cada um acaba assistindo sozinho.
 
 Os apps existentes não resolvem isso porque atacam outro problema:
 catálogos organizam **o acervo**, diários de filme registram **o passado
 individual**. Nenhum deles cria o **compromisso social** que faz a sessão
 acontecer.
 
-O detalhe completo está em [docs/01-escopo.md](docs/01-escopo.md).
+O detalhamento está no [documento de escopo](docs/01-escopo.md).
 
 ## ⚙️ Como funciona
 
 | Etapa | O que acontece |
 |---|---|
-| 1. Clube | Alguém cria o clube e convida o grupo por código |
+| 1. Clube | Um integrante cria o clube e convida o grupo por código |
 | 2. Temporada | O clube define quantas rodadas terá a temporada (ex: 8 semanas) |
-| 3. Curadoria | A cada rodada o app sorteia/rodiziona quem escolhe o filme |
+| 3. Curadoria | A cada rodada, o aplicativo define por rodízio quem escolhe o filme |
 | 4. Sessão | O curador escolhe o filme e marca a data da sessão |
-| 5. Notas | Depois da data, cada um dá nota de 0 a 10 e escreve uma linha |
+| 5. Notas | Após a sessão, cada integrante atribui nota de 0 a 10 e registra uma resenha de uma linha |
 | 6. Revelação | As notas só aparecem quando **todos** votam — sem efeito manada |
 | 7. Placar | A média da rodada é o ponto do curador na temporada |
 
 ## 📱 Telas conceituais
 
-🎬 **[Ver as telas conceituais do Claquete](https://claude.ai/code/artifact/cd8d30a8-913f-499c-a325-f4fbdea29648)**
+<div align="center">
 
-Seis telas em formato de celular, com a identidade visual já aplicada. As telas
-desta etapa são conceituais (não funcionais) — a descrição de cada uma e o
-fluxo de navegação estão em [docs/04-telas.md](docs/04-telas.md).
+<img src="docs/telas/mockups/mockup-2-rodada-da-semana.png" width="260" alt="Rodada da semana" /> <img src="docs/telas/mockups/mockup-4-votacao.png" width="260" alt="Votação" /> <img src="docs/telas/mockups/mockup-6-placar.png" width="260" alt="Placar da temporada" />
+
+</div>
+
+São seis telas, com a identidade visual já aplicada. Nesta etapa elas são
+**conceituais** — representam a interface pretendida, mas ainda não são
+funcionais; a implementação começa no CP5.
+
+A descrição de cada tela, o fluxo de navegação e as demais imagens estão no
+[documento de telas](docs/04-telas.md).
 
 ## 📚 Documentação
 
@@ -97,24 +104,36 @@ node scripts/build-pitch-deck.mjs   # deck de apresentação
 
 ```
 claquete/
-├── app/                    # Rotas do Expo Router (cada arquivo = uma tela)
-│   ├── _layout.tsx         # Layout raiz: fontes, tema e navegação
-│   └── index.tsx           # Tela de abertura da marca
+├── app/                     # Rotas do Expo Router (cada arquivo é uma tela)
+│   ├── _layout.tsx          # Layout raiz: fontes, tema e navegação
+│   └── index.tsx            # Tela de abertura da marca
 ├── src/
-│   ├── theme/              # Design tokens: cores, tipografia, espaçamento
-│   ├── components/         # Componentes reutilizáveis de UI
-│   ├── features/           # Módulos por funcionalidade (clube, rodada, notas)
-│   ├── data/               # Dados mockados (JSON) usados a partir do CP5
-│   ├── hooks/              # Hooks compartilhados
-│   ├── services/           # Integrações externas (ex: TMDB)
-│   ├── types/              # Tipos e contratos de dados
-│   └── utils/              # Funções utilitárias
+│   ├── theme/               # Design tokens: cores, tipografia, espaçamento
+│   ├── components/          # Componentes reutilizáveis de interface
+│   ├── features/            # Módulos por funcionalidade (clube, rodada, notas)
+│   ├── data/                # Dados mockados, a partir do CP5
+│   ├── hooks/               # Hooks compartilhados
+│   ├── services/            # Integrações externas (ex.: TMDB)
+│   ├── types/               # Tipos e contratos de dados
+│   └── utils/               # Funções utilitárias
 ├── assets/
-│   ├── brand/              # Logo em vetor e PNG
-│   └── *.png               # Ícone do app, adaptive icon e favicon
+│   ├── brand/               # Logo, assinatura e símbolo
+│   ├── mock/posters/        # Pôsteres usados nas telas conceituais
+│   └── *.png                # Ícone do app, adaptive icon, splash e favicon
 ├── scripts/
-│   └── generate-brand-icons.mjs   # Gera os PNGs da marca a partir dos tokens
-└── docs/                   # Documentação do projeto (escopo, marca, pitch)
+│   ├── generate-brand-icons.mjs   # Gera os ícones a partir dos design tokens
+│   ├── generate-wordmark.mjs      # Gera a assinatura da marca
+│   ├── build-docs-pdf.mjs         # Converte a documentação em PDF
+│   ├── build-pitch-deck.mjs       # Monta o deck de apresentação
+│   ├── deck/                      # Fonte do deck (HTML e estilo)
+│   ├── pdf/                       # Estilo de impressão dos documentos
+│   └── mockup-3d/                 # Cena 3D que gera os mockups de aparelho
+└── docs/
+    ├── 01-escopo.md … 05-equipe.md   # Documentação do projeto
+    ├── pdf/                          # Documentos exportados em PDF
+    ├── deck/                         # Deck de apresentação
+    ├── telas/                        # Telas conceituais e mockups
+    └── evidencias/                   # Prints e vídeos de cada entrega
 ```
 
 ## 🚀 Como rodar

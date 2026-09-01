@@ -13,7 +13,11 @@
 São seis telas em formato de celular (390 × 844), organizadas em um canvas
 navegável, todas construídas com a paleta e a tipografia definidas em
 [02-marca.md](02-marca.md). O canvas permite ampliar cada tela e exportar em
-PNG ou PDF para anexar na apresentação.
+PNG ou PDF.
+
+> O canvas é um link privado: para que terceiros o acessem, é preciso
+> compartilhá-lo. As imagens abaixo, versionadas no repositório, dispensam
+> esse passo.
 
 ## 2. As telas
 
@@ -76,7 +80,7 @@ Liberada depois da data da sessão. Nota de 0 a 10 e uma linha de resenha.
 O momento de maior valor do app: as notas são reveladas de uma vez.
 
 - Elementos: média do clube em destaque, lista de todos os votos com resenha, pontuação creditada ao curador e sua nova posição
-- Decisão de design: a média aparece em corpo grande e âmbar porque é o "resultado da rodada"; as notas individuais vêm logo abaixo, com nome e cara de cada um
+- Decisão de design: a média aparece em corpo grande e âmbar porque é o "resultado da rodada"; as notas individuais vêm logo abaixo, identificadas por nome e avatar
 
 ### 6 · Placar da temporada
 Onde a competição de curadoria vive. Pódio dos três primeiros e a lista dos

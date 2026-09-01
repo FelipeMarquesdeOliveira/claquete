@@ -137,7 +137,7 @@ Contraste medido segundo a WCAG 2.1 (mínimo AA para texto normal: **4.5:1**).
 
 | Papel | Fonte | Por quê |
 |---|---|---|
-| **Display** | **Bebas Neue** | Condensada e maiúscula, com a mesma cara de cartaz de cinema e de crédito de filme. Segura títulos grandes e números de nota sem ocupar linha inteira |
+| **Display** | **Bebas Neue** | Condensada e caixa-alta, com o mesmo caráter de cartaz de cinema e de crédito de filme. Sustenta títulos grandes e números de nota sem ocupar a linha inteira |
 | **Texto** | **Inter** | Desenhada para tela, com altura de x alta. Aguenta corpo 13 px em celular sem cansar |
 
 Ambas são open source (SIL Open Font License) e vêm embarcadas no bundle via
@@ -169,8 +169,8 @@ Implementada em [`src/theme/typography.ts`](../src/theme/typography.ts):
 
 ## 6. Tom de voz
 
-A marca fala como **um amigo que organiza o rolê**: direto, com humor, sem
-esnobismo de cinéfilo.
+A marca fala como **quem organiza o encontro**: de forma direta, com humor e
+sem esnobismo de cinéfilo.
 
 | Princípio | ✅ Assim | ❌ Não assim |
 |---|---|---|
