@@ -1,0 +1,214 @@
+/* Print stylesheet for the Claquete documentation PDFs.
+   Colors come from the brand palette in docs/02-marca.md. */
+
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('bebas.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Inter Doc';
+  src: url('inter-regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Inter Doc';
+  src: url('inter-medium.ttf') format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Inter Doc';
+  src: url('inter-bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@page {
+  size: A4;
+  margin: 15mm 16mm 16mm;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter Doc', -apple-system, sans-serif;
+  font-size: 10pt;
+  line-height: 1.55;
+  color: #26262E;
+  margin: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ------------------------------------------------------------- cabecalho -- */
+
+.doc-header {
+  background: #0E0E12;
+  border-radius: 14px;
+  padding: 22px 26px 24px;
+  margin-bottom: 26px;
+  color: #F5F5F7;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.doc-header svg { flex-shrink: 0; }
+
+.doc-header .meta {
+  font-size: 7.5pt;
+  letter-spacing: 1.6px;
+  font-weight: 700;
+  color: #FFC53D;
+  text-transform: uppercase;
+}
+
+.doc-header .title {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 30pt;
+  line-height: 1.02;
+  letter-spacing: 0.6px;
+  margin-top: 4px;
+}
+
+.doc-header .sub {
+  font-size: 8.5pt;
+  color: #9A9AA5;
+  margin-top: 5px;
+}
+
+/* ---------------------------------------------------------------- titulos -- */
+
+h1, h2, h3, h4 { break-after: avoid; page-break-after: avoid; }
+
+h1 {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 22pt;
+  letter-spacing: 0.5px;
+  color: #0E0E12;
+  margin: 26px 0 10px;
+}
+
+h2 {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 17pt;
+  letter-spacing: 0.5px;
+  color: #0E0E12;
+  margin: 22px 0 8px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #FFC53D;
+}
+
+h3 {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #0E0E12;
+  margin: 16px 0 5px;
+}
+
+h4 {
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: #55555F;
+  margin: 12px 0 4px;
+}
+
+p { margin: 0 0 9px; }
+strong { font-weight: 700; color: #0E0E12; }
+
+ul, ol { margin: 0 0 10px; padding-left: 18px; }
+li { margin-bottom: 3px; }
+
+hr { border: none; border-top: 1px solid #E4E4E8; margin: 20px 0; }
+
+a { color: #9A6E00; text-decoration: none; border-bottom: 1px solid #E8D9A8; }
+
+/* ---------------------------------------------------------------- blocos -- */
+
+blockquote {
+  margin: 12px 0;
+  padding: 12px 16px;
+  background: #FFFAEE;
+  border-left: 3px solid #FFC53D;
+  border-radius: 0 8px 8px 0;
+  break-inside: avoid;
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+pre {
+  background: #14141A;
+  color: #E8E8EC;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 8.5pt;
+  line-height: 1.5;
+  overflow: hidden;
+  break-inside: avoid;
+}
+pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+
+code {
+  font-family: 'SF Mono', Menlo, monospace;
+  font-size: 8.5pt;
+  background: #F1F1F4;
+  color: #0E0E12;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------- tabelas -- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 16px;
+  font-size: 8.8pt;
+}
+
+/* Tabelas longas podem quebrar entre paginas, mas nunca no meio de uma linha,
+   e o cabecalho se repete no topo da pagina seguinte. */
+thead { display: table-header-group; }
+tr { break-inside: avoid; page-break-inside: avoid; }
+
+thead th {
+  background: #0E0E12;
+  color: #F5F5F7;
+  font-weight: 700;
+  font-size: 7.6pt;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 8px 10px;
+}
+thead th:first-child { border-radius: 8px 0 0 0; }
+thead th:last-child { border-radius: 0 8px 0 0; }
+
+tbody td {
+  padding: 7px 10px;
+  border-bottom: 1px solid #E9E9ED;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) { background: #F8F8FA; }
+
+/* amostra de cor injetada antes de cada codigo hexadecimal */
+.chip {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  margin-right: 5px;
+  vertical-align: -1px;
+}
+
+/* ---------------------------------------------------------------- rodape -- */
+
+.doc-footer {
+  margin-top: 28px;
+  padding-top: 12px;
+  border-top: 1px solid #E4E4E8;
+  font-size: 7.8pt;
+  color: #77777F;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
