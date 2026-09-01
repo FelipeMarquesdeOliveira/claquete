@@ -1,7 +1,9 @@
 # 05 · Equipe e Papéis
 
-> Grupo responsável pelo projeto **Claquete** nos Checkpoints 4, 5 e 6.
+> Grupo responsável pelo projeto **Claquete**.
 > Disciplina: Mobile Development & IoT · FIAP · 3º ano de Engenharia de Software
+>
+> Etapa: Checkpoint 4 — Idealização
 
 ---
 
@@ -9,45 +11,44 @@
 
 | RM | Nome | Papel |
 |---|---|---|
-| **RM556319** | **Felipe Marques** | Product Owner & Desenvolvedor Mobile |
-| **RM556309** | **Gabriel Barros Cisoto** | Designer de Produto & Estratégia de Negócio |
+| **RM556319** | **Felipe Marques** | Product Owner, Desenvolvedor Mobile e Direção de Produto |
+| **RM556309** | **Gabriel Barros Cisoto** | Apoio de Design, Pesquisa e Apresentação |
 
-O trabalho foi dividido igualmente entre os dois integrantes: cada um respondeu
-por metade das entregas de cada checkpoint, conforme detalhado abaixo.
+**Felipe Marques** responde pela concepção do produto, pela decisão técnica e
+pela identidade visual — as frentes que definem o que o Claquete é.
+**Gabriel Barros Cisoto** atua no apoio a essas frentes e responde pela
+apresentação do pitch em sala.
 
 ## 2. Divisão do trabalho
 
-### Checkpoint 4 — Idealização
+### Felipe Marques · RM556319
 
-| Felipe Marques · RM556319 | Gabriel Barros Cisoto · RM556309 |
-|---|---|
-| Documento de escopo: problema, público-alvo e proposta de valor | Desenvolvimento de marca: nome, logo, paleta e tipografia |
-| Setup do projeto em React Native / Expo e organização de pastas | Telas conceituais e definição dos padrões de interface |
-| Tema e design tokens aplicados em código | Pitch, modelo de negócio e análise competitiva |
-| README e organização do repositório | Deck de apresentação do produto |
+- **Concepção do produto** — mecânica de rodízio de curadoria, revelação
+  simultânea das notas e placar de temporada
+- **Documento de escopo** — problema, público-alvo, personas, proposta de valor
+  e delimitação do MVP
+- **Identidade visual** — nome, símbolo, assinatura, paleta, tipografia e
+  manual da marca
+- **Modelo de negócio** — monetização, precificação e diferencial competitivo
+- **Telas conceituais** e definição dos padrões de interface
+- **Setup técnico** — projeto React Native / Expo, arquitetura de pastas e
+  design tokens aplicados em código
+- **Organização do repositório** — README, estrutura da documentação e
+  automações de geração dos PDFs e do deck
 
-### Checkpoint 5 — Protótipo funcional
+### Gabriel Barros Cisoto · RM556309
 
-| Felipe Marques · RM556319 | Gabriel Barros Cisoto · RM556309 |
-|---|---|
-| Navegação entre telas com Expo Router | Modelagem e criação dos dados mockados em JSON |
-| Implementação das telas do fluxo principal | Roteiro de testes e ambiente de testes |
-| Componentes reutilizáveis de interface | Evidências de execução (prints e vídeo) |
-| Registro das decisões técnicas | Atualização do README e da documentação |
-
-### Checkpoint 6 — Entrega final
-
-| Felipe Marques · RM556319 | Gabriel Barros Cisoto · RM556309 |
-|---|---|
-| Integração com a API pública do TMDB | Ajuste visual final e revisão da identidade |
-| Persistência local e tratamento de erros | Manual de uso do aplicativo |
-| Geração do APK via EAS Build | Documentação final e roteiro da apresentação |
-| Correção de bugs e estabilidade | Testes de aceitação no dispositivo |
+- **Pesquisa de referências** e levantamento dos aplicativos concorrentes
+- **Apoio na redação** do manual da marca
+- **Montagem do deck** de apresentação a partir do pitch
+- **Apresentação do pitch** em sala
+- **Revisão da documentação** e conferência dos textos
+- **Organização dos arquivos** de entrega
 
 ## 3. Organização do trabalho
 
-- **Repositório:** um único repositório Git para os três checkpoints, com a
-  documentação versionada junto do código em [`docs/`](.)
+- **Repositório:** um único repositório Git, com a documentação versionada
+  junto do código em [`docs/`](..)
 - **Commits:** mensagens em inglês, no formato `tipo: descrição`
   (`feat`, `fix`, `docs`, `chore`), com um commit por mudança lógica
-- **Branch:** `main` como branch de entrega de cada checkpoint
+- **Branch:** `main` como branch de entrega
