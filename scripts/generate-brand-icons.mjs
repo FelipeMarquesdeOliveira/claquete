@@ -49,44 +49,19 @@ const rotatedRect = (cx, cy, w, h, deg) => {
  * Builds the mark as an ordered list of layers. Coordinates are normalized to a
  * 256x256 grid and scaled to the requested size, so every export stays aligned.
  */
-function markLayers({ scale, withBoard, monochrome }) {
+function markLayers({ scale, monochrome = false, opaqueGap = false }) {
   const s = (v) => v * scale;
-  const fg = monochrome ? PALETTE.white : null;
-  const layers = [];
+  const fill = monochrome ? PALETTE.white : PALETTE.primary;
 
-  const board = roundRect(s(0), s(0), s(256), s(256), s(56));
+  const block = roundRect(s(0), s(0), s(200), s(200), s(46));
+  // The cut: one diagonal opening across the block, at the same angle as the
+  // slice in the wordmark. It is the whole brand idea - the clapper closing.
+  const cut = rotatedRect(s(100), s(88), s(340), s(18), -12);
 
-  if (withBoard) {
-    layers.push({ test: board, color: fg ?? PALETTE.surface });
-  }
-
-  // clapper bar
-  const bar = (px, py) => board(px, py) && py <= s(80);
-  layers.push({ test: bar, color: fg ?? PALETTE.primary });
-
-  // diagonal stripes cut out of the clapper bar
-  const stripes = [28, 100, 172, 244].map((x) =>
-    rotatedRect(s(x), s(40), s(28), s(130), 20)
-  );
-  layers.push({
-    test: (px, py) => bar(px, py) && stripes.some((st) => st(px, py)),
-    color: monochrome ? null : PALETTE.background,
-  });
-
-  // rating bars
-  const bars = [
-    { x: 72, y: 168, h: 42, color: PALETTE.barMuted },
-    { x: 114, y: 128, h: 82, color: PALETTE.primary },
-    { x: 156, y: 150, h: 60, color: PALETTE.barMuted },
+  return [
+    { test: block, color: fill },
+    { test: (px, py) => block(px, py) && cut(px, py), color: opaqueGap ? PALETTE.background : null },
   ];
-  for (const b of bars) {
-    layers.push({
-      test: roundRect(s(b.x), s(b.y), s(30), s(b.h), s(8)),
-      color: fg ?? b.color,
-    });
-  }
-
-  return layers;
 }
 
 // --------------------------------------------------------------- rasterizer --
@@ -211,20 +186,29 @@ function write(relativePath, width, height, options) {
 }
 
 const SIZE = 1024;
-const scale = SIZE / 256;
+const scale = SIZE / 200;
+const inner = SIZE * 0.62;
+const innerScale = inner / 200;
+const inset = (SIZE - inner) / 2;
 
 console.log('Generating Claquete brand assets:');
 
-// App icon: full clapperboard on the brand surface.
+// App icon: full-bleed amber, so the OS mask leaves a clean shape.
 write('assets/icon.png', SIZE, SIZE, {
-  layers: markLayers({ scale, withBoard: true }),
+  layers: [
+    { test: () => true, color: PALETTE.primary },
+    {
+      test: rotatedRect(SIZE / 2, SIZE * 0.44, SIZE * 1.7, SIZE * 0.09, -12),
+      color: PALETTE.background,
+    },
+  ],
 });
 
-// Android adaptive icon: foreground needs to sit inside the 66% safe zone.
-const inner = SIZE * 0.62;
+// Android adaptive icon: foreground inside the 66% safe zone, cut left open so
+// the background layer shows through it.
 write('assets/android-icon-foreground.png', SIZE, SIZE, {
-  layers: markLayers({ scale: inner / 256, withBoard: true }),
-  inset: (SIZE - inner) / 2,
+  layers: markLayers({ scale: innerScale }),
+  inset,
 });
 
 write('assets/android-icon-background.png', SIZE, SIZE, {
@@ -232,22 +216,25 @@ write('assets/android-icon-background.png', SIZE, SIZE, {
 });
 
 write('assets/android-icon-monochrome.png', SIZE, SIZE, {
-  layers: markLayers({ scale: inner / 256, withBoard: true, monochrome: true }),
-  inset: (SIZE - inner) / 2,
+  layers: markLayers({ scale: innerScale, monochrome: true }),
+  inset,
 });
 
-// Splash screen artwork: the mark with breathing room, on transparency.
 write('assets/splash-icon.png', SIZE, SIZE, {
-  layers: markLayers({ scale: inner / 256, withBoard: true }),
-  inset: (SIZE - inner) / 2,
+  layers: markLayers({ scale: innerScale }),
+  inset,
 });
 
 write('assets/favicon.png', 64, 64, {
-  layers: markLayers({ scale: 64 / 256, withBoard: true }),
+  layers: [
+    { test: () => true, color: PALETTE.primary },
+    { test: rotatedRect(32, 28, 110, 6, -12), color: PALETTE.background },
+  ],
 });
 
+// Documents and slides: the mark alone, cut open, on transparency.
 write('assets/brand/logo-mark.png', 512, 512, {
-  layers: markLayers({ scale: 512 / 256, withBoard: true }),
+  layers: markLayers({ scale: 512 / 200 }),
 });
 
 console.log('Done.');
