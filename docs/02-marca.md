@@ -32,39 +32,62 @@ torno de um mesmo momento.
 
 ### 2.1 Conceito
 
-O símbolo é uma **claquete cujas listras diagonais reaparecem no corpo como
-barras de nota**. As duas metades contam a mecânica do app em uma imagem só:
+A marca **não desenha o objeto — ela faz o gesto**.
 
-- **Barra superior listrada** → a sessão que começa (a escolha do curador)
-- **Barras inferiores** → as notas que o grupo dá depois
+Um bloco sólido, aberto por um único **corte diagonal**. É a claquete batendo,
+e é também o corte de montagem que transforma material bruto em filme. O mesmo
+corte atravessa o nome na assinatura: a metade de cima escorrega, como se a
+palavra tivesse acabado de ser cortada.
+
+> **Por que não uma claquete desenhada.** Uma claquete literal é o ícone mais
+> previsível possível para cinema — existe igual em qualquer banco de imagens e
+> não pertence a ninguém. Reduzir a marca a um gesto que só ela faz é o que
+> torna o símbolo reconhecível e defensável.
+
+O corte também carrega a mecânica do produto: a rodada é aberta por alguém, e
+o clube é dividido entre quem escolheu e quem julga.
 
 ### 2.2 Arquivos
 
 | Arquivo | Uso |
 |---|---|
-| [`assets/brand/logo-mark.svg`](../assets/brand/logo-mark.svg) | Símbolo em vetor, para qualquer tamanho |
-| [`assets/brand/logo-horizontal.svg`](../assets/brand/logo-horizontal.svg) | Assinatura horizontal: símbolo + nome + tagline |
+| [`assets/brand/logo-mark.svg`](../assets/brand/logo-mark.svg) | Símbolo em vetor |
 | [`assets/brand/logo-mark.png`](../assets/brand/logo-mark.png) | Símbolo em 512 px, para documentos e slides |
-| [`assets/icon.png`](../assets/icon.png) | Ícone do aplicativo (1024 px) |
+| [`assets/brand/wordmark.png`](../assets/brand/wordmark.png) | Assinatura: o nome com o corte, em fundo transparente |
+| [`assets/brand/logo-horizontal.svg`](../assets/brand/logo-horizontal.svg) | Assinatura horizontal: símbolo + nome |
+| [`assets/icon.png`](../assets/icon.png) | Ícone do aplicativo, âmbar de ponta a ponta |
 | [`assets/android-icon-*.png`](../assets/) | Adaptive icon do Android (fundo, frente e monocromático) |
 
-Todos os PNGs são **gerados por código** a partir dos tokens da paleta, pelo
-script [`scripts/generate-brand-icons.mjs`](../scripts/generate-brand-icons.mjs).
-Mudou a cor no manual, roda o script e todos os ícones acompanham — a marca não
-sai do lugar por descuido.
+Os PNGs do símbolo são **gerados por código** a partir dos tokens da paleta,
+pelo script [`scripts/generate-brand-icons.mjs`](../scripts/generate-brand-icons.mjs);
+a assinatura sai de [`scripts/generate-wordmark.mjs`](../scripts/generate-wordmark.mjs).
+Mudou a cor no manual, roda os scripts e toda a marca acompanha.
 
-### 2.3 Regras de uso
+### 2.3 Geometria
+
+Definida em uma grade de 200 × 200:
+
+| Elemento | Medida |
+|---|---|
+| Bloco | 200 × 200, raio de canto 46 (23%) |
+| Corte | espessura 18 (9%), inclinação **−12°**, centro na altura 88 |
+| Assinatura | corte com a mesma inclinação; metade de cima deslocada 5 à direita e 3 acima |
+
+A inclinação de −12° é a única constante visual entre símbolo e assinatura —
+é ela que faz os dois lerem como a mesma marca.
+
+### 2.4 Regras de uso
 
 ✅ **Pode:**
 - Usar o símbolo sozinho quando o nome já estiver no contexto
-- Aplicar sobre fundos escuros (`#0E0E12` a `#24242D`)
-- Reduzir até 24 px — as barras continuam legíveis
+- Aplicar o ícone âmbar de ponta a ponta, deixando o sistema operacional recortar o formato
+- Reduzir até 20 px — o corte é a última coisa a desaparecer
 
 ❌ **Não pode:**
-- Recolorir o símbolo fora da paleta oficial
-- Distorcer a proporção ou rotacionar
-- Aplicar sobre foto sem uma camada escura de contraste
-- Adicionar sombra, contorno ou gradiente
+- Mudar a inclinação do corte ou a espessura dele
+- Recolorir fora da paleta oficial, ou usar gradiente no bloco
+- Adicionar contorno, sombra ou brilho
+- Reconstituir o nome cortado com a fonte inteira, sem o corte
 
 ## 3. Paleta de cores
 
