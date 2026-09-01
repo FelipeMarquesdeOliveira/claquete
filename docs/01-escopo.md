@@ -78,11 +78,14 @@ cria um dono e dá prazo.
 
 ### 3.2 Personas
 
+Arquétipos que orientam as decisões de produto. O clube de demonstração das
+telas conceituais é ilustrativo e não corresponde a estas personas.
+
 **Marina, 23 — a organizadora frustrada**
 Estudante, mora com mais três pessoas. É sempre ela quem propõe a sessão,
 monta a lista de opções e ainda ouve "esse não". *Quer dividir a responsabilidade da escolha sem perder o ritual.*
 
-**Léo, 27 — o crítico do grupo**
+**Caio, 27 — o crítico do grupo**
 Assiste a três filmes por semana e tem opinião sobre todos. Já usa Letterboxd
 sozinho. *Quer provar que tem o melhor gosto do grupo — e o placar do Claquete
 é exatamente o palco que faltava.*

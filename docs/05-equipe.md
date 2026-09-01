@@ -51,4 +51,3 @@ por metade das entregas de cada checkpoint, conforme detalhado abaixo.
 - **Commits:** mensagens em inglês, no formato `tipo: descrição`
   (`feat`, `fix`, `docs`, `chore`), com um commit por mudança lógica
 - **Branch:** `main` como branch de entrega de cada checkpoint
-- **Evidências:** prints e vídeos de cada entrega em [`docs/evidencias/`](evidencias)

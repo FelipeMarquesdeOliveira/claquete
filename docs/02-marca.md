@@ -21,7 +21,7 @@ torno de um mesmo momento.
 |---|---|
 | Curto | Três sílabas, cabe embaixo do ícone sem truncar |
 | Brasileiro | Palavra do vocabulário de cinema em português, sem soar importada |
-| Concreto | Vira logo sozinho — o objeto já é uma forma reconhecível |
+| Concreto | Rende um gesto visual próprio — o corte que abre a marca |
 | Verbal | Rende linguagem própria: *"bateu a claquete"* para o início da rodada |
 
 **Nomes descartados:** *Sessão* (genérico demais, impossível de buscar),
@@ -57,6 +57,8 @@ o clube é dividido entre quem escolheu e quem julga.
 | [`assets/brand/logo-horizontal.svg`](../assets/brand/logo-horizontal.svg) | Assinatura horizontal: símbolo + nome |
 | [`assets/icon.png`](../assets/icon.png) | Ícone do aplicativo, âmbar de ponta a ponta |
 | [`assets/android-icon-*.png`](../assets/) | Adaptive icon do Android (fundo, frente e monocromático) |
+| [`assets/splash-icon.png`](../assets/splash-icon.png) | Arte da tela de abertura do sistema |
+| [`assets/favicon.png`](../assets/favicon.png) | Ícone da versão web |
 
 Os PNGs do símbolo são **gerados por código** a partir dos tokens da paleta,
 pelo script [`scripts/generate-brand-icons.mjs`](../scripts/generate-brand-icons.mjs);
@@ -145,11 +147,14 @@ Ambas são open source (SIL Open Font License) e vêm embarcadas no bundle via
 
 ### 4.1 Escala tipográfica
 
-Implementada em [`src/theme/typography.ts`](../src/theme/typography.ts):
+Implementada em [`src/theme/typography.ts`](../src/theme/typography.ts). A
+assinatura do nome não é composta em tempo de execução: ela é um arquivo
+fixo ([`wordmark.png`](../assets/brand/wordmark.png)), para o corte sair
+sempre idêntico.
 
 | Token | Fonte | Tamanho | Uso |
 |---|---|---|---|
-| `hero` | Bebas Neue | 56 | Nome da marca na abertura |
+| `hero` | Bebas Neue | 56 | Números e títulos de maior peso |
 | `title` | Bebas Neue | 32 | Título de tela e de seção |
 | `score` | Bebas Neue | 40 | Nota do filme e pontuação do curador |
 | `subtitle` | Inter Medium | 18 | Subtítulo e tagline |
@@ -164,7 +169,7 @@ Implementada em [`src/theme/typography.ts`](../src/theme/typography.ts):
 | `xs` … `xxl` | 4 · 8 · 16 · 24 · 32 · 48 | Escala de espaçamento em múltiplos de 4 |
 | `radius.sm` | 8 px | Etiquetas e elementos pequenos |
 | `radius.md` | 12 px | Botões e campos |
-| `radius.lg` | 20 px | Cartões e o próprio símbolo da marca |
+| `radius.lg` | 20 px | Cartões e blocos de conteúdo |
 | `radius.pill` | 999 px | Avatares e chips |
 
 ## 6. Tom de voz

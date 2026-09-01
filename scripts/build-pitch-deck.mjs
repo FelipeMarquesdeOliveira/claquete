@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const WORK = resolve(ROOT, '.deck-build');
-const OUT = resolve(ROOT, 'docs/deck/claquete-pitch-deck.pdf');
+const OUT = resolve(ROOT, 'docs/pitch-deck/claquete-pitch-deck.pdf');
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
 const FONTS = {
@@ -69,7 +69,7 @@ async function print() {
   chrome.kill('SIGKILL');
 
   if (!existsSync(OUT)) throw new Error('Chrome nao gerou o deck.');
-  console.log(`docs/deck/claquete-pitch-deck.pdf  ${(statSync(OUT).size / 1024).toFixed(0)} KB`);
+  console.log(`docs/pitch-deck/claquete-pitch-deck.pdf  ${(statSync(OUT).size / 1024).toFixed(0)} KB`);
 }
 
 stage();

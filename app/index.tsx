@@ -18,7 +18,7 @@ function ClaqueteMark() {
 const STEPS = [
   {
     title: 'Monte seu clube',
-    detail: 'Chame de 3 a 6 amigos por um código.',
+    detail: 'Chame de 3 a 5 amigos por um código.',
   },
   {
     title: 'Toda semana, um escolhe',
