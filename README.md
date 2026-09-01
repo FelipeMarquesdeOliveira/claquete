@@ -169,6 +169,12 @@ node scripts/generate-brand-icons.mjs
 A divisão detalhada do trabalho por checkpoint está em
 [docs/05-equipe.md](docs/05-equipe.md).
 
+## 🎬 Créditos
+
+Os pôsteres usados nas telas conceituais vêm do
+**[The Movie Database (TMDB)](https://www.themoviedb.org)**. Este produto usa a
+API do TMDB, mas não é endossado nem certificado pelo TMDB.
+
 ## 📄 Licença
 
 Distribuído sob a licença MIT. Veja [LICENSE](LICENSE).

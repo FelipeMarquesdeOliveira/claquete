@@ -98,7 +98,20 @@ demais.
 | **Ícones** | Traço de 2 px em grade de 24 px, sem emoji |
 | **Área de toque** | Mínimo de 44 px em qualquer elemento tocável |
 
-## 6. O que ainda não foi desenhado
+## 6. Sobre as imagens de pôster
+
+Os pôsteres que aparecem nas telas vêm do **The Movie Database (TMDB)** e estão
+guardados em [`assets/mock/posters/`](../assets/mock/posters) apenas para as
+telas conceituais desta etapa.
+
+A partir do CP6, essas imagens deixam de ser arquivos no repositório e passam a
+ser buscadas em tempo de execução pela **API pública do TMDB** — que é também o
+desafio bônus proposto pelo professor. A camada de serviço que fará essa
+chamada já está prevista em [`src/services`](../src/services).
+
+> Este produto usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.
+
+## 7. O que ainda não foi desenhado
 
 Telas previstas para o CP5 e o CP6, fora do escopo desta entrega:
 
