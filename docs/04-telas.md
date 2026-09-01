@@ -15,7 +15,16 @@ navegável, todas construídas com a paleta e a tipografia definidas em
 [02-marca.md](02-marca.md). O canvas permite ampliar cada tela e exportar em
 PNG ou PDF para anexar na apresentação.
 
-## 2. Fluxo de navegação
+## 2. As telas
+
+| | | |
+|:---:|:---:|:---:|
+| ![Abertura](telas/1-abertura.png) | ![Rodada da semana](telas/2-rodada-da-semana.png) | ![Vez do curador](telas/3-vez-do-curador.png) |
+| **1 · Abertura** | **2 · Rodada da semana** | **3 · Vez do curador** |
+| ![Votação](telas/4-votacao.png) | ![Veredito](telas/5-veredito.png) | ![Placar](telas/6-placar.png) |
+| **4 · Votação** | **5 · Veredito** | **6 · Placar da temporada** |
+
+## 3. Fluxo de navegação
 
 ```mermaid
 flowchart TD
@@ -32,7 +41,7 @@ flowchart TD
 O ciclo é fechado de propósito: o placar devolve o usuário para a próxima
 rodada. É esse laço que sustenta a recorrência semanal do produto.
 
-## 3. Descrição das telas
+## 4. Descrição das telas
 
 ### 1 · Abertura
 Primeiro contato com a marca. Apresenta o símbolo, a tagline e explica a
@@ -76,7 +85,7 @@ demais.
 - Elementos: pódio com alturas diferentes, posições restantes, contagem de rodadas até o troféu
 - Decisão de design: quem ainda não foi curador aparece com "—" no lugar da nota, deixando claro que a pontuação vem de **escolher**, não de votar
 
-## 4. Padrões de interface adotados
+## 5. Padrões de interface adotados
 
 | Padrão | Definição |
 |---|---|
@@ -89,7 +98,7 @@ demais.
 | **Ícones** | Traço de 2 px em grade de 24 px, sem emoji |
 | **Área de toque** | Mínimo de 44 px em qualquer elemento tocável |
 
-## 5. O que ainda não foi desenhado
+## 6. O que ainda não foi desenhado
 
 Telas previstas para o CP5 e o CP6, fora do escopo desta entrega:
 
