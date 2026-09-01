@@ -43,7 +43,7 @@ catálogos organizam **o acervo**, diários de filme registram **o passado
 individual**. Nenhum deles cria o **compromisso social** que faz a sessão
 acontecer.
 
-O detalhamento está no [documento de escopo](docs/01-escopo.md).
+O detalhamento está no [documento de escopo](docs/01-escopo.pdf).
 
 ## ⚙️ Como funciona
 
@@ -70,20 +70,23 @@ São seis telas, com a identidade visual já aplicada. Nesta etapa elas são
 funcionais; a implementação começa no CP5.
 
 A descrição de cada tela, o fluxo de navegação e as demais imagens estão no
-[documento de telas](docs/04-telas.md).
+[documento de telas](docs/04-telas.pdf).
 
 ## 📚 Documentação
 
-| Documento | Conteúdo | Arquivos |
-|---|---|---|
-| **Escopo** | Problema, público-alvo, proposta de valor e escopo do MVP | [`claquete-escopo.pdf`](docs/pdf/claquete-escopo.pdf) · [`01-escopo.md`](docs/01-escopo.md) |
-| **Marca** | Nome, logo, paleta de cores, tipografia e tom de voz | [`claquete-marca.pdf`](docs/pdf/claquete-marca.pdf) · [`02-marca.md`](docs/02-marca.md) |
-| **Pitch** | Modelo de negócio, monetização e diferencial competitivo | [`claquete-pitch-deck.pdf`](docs/pitch-deck/claquete-pitch-deck.pdf) · [`03-pitch.md`](docs/03-pitch.md) |
-| **Telas** | Telas conceituais e fluxo de navegação | [`04-telas.md`](docs/04-telas.md) |
-| **Equipe** | Integrantes e papéis de cada um no projeto | [`05-equipe.md`](docs/05-equipe.md) |
+| # | Documento | Conteúdo | Fonte |
+|---|---|---|---|
+| 01 | [**Escopo**](docs/01-escopo.pdf) | Problema, público-alvo, proposta de valor e escopo do MVP | [`01-escopo.md`](docs/markdown/01-escopo.md) |
+| 02 | [**Marca**](docs/02-marca.pdf) | Nome, logo, paleta de cores, tipografia e tom de voz | [`02-marca.md`](docs/markdown/02-marca.md) |
+| 03 | [**Pitch**](docs/03-pitch.pdf) | Modelo de negócio, monetização e diferencial competitivo | [`03-pitch.md`](docs/markdown/03-pitch.md) |
+| 04 | [**Telas**](docs/04-telas.pdf) | Telas conceituais e fluxo de navegação | [`04-telas.md`](docs/markdown/04-telas.md) |
+| 05 | [**Equipe**](docs/05-equipe.pdf) | Integrantes e papéis de cada um no projeto | [`05-equipe.md`](docs/markdown/05-equipe.md) |
 
-Os PDFs são gerados a partir dos arquivos Markdown, que continuam sendo a fonte
-de verdade. Para regerar qualquer um deles:
+🎤 A apresentação do pitch está em
+[**`claquete-pitch-deck.pdf`**](docs/pitch-deck/claquete-pitch-deck.pdf).
+
+Os PDFs são o documento de entrega; o Markdown em [`docs/markdown/`](docs/markdown)
+é a fonte a partir da qual eles são gerados. Para regerar:
 
 ```bash
 node scripts/build-docs-pdf.mjs     # documentos em PDF
@@ -129,8 +132,8 @@ claquete/
 │   ├── pdf/                       # Estilo de impressão dos documentos
 │   └── mockup-3d/                 # Cena 3D que gera os mockups de aparelho
 └── docs/
-    ├── 01-escopo.md … 05-equipe.md   # Documentação do projeto
-    ├── pdf/                          # Documentos exportados em PDF
+    ├── 01-escopo.pdf … 05-equipe.pdf # Documentação (entrega)
+    ├── markdown/                     # Fonte da documentação
     ├── pitch-deck/                   # Deck de apresentação
     └── telas/                        # Telas conceituais e mockups
 ```
@@ -185,7 +188,7 @@ node scripts/generate-brand-icons.mjs
 | RM556309 | **Gabriel Barros Cisoto** | Designer de Produto & Estratégia de Negócio |
 
 A divisão detalhada do trabalho por checkpoint está em
-[docs/05-equipe.md](docs/05-equipe.md).
+[documento da equipe](docs/05-equipe.pdf).
 
 ## 🎬 Créditos
 

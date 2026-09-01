@@ -11,40 +11,36 @@
 import { execFileSync, spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, copyFileSync, rmSync, existsSync, statSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const WORK = resolve(ROOT, '.pdf-build');
-const OUT = resolve(ROOT, 'docs/pdf');
+const OUT = resolve(ROOT, 'docs');
 
 const CHROME =
   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
 const DOCS = [
-  { file: 'docs/01-escopo.md', out: 'claquete-escopo.pdf', label: 'Checkpoint 4 · Documento de escopo' },
-  { file: 'docs/02-marca.md', out: 'claquete-marca.pdf', label: 'Checkpoint 4 · Manual da marca' },
-  { file: 'docs/03-pitch.md', out: 'claquete-pitch.pdf', label: 'Checkpoint 4 · Pitch e modelo de negócio' },
-  { file: 'docs/04-telas.md', out: 'claquete-telas.pdf', label: 'Checkpoint 4 · Telas conceituais' },
-  { file: 'docs/05-equipe.md', out: 'claquete-equipe.pdf', label: 'Checkpoint 4 · Equipe e papéis' },
+  { file: 'docs/markdown/01-escopo.md', out: '01-escopo.pdf', label: 'Checkpoint 4 · Documento de escopo' },
+  { file: 'docs/markdown/02-marca.md', out: '02-marca.pdf', label: 'Checkpoint 4 · Manual da marca' },
+  { file: 'docs/markdown/03-pitch.md', out: '03-pitch.pdf', label: 'Checkpoint 4 · Pitch e modelo de negócio' },
+  { file: 'docs/markdown/04-telas.md', out: '04-telas.pdf', label: 'Checkpoint 4 · Telas conceituais' },
+  { file: 'docs/markdown/05-equipe.md', out: '05-equipe.pdf', label: 'Checkpoint 4 · Equipe e papéis' },
 ];
 
 const FOOTER =
   'Felipe Marques (RM556319) · Gabriel Barros Cisoto (RM556309)';
 
-const LOGO = `<svg width="58" height="58" viewBox="0 0 256 256">
-  <defs><clipPath id="mark"><rect width="256" height="256" rx="56"/></clipPath></defs>
-  <g clip-path="url(#mark)">
-    <rect width="256" height="256" fill="#1A1A21"/>
-    <rect width="256" height="80" fill="#FFC53D"/>
-    <g fill="#0E0E12">
-      <rect x="14" y="-24" width="28" height="130" transform="rotate(20 28 40)"/>
-      <rect x="86" y="-24" width="28" height="130" transform="rotate(20 100 40)"/>
-      <rect x="158" y="-24" width="28" height="130" transform="rotate(20 172 40)"/>
-      <rect x="230" y="-24" width="28" height="130" transform="rotate(20 244 40)"/>
-    </g>
-    <rect x="72" y="168" width="30" height="42" rx="8" fill="#3A3A46"/>
-    <rect x="114" y="128" width="30" height="82" rx="8" fill="#FFC53D"/>
-    <rect x="156" y="150" width="30" height="60" rx="8" fill="#3A3A46"/>
+const LOGO = `<svg width="58" height="58" viewBox="0 0 200 200">
+  <defs>
+    <clipPath id="bloco"><rect width="200" height="200" rx="46" ry="46"/></clipPath>
+    <mask id="corte">
+      <rect width="200" height="200" fill="#fff"/>
+      <rect x="-70" y="79" width="340" height="18" fill="#000" transform="rotate(-12 100 88)"/>
+    </mask>
+  </defs>
+  <g clip-path="url(#bloco)" mask="url(#corte)">
+    <rect width="200" height="200" fill="#FFC53D"/>
   </g>
 </svg>`;
 
@@ -77,6 +73,44 @@ function extractTitle(html) {
   return { title, body: html.replace(match[0], '') };
 }
 
+/** Resolve caminhos de imagem contra a pasta do Markdown, para o Chrome achar. */
+function comImagensAbsolutas(html, pasta) {
+  // pathToFileURL codifica espaços e parênteses do caminho; sem isso o Chrome
+  // simplesmente não carrega a imagem e o documento sai com buracos.
+  return html.replace(
+    /src="(?!https?:|file:|data:)([^"]+)"/g,
+    (_, caminho) => `src="${pathToFileURL(resolve(pasta, caminho)).href}"`
+  );
+}
+
+/**
+ * O Chrome nao renderiza mermaid. Em vez de imprimir o codigo do diagrama,
+ * traduz as setas do fluxo em uma sequencia legivel.
+ */
+function fluxoLegivel(html) {
+  return html.replace(/<pre class="mermaid"><code>([\s\S]*?)<\/code><\/pre>/g, (_, codigo) => {
+    const texto = codigo.replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    const rotulos = {};
+    for (const [, id, rotulo] of texto.matchAll(/(\w+)\[([^\]]+)\]/g)) rotulos[id] = rotulo;
+
+    const passos = [];
+    for (const [, de, condicao, para] of texto.matchAll(/(\w+)\s*--+>(?:\|([^|]*)\|)?\s*(\w+)/g)) {
+      passos.push({
+        de: rotulos[de] || de,
+        para: rotulos[para] || para,
+        condicao: (condicao || '').trim(),
+      });
+    }
+    if (!passos.length) return '';
+
+    const linhas = passos.map((p) =>
+      `<tr><td>${p.de}</td><td class="seta">&rarr;</td><td>${p.para}</td>` +
+      `<td class="condicao">${p.condicao ? p.condicao : ''}</td></tr>`
+    ).join('');
+    return `<table class="fluxo"><thead><tr><th>De</th><th></th><th>Para</th><th>Quando</th></tr></thead><tbody>${linhas}</tbody></table>`;
+  });
+}
+
 /** Puts a color swatch in front of every hex code so the palette reads at a glance. */
 function addColorChips(html) {
   return html.replace(
@@ -93,6 +127,7 @@ async function render(doc) {
   );
 
   const { title, body } = extractTitle(fragment);
+  const corpo = comImagensAbsolutas(fluxoLegivel(addColorChips(body)), dirname(resolve(ROOT, doc.file)));
   const page = `<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -109,7 +144,7 @@ async function render(doc) {
     <div class="sub">FIAP · Mobile Development &amp; IoT · Engenharia de Software</div>
   </div>
 </header>
-${addColorChips(body)}
+${corpo}
 <footer class="doc-footer"><span>Claquete · ${doc.label}</span><span>${FOOTER}</span></footer>
 </body>
 </html>`;
@@ -118,7 +153,7 @@ ${addColorChips(body)}
   writeFileSync(htmlPath, page);
 
   await printPdf(htmlPath, resolve(OUT, doc.out));
-  console.log(`  docs/pdf/${doc.out}`);
+  console.log(`  docs/${doc.out}`);
 }
 
 const sleep = (ms) => new Promise((done) => setTimeout(done, ms));

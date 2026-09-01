@@ -212,3 +212,11 @@ tbody tr:nth-child(even) { background: #F8F8FA; }
   justify-content: space-between;
   gap: 16px;
 }
+
+/* fluxo de navegação: substitui o diagrama, que não renderiza em PDF */
+table.fluxo td { font-size: 9pt; }
+table.fluxo td.seta { text-align: center; color: #FFC53D; font-weight: 700; width: 24px; }
+table.fluxo td.condicao { color: #77777F; font-style: italic; }
+
+/* galeria de telas: as imagens vêm em resolução de tela, precisam caber */
+table img { max-width: 132px; height: auto; display: block; margin: 0 auto; }

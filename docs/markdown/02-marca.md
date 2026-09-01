@@ -2,7 +2,7 @@
 
 > **Claquete** — identidade visual definida no Checkpoint 4.
 > Tudo neste documento está implementado em código em
-> [`src/theme`](../src/theme), que é a fonte única de verdade do app.
+> [`src/theme`](../../src/theme), que é a fonte única de verdade do app.
 
 ---
 
@@ -51,18 +51,18 @@ o clube é dividido entre quem escolheu e quem julga.
 
 | Arquivo | Uso |
 |---|---|
-| [`assets/brand/logo-mark.svg`](../assets/brand/logo-mark.svg) | Símbolo em vetor |
-| [`assets/brand/logo-mark.png`](../assets/brand/logo-mark.png) | Símbolo em 512 px, para documentos e slides |
-| [`assets/brand/wordmark.png`](../assets/brand/wordmark.png) | Assinatura: o nome com o corte, em fundo transparente |
-| [`assets/brand/logo-horizontal.svg`](../assets/brand/logo-horizontal.svg) | Assinatura horizontal: símbolo + nome |
-| [`assets/icon.png`](../assets/icon.png) | Ícone do aplicativo, âmbar de ponta a ponta |
-| [`assets/android-icon-*.png`](../assets/) | Adaptive icon do Android (fundo, frente e monocromático) |
-| [`assets/splash-icon.png`](../assets/splash-icon.png) | Arte da tela de abertura do sistema |
-| [`assets/favicon.png`](../assets/favicon.png) | Ícone da versão web |
+| [`assets/brand/logo-mark.svg`](../../assets/brand/logo-mark.svg) | Símbolo em vetor |
+| [`assets/brand/logo-mark.png`](../../assets/brand/logo-mark.png) | Símbolo em 512 px, para documentos e slides |
+| [`assets/brand/wordmark.png`](../../assets/brand/wordmark.png) | Assinatura: o nome com o corte, em fundo transparente |
+| [`assets/brand/logo-horizontal.svg`](../../assets/brand/logo-horizontal.svg) | Assinatura horizontal: símbolo + nome |
+| [`assets/icon.png`](../../assets/icon.png) | Ícone do aplicativo, âmbar de ponta a ponta |
+| [`assets/android-icon-*.png`](../../assets/) | Adaptive icon do Android (fundo, frente e monocromático) |
+| [`assets/splash-icon.png`](../../assets/splash-icon.png) | Arte da tela de abertura do sistema |
+| [`assets/favicon.png`](../../assets/favicon.png) | Ícone da versão web |
 
 Os PNGs do símbolo são **gerados por código** a partir dos tokens da paleta,
-pelo script [`scripts/generate-brand-icons.mjs`](../scripts/generate-brand-icons.mjs);
-a assinatura sai de [`scripts/generate-wordmark.mjs`](../scripts/generate-wordmark.mjs).
+pelo script [`scripts/generate-brand-icons.mjs`](../../scripts/generate-brand-icons.mjs);
+a assinatura sai de [`scripts/generate-wordmark.mjs`](../../scripts/generate-wordmark.mjs).
 Mudou a cor no manual, roda os scripts e toda a marca acompanha.
 
 ### 2.3 Geometria
@@ -147,9 +147,9 @@ Ambas são open source (SIL Open Font License) e vêm embarcadas no bundle via
 
 ### 4.1 Escala tipográfica
 
-Implementada em [`src/theme/typography.ts`](../src/theme/typography.ts). A
+Implementada em [`src/theme/typography.ts`](../../src/theme/typography.ts). A
 assinatura do nome não é composta em tempo de execução: ela é um arquivo
-fixo ([`wordmark.png`](../assets/brand/wordmark.png)), para o corte sair
+fixo ([`wordmark.png`](../../assets/brand/wordmark.png)), para o corte sair
 sempre idêntico.
 
 | Token | Fonte | Tamanho | Uso |

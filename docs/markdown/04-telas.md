@@ -23,9 +23,9 @@ PNG ou PDF.
 
 | | | |
 |:---:|:---:|:---:|
-| ![Abertura](telas/1-abertura.png) | ![Rodada da semana](telas/2-rodada-da-semana.png) | ![Vez do curador](telas/3-vez-do-curador.png) |
+| ![Abertura](../telas/1-abertura.png) | ![Rodada da semana](../telas/2-rodada-da-semana.png) | ![Vez do curador](../telas/3-vez-do-curador.png) |
 | **1 · Abertura** | **2 · Rodada da semana** | **3 · Vez do curador** |
-| ![Votação](telas/4-votacao.png) | ![Veredito](telas/5-veredito.png) | ![Placar](telas/6-placar.png) |
+| ![Votação](../telas/4-votacao.png) | ![Veredito](../telas/5-veredito.png) | ![Placar](../telas/6-placar.png) |
 | **4 · Votação** | **5 · Veredito** | **6 · Placar da temporada** |
 
 ## 3. Fluxo de navegação
@@ -105,20 +105,20 @@ demais.
 ## 6. Sobre as imagens de pôster
 
 Os pôsteres que aparecem nas telas vêm do **The Movie Database (TMDB)** e estão
-guardados em [`assets/mock/posters/`](../assets/mock/posters) apenas para as
+guardados em [`assets/mock/posters/`](../../assets/mock/posters) apenas para as
 telas conceituais desta etapa.
 
 A partir do CP6, essas imagens deixam de ser arquivos no repositório e passam a
 ser buscadas em tempo de execução pela **API pública do TMDB** — que é também o
 desafio bônus proposto pelo professor. A camada de serviço que fará essa
-chamada já está prevista em [`src/services`](../src/services).
+chamada já está prevista em [`src/services`](../../src/services).
 
 > Este produto usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.
 
-Os mockups em [`docs/telas/mockups/`](telas/mockups) mostram essas telas dentro
+Os mockups em [`docs/telas/mockups/`](../telas/mockups) mostram essas telas dentro
 de um aparelho **renderizado em 3D** — com espessura, trilho metálico refletindo
 a luz, botões laterais e sombra de contato. A cena está em
-[`scripts/mockup-3d/`](../scripts/mockup-3d) e usa as medidas físicas do
+[`scripts/mockup-3d/`](../../scripts/mockup-3d) e usa as medidas físicas do
 iPhone X, com a tela entrando como textura.
 
 ## 7. O que ainda não foi desenhado
