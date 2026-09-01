@@ -71,7 +71,7 @@ fluxo de navegação estão em [docs/04-telas.md](docs/04-telas.md).
 |---|---|---|
 | **Escopo** | Problema, público-alvo, proposta de valor e escopo do MVP | [📄 PDF](docs/pdf/claquete-escopo.pdf) · [md](docs/01-escopo.md) |
 | **Marca** | Nome, logo, paleta de cores, tipografia e tom de voz | [📄 PDF](docs/pdf/claquete-marca.pdf) · [md](docs/02-marca.md) |
-| **Pitch** | Modelo de negócio, monetização e diferencial competitivo | [md](docs/03-pitch.md) |
+| **Pitch** | Modelo de negócio, monetização e diferencial competitivo | [🎤 Deck](docs/deck/claquete-pitch-deck.pdf) · [md](docs/03-pitch.md) |
 | **Telas** | Telas conceituais e fluxo de navegação | [md](docs/04-telas.md) |
 | **Equipe** | Integrantes e papéis de cada um no projeto | [md](docs/05-equipe.md) |
 
@@ -79,7 +79,8 @@ Os PDFs são gerados a partir dos arquivos Markdown, que continuam sendo a fonte
 de verdade. Para regerar qualquer um deles:
 
 ```bash
-node scripts/build-docs-pdf.mjs
+node scripts/build-docs-pdf.mjs     # documentos em PDF
+node scripts/build-pitch-deck.mjs   # deck de apresentação
 ```
 
 ## 🛠️ Stack técnica
