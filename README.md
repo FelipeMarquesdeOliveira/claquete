@@ -126,7 +126,7 @@ Para rodar no celular, instale o app **Expo Go**
 
 ```bash
 # 1. clonar o repositório
-git clone https://github.com/<usuario>/claquete.git
+git clone https://github.com/FelipeMarquesdeOliveira/claquete.git
 cd claquete
 
 # 2. instalar as dependências
