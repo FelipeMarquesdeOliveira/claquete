@@ -236,6 +236,12 @@ write('assets/android-icon-monochrome.png', SIZE, SIZE, {
   inset: (SIZE - inner) / 2,
 });
 
+// Splash screen artwork: the mark with breathing room, on transparency.
+write('assets/splash-icon.png', SIZE, SIZE, {
+  layers: markLayers({ scale: inner / 256, withBoard: true }),
+  inset: (SIZE - inner) / 2,
+});
+
 write('assets/favicon.png', 64, 64, {
   layers: markLayers({ scale: 64 / 256, withBoard: true }),
 });
