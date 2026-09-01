@@ -67,13 +67,20 @@ fluxo de navegação estão em [docs/04-telas.md](docs/04-telas.md).
 
 ## 📚 Documentação
 
-| Documento | Conteúdo |
-|---|---|
-| [01 — Escopo](docs/01-escopo.md) | Problema, público-alvo, proposta de valor e escopo do MVP |
-| [02 — Marca](docs/02-marca.md) | Nome, logo, paleta de cores, tipografia e tom de voz |
-| [03 — Pitch](docs/03-pitch.md) | Modelo de negócio, monetização e diferencial competitivo |
-| [04 — Telas](docs/04-telas.md) | Telas conceituais e fluxo de navegação |
-| [05 — Equipe](docs/05-equipe.md) | Integrantes e papéis de cada um no projeto |
+| Documento | Conteúdo | Formatos |
+|---|---|---|
+| **Escopo** | Problema, público-alvo, proposta de valor e escopo do MVP | [📄 PDF](docs/pdf/claquete-escopo.pdf) · [md](docs/01-escopo.md) |
+| **Marca** | Nome, logo, paleta de cores, tipografia e tom de voz | [📄 PDF](docs/pdf/claquete-marca.pdf) · [md](docs/02-marca.md) |
+| **Pitch** | Modelo de negócio, monetização e diferencial competitivo | [md](docs/03-pitch.md) |
+| **Telas** | Telas conceituais e fluxo de navegação | [md](docs/04-telas.md) |
+| **Equipe** | Integrantes e papéis de cada um no projeto | [md](docs/05-equipe.md) |
+
+Os PDFs são gerados a partir dos arquivos Markdown, que continuam sendo a fonte
+de verdade. Para regerar qualquer um deles:
+
+```bash
+node scripts/build-docs-pdf.mjs
+```
 
 ## 🛠️ Stack técnica
 
@@ -153,7 +160,12 @@ node scripts/generate-brand-icons.mjs
 
 ## 👥 Equipe
 
-Os integrantes e o papel de cada um estão em
+| RM | Nome | Papel |
+|---|---|---|
+| RM556319 | **Felipe Marques** | Product Owner & Desenvolvedor Mobile |
+| RM556309 | **Gabriel Barros Cisoto** | Designer de Produto & Estratégia de Negócio |
+
+A divisão detalhada do trabalho por checkpoint está em
 [docs/05-equipe.md](docs/05-equipe.md).
 
 ## 📄 Licença
