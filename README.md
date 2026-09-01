@@ -82,15 +82,27 @@ A descrição de cada tela, o fluxo de navegação e as demais imagens estão no
 | 04 | [**Telas**](docs/04-telas.pdf) | Telas conceituais e fluxo de navegação | [`04-telas.md`](docs/markdown/04-telas.md) |
 | 05 | [**Equipe**](docs/05-equipe.pdf) | Integrantes e papéis de cada um no projeto | [`05-equipe.md`](docs/markdown/05-equipe.md) |
 
-🎤 A apresentação do pitch está em
-[**`claquete-pitch-deck.pdf`**](docs/pitch-deck/claquete-pitch-deck.pdf).
+### 🎤 Pitch deck
+
+A apresentação do pitch, em três formatos:
+
+| Formato | Arquivo | Para quê |
+|---|---|---|
+| PDF | [`claquete-pitch-deck.pdf`](docs/pitch-deck/claquete-pitch-deck.pdf) | Apresentar em tela cheia, com a formatação garantida |
+| PowerPoint | [`claquete-pitch-deck.pptx`](docs/pitch-deck/claquete-pitch-deck.pptx) | Abrir no PowerPoint, Google Slides ou Keynote |
+| Imagens | [`slides/`](docs/pitch-deck/slides) | Um PNG por slide, para inserir em outros documentos |
+
+No arquivo do PowerPoint cada slide entra como imagem de página inteira — assim
+a apresentação projeta idêntica ao PDF mesmo em um computador que não tenha as
+fontes da marca instaladas.
 
 Os PDFs são o documento de entrega; o Markdown em [`docs/markdown/`](docs/markdown)
 é a fonte a partir da qual eles são gerados. Para regerar:
 
 ```bash
-node scripts/build-docs-pdf.mjs     # documentos em PDF
-node scripts/build-pitch-deck.mjs   # deck de apresentação
+node scripts/build-docs-pdf.mjs       # documentos em PDF
+node scripts/build-pitch-deck.mjs     # deck de apresentação (PDF)
+node scripts/build-deck-formats.mjs   # deck em PPTX e imagens dos slides
 ```
 
 ## 🛠️ Stack técnica
@@ -128,13 +140,14 @@ claquete/
 │   ├── generate-wordmark.mjs      # Gera a assinatura da marca
 │   ├── build-docs-pdf.mjs         # Converte a documentação em PDF
 │   ├── build-pitch-deck.mjs       # Monta o deck de apresentação
+│   ├── build-deck-formats.mjs     # Exporta o deck em PPTX e imagens
 │   ├── deck/                      # Fonte do deck (HTML e estilo)
 │   ├── pdf/                       # Estilo de impressão dos documentos
 │   └── mockup-3d/                 # Cena 3D que gera os mockups de aparelho
 └── docs/
     ├── 01-escopo.pdf … 05-equipe.pdf # Documentação (entrega)
     ├── markdown/                     # Fonte da documentação
-    ├── pitch-deck/                   # Deck de apresentação
+    ├── pitch-deck/                   # Deck em PDF, PPTX e imagens
     └── telas/                        # Telas conceituais e mockups
 ```
 
