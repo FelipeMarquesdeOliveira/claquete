@@ -10,7 +10,9 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-const tela = new URLSearchParams(location.search).get('tela') || '1-abertura';
+const parametros = new URLSearchParams(location.search);
+const tela = parametros.get('tela') || '1-abertura';
+const giro = parametros.get('lado') === 'direita' ? -0.38 : 0.38;
 const L = 620, A = 1120;
 
 // ------------------------------------------------------------- dimensoes --
@@ -38,7 +40,7 @@ camera.lookAt(0, 0.4, 0);
 
 // ---------------------------------------------------------------- luzes --
 const chave = new THREE.DirectionalLight(0xffffff, 2.1);
-chave.position.set(-6, 20, 13);
+chave.position.set(giro > 0 ? -6 : 6, 20, 13);
 chave.castShadow = true;
 chave.shadow.mapSize.set(2048, 2048);
 chave.shadow.radius = 12;
@@ -50,7 +52,7 @@ cena.add(new THREE.DirectionalLight(0xffffff, 0.6).translateX(14).translateY(5).
 
 // luz de contorno, para o trilho metalico acender na borda
 const contorno = new THREE.DirectionalLight(0xdfe6ff, 1.5);
-contorno.position.set(-16, 3, -8);
+contorno.position.set(giro > 0 ? -16 : 16, 3, -8);
 cena.add(contorno);
 
 // ---------------------------------------------------------------- corpo --
@@ -135,7 +137,7 @@ const notch = new THREE.Mesh(
 notch.position.set(0, VISOR.a / 2 - 0.28, frenteZ + 0.011);
 grupo.add(notch);
 
-grupo.rotation.y = 0.38;
+grupo.rotation.y = giro;
 grupo.rotation.x = 0.02;
 grupo.position.y = 0.7;
 cena.add(grupo);

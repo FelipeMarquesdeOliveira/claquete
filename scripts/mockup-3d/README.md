@@ -29,3 +29,6 @@ python3 -m http.server     # a cena precisa de http, não de file://
 
 Abra `cena.html?tela=<nome-da-tela>` e capture o canvas. As telas de origem
 estão em `docs/telas/`.
+
+O parâmetro `&lado=direita` espelha o giro (e move a luz junto), para o
+aparelho apontar para o outro lado sem espelhar o conteúdo da tela.
