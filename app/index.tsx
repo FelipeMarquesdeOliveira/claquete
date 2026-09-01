@@ -1,34 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { colors, spacing, radius, typography } from '@/theme';
 
 /**
- * Claquete brand mark drawn with native views (no SVG dependency):
- * a clapperboard whose top stripes turn into rating bars in the body.
+ * Claquete brand mark: a solid block opened by a single diagonal cut - the same
+ * gesture that slices the wordmark. See docs/02-marca.md.
  */
 function ClaqueteMark() {
   return (
     <View style={styles.mark}>
-      <View style={styles.markTop}>
-        {[0, 1, 2].map((i) => (
-          <View key={i} style={[styles.stripe, { left: 8 + i * 28 }]} />
-        ))}
-      </View>
-      <View style={styles.markBody}>
-        {[14, 30, 22].map((height, i) => (
-          <View
-            key={i}
-            style={[
-              styles.bar,
-              {
-                height,
-                backgroundColor: i === 1 ? colors.primary : colors.surfaceAlt,
-              },
-            ]}
-          />
-        ))}
-      </View>
+      <View style={styles.cut} />
     </View>
   );
 }
@@ -45,7 +27,12 @@ export default function Home() {
       <View style={styles.container}>
         <View style={styles.header}>
           <ClaqueteMark />
-          <Text style={styles.wordmark}>CLAQUETE</Text>
+          <Image
+            source={require('../assets/brand/wordmark.png')}
+            style={styles.wordmark}
+            resizeMode="contain"
+            accessibilityLabel="Claquete"
+          />
           <Text style={styles.tagline}>
             Toda semana um escolhe. Todo mundo julga.
           </Text>
@@ -81,35 +68,20 @@ const styles = StyleSheet.create({
   mark: {
     width: 96,
     height: 96,
-    borderRadius: radius.lg,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    overflow: 'hidden',
-  },
-  markTop: {
-    height: 30,
+    borderRadius: 22,
     backgroundColor: colors.primary,
     overflow: 'hidden',
   },
-  stripe: {
+  cut: {
     position: 'absolute',
-    top: -16,
-    width: 11,
-    height: 62,
+    left: -40,
+    right: -40,
+    top: 38,
+    height: 9,
     backgroundColor: colors.background,
-    transform: [{ rotate: '20deg' }],
+    transform: [{ rotate: '-12deg' }],
   },
-  markBody: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    paddingBottom: spacing.md,
-  },
-  bar: { width: 12, borderRadius: radius.sm / 2 },
-  wordmark: { ...typography.hero, color: colors.text },
+  wordmark: { width: 264, height: 82 },
   tagline: {
     ...typography.subtitle,
     color: colors.textMuted,
