@@ -73,15 +73,15 @@ do projetor + vermelho da poltrona**.
 
 ### 3.1 Cores da marca
 
-| Amostra | Token | Hex | Uso |
-|---|---|---|---|
-| 🟨 | `primary` | `#FFC53D` | Âmbar do projetor. Ação principal, notas, destaques e o elemento que guia o olho |
-| 🟥 | `secondary` | `#E23E57` | Vermelho da poltrona. Estados de urgência: "sua vez", prazo acabando |
-| ⬛ | `background` | `#0E0E12` | Preto da sala. Fundo padrão de todas as telas |
-| ⬛ | `surface` | `#1A1A21` | Cartões, listas e blocos de conteúdo |
-| ⬛ | `surfaceAlt` | `#24242D` | Divisores, estados pressionados e elementos inativos |
-| ⬜ | `text` | `#F5F5F7` | Texto principal |
-| ⬜ | `textMuted` | `#9A9AA5` | Texto secundário, legendas e metadados |
+| Token | Hex | Uso |
+|---|---|---|
+| `primary` | `#FFC53D` | Âmbar do projetor. Ação principal, notas, destaques e o elemento que guia o olho |
+| `secondary` | `#E23E57` | Vermelho da poltrona. Estados de urgência: "sua vez", prazo acabando |
+| `background` | `#0E0E12` | Preto da sala. Fundo padrão de todas as telas |
+| `surface` | `#1A1A21` | Cartões, listas e blocos de conteúdo |
+| `surfaceAlt` | `#24242D` | Divisores, estados pressionados e elementos inativos |
+| `text` | `#F5F5F7` | Texto principal |
+| `textMuted` | `#9A9AA5` | Texto secundário, legendas e metadados |
 
 ### 3.2 Cores semânticas
 

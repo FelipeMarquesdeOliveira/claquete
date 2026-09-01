@@ -1,7 +1,9 @@
 # 01 · Documento de Escopo
 
 > **Claquete** — o clube de cinema dos seus amigos, com rodízio de curadoria e placar.
+>
 > Disciplina: Mobile Development & IoT · FIAP · 3º ano de Engenharia de Software
+>
 > Etapa: Checkpoint 4 — Idealização
 
 ---
