@@ -43,3 +43,10 @@ yarn-error.*
 # PDF build (temporario)
 .pdf-build/
 .deck-build/
+
+# configuracoes locais de editor e ferramentas
+.claude/
+.vscode/
+.idea/
+CLAUDE.md
+AGENTS.md
