@@ -6,6 +6,7 @@ import { roundAverage } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, spacing, typography } from '@/theme';
 import { formatSession } from '@/utils/date';
+import { withArticle } from '@/utils/names';
 
 export default function ShelfScreen() {
   const { club, movies } = useClubStore();
@@ -43,7 +44,7 @@ export default function ShelfScreen() {
                 <Text style={styles.movieTitle}>{movie?.title}</Text>
                 <View style={styles.curator}>
                   <Avatar member={curator} size={20} />
-                  <Text style={styles.meta}>escolha de {curator.name}</Text>
+                  <Text style={styles.meta}>escolha {withArticle(curator.name)}</Text>
                 </View>
                 {round.sessionAt && (
                   <Text style={styles.meta}>{formatSession(round.sessionAt)}</Text>

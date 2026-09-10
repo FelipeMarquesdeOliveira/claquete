@@ -6,6 +6,7 @@ import { Avatar, Button, Card, Icon, Label, Poster } from '@/components';
 import { roundAverage, seasonStandings } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, spacing, typography } from '@/theme';
+import { withArticle } from '@/utils/names';
 
 export default function VerdictScreen() {
   const { club, movies, currentUserId } = useClubStore();
@@ -34,7 +35,8 @@ export default function VerdictScreen() {
           <View style={styles.summaryInfo}>
             <Text style={styles.movieTitle}>{movie?.title.toUpperCase()}</Text>
             <Text style={styles.meta}>
-              Rodada {round.number} · escolha {curator.id === currentUserId ? 'sua' : `de ${curator.name}`}
+              Rodada {round.number} · escolha{' '}
+              {curator.id === currentUserId ? 'sua' : withArticle(curator.name)}
             </Text>
           </View>
           <View style={styles.averageBox}>

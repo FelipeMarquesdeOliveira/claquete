@@ -17,11 +17,7 @@ import {
 import { useClubStore } from '@/store/useClubStore';
 import { colors, spacing, typography } from '@/theme';
 import { countdownLabel, formatSession } from '@/utils/date';
-
-/** "da Marina" / "do Gabriel" — nomes terminados em A levam artigo feminino. */
-function genderedOf(name: string): string {
-  return `${name.trim().toLowerCase().endsWith('a') ? 'da' : 'do'} ${name}`;
-}
+import { withArticle } from '@/utils/names';
 
 export default function ClubScreen() {
   const { club, movies, currentUserId, loading, confirmPresence, openVoting, closeRound } =
@@ -111,7 +107,7 @@ export default function ClubScreen() {
                       <View style={styles.curatorRow}>
                         <Avatar member={curator} size={22} />
                         <Text style={styles.body}>
-                          escolha {curator.id === currentUserId ? 'sua' : `de ${curator.name}`}
+                          escolha {curator.id === currentUserId ? 'sua' : withArticle(curator.name)}
                         </Text>
                       </View>
                     )}
@@ -201,12 +197,12 @@ export default function ClubScreen() {
             <Avatar member={nextCurator(club)} size={28} />
             <View>
               <Text style={styles.stripTitle}>
-                Rodada {round.number + 1} é {genderedOf(nextCurator(club).name)}
+                Rodada {round.number + 1} é {withArticle(nextCurator(club).name)}
               </Text>
               <Text style={styles.meta}>
                 {curatorAfterNext(club).id === currentUserId
                   ? 'Depois, é a sua vez'
-                  : `Depois, é a vez ${genderedOf(curatorAfterNext(club).name)}`}
+                  : `Depois, é a vez ${withArticle(curatorAfterNext(club).name)}`}
               </Text>
             </View>
           </Card>
@@ -228,7 +224,7 @@ export default function ClubScreen() {
                   <View style={styles.shelfInfo}>
                     <Text style={styles.shelfTitle}>{shelfMovie?.title}</Text>
                     <Text style={styles.shelfMeta}>
-                      rodada {item.number} · escolha de {memberById(item.curatorId).name}
+                      rodada {item.number} · escolha {withArticle(memberById(item.curatorId).name)}
                     </Text>
                   </View>
                   <Text style={styles.score}>{roundAverage(item)?.toFixed(1)}</Text>

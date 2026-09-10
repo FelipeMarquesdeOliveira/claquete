@@ -125,6 +125,42 @@ código como `Prototype only`:
 As notas simuladas são fixas de propósito: assim toda execução da demonstração
 chega ao mesmo veredito, e quem apresenta sabe o que vai aparecer na tela.
 
+## 4.2 Fidelidade às telas do CP4
+
+Os dados mockados foram escritos para que o protótipo reproduza as telas
+conceituais do [documento de telas](04-telas.md). O que bate exatamente:
+
+- **O filme da rodada** — Cidade de Deus, com o mesmo pôster, ano, gêneros e duração
+- **O curador** — Gabriel, e a rodada 5 de 8
+- **A estante** — Ainda Estou Aqui na rodada 4 e Tropa de Elite na rodada 3
+- **As confirmações** — 3 de 5, com o botão de confirmar presença ainda disponível
+- **Os votos e as resenhas do veredito** — os cinco, palavra por palavra
+- **A busca do curador** — Cidade de Deus, Cidade dos Homens e Cidade Baixa, com as mesmas plataformas
+- **A estrutura do placar** — pódio, quarto e quinto lugar, e o "ainda não foi curador"
+
+### Duas contradições no material do CP4
+
+As telas conceituais foram desenhadas uma a uma e, postas lado a lado, não
+fecham entre si. O protótipo precisou escolher, porque **um banco de dados não
+aceita duas verdades**:
+
+| Contradição | O que o CP4 mostra | O que o protótipo faz |
+|---|---|---|
+| Posição da Marina no rodízio | A estante diz "rodada 4 · escolha da Marina" e, três centímetros acima, "Rodada 6 é da Marina" — com cinco membros, ela não ocupa a 4ª e a 1ª posição ao mesmo tempo | Mantém a estante (dois filmes com nota, mais visíveis) e a rodada 6 fica com a Bia |
+| Quem nunca curou | O placar mostra o João como "ainda não foi curador" depois de cinco rodadas — com cinco membros, cinco rodadas cobrem todo mundo | Quem ainda não curou é o Gabriel, que é justamente quem está com a rodada em jogo |
+
+Há ainda um detalhe aritmético: a nota **7.1** do placar do CP4 não sai de cinco
+notas inteiras — precisaria somar 35,5. No protótipo a média é **calculada** a
+partir dos votos, não digitada, então números impossíveis simplesmente não
+aparecem. É uma diferença que só existe porque agora há uma conta de verdade
+por trás do número.
+
+### Ver o aplicativo como outro membro
+
+A tela de **Perfil** permite trocar de usuário. Não é enfeite: o Claquete é um
+produto de grupo apresentado em um aparelho só, e telas que existem apenas para
+o curador — como a escolha do filme — ficariam inalcançáveis sem isso.
+
 ## 5. Ambiente de teste
 
 ```bash

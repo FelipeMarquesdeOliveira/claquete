@@ -7,6 +7,7 @@ import { Button, Card, Icon, Label, Poster } from '@/components';
 import { currentRound, everyoneVoted, votesMissing } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, radius, spacing, typography } from '@/theme';
+import { withArticle } from '@/utils/names';
 
 const SCORES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -53,7 +54,7 @@ export default function VotingScreen() {
           <View style={styles.movieInfo}>
             <Text style={styles.movieTitle}>{movie.title}</Text>
             <Text style={styles.meta}>
-              Rodada {round.number} · escolha de {curator?.name}
+              Rodada {round.number} · escolha {curator ? withArticle(curator.name) : ''}
             </Text>
           </View>
         </Card>
