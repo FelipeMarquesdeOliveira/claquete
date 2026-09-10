@@ -1,16 +1,21 @@
 import { mockRepository } from './mockRepository';
+import { supabaseRepository } from './supabaseRepository';
+import { supabaseConfigured } from '@/services/supabase';
 import type { ClubRepository } from './repository';
 
 export * from './repository';
 export { resetMockData } from './mockRepository';
+export { supabaseConfigured };
 
 /**
- * Picks where the data comes from.
+ * Decides where the data comes from.
  *
- * Supabase takes over as soon as the credentials are configured; without them
- * the app falls back to the local JSON, so the prototype always runs — in the
- * emulator, in the browser and on a machine that has never seen the .env.
+ * Supabase takes over as soon as the two variables are set in .env; without
+ * them the app falls back to the local JSON. That fallback is deliberate: the
+ * prototype has to run in the emulator, in the browser and on a machine that
+ * has never seen the credentials — a missing .env should never be the reason a
+ * demonstration fails.
  */
 export function getRepository(): ClubRepository {
-  return mockRepository;
+  return supabaseConfigured ? supabaseRepository : mockRepository;
 }
