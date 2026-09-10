@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Avatar, Card, Label } from '@/components';
+import { Avatar, Card, Icon, Label } from '@/components';
 import { roundsRemaining, seasonStandings } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, radius, spacing, typography } from '@/theme';
@@ -37,6 +37,7 @@ export default function StandingsScreen() {
               const first = row.member.id === podium[0]?.member.id;
               return (
                 <View key={row.member.id} style={styles.podiumColumn}>
+                  {first && <Icon name="trophy" color={colors.primary} size={18} />}
                   <Avatar member={row.member} size={first ? 46 : 38} />
                   <Text style={styles.podiumName}>{row.member.name}</Text>
                   <View
@@ -83,6 +84,7 @@ export default function StandingsScreen() {
         </View>
 
         <Card outlined style={styles.footer}>
+          <Icon name="clock" color={colors.textMuted} size={16} />
           <Label>
             {remaining === 0
               ? 'Temporada encerrada'
@@ -124,5 +126,5 @@ const styles = StyleSheet.create({
   you: { color: colors.primary },
   meta: { ...typography.caption, color: colors.textMuted, marginTop: 2 },
   rowScore: { ...typography.score, fontSize: 22, color: colors.primary },
-  footer: { alignItems: 'center' },
+  footer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm },
 });

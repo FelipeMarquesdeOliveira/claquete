@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Avatar, Button, Card, Label, Poster } from '@/components';
+import { Avatar, Button, Card, Icon, Label, Poster } from '@/components';
 import { roundAverage, seasonStandings } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, spacing, typography } from '@/theme';
@@ -40,6 +40,9 @@ export default function VerdictScreen() {
           <View style={styles.averageBox}>
             <Text style={styles.average}>{average?.toFixed(1)}</Text>
             <Label>Média</Label>
+            <Text style={styles.allVoted}>
+              {round.votes.length} de {club.members.length} votaram
+            </Text>
           </View>
         </Card>
 
@@ -65,6 +68,8 @@ export default function VerdictScreen() {
         </View>
 
         <Card style={styles.points}>
+          <Icon name="trophy" color={colors.primary} size={20} />
+          <View style={styles.pointsText}>
           <Text style={styles.pointsTitle}>
             {curator.id === currentUserId ? 'Você ganhou' : `${curator.name} ganhou`}{' '}
             {average?.toFixed(1)} pontos
@@ -72,6 +77,7 @@ export default function VerdictScreen() {
           <Text style={styles.meta}>
             {standing ? `${standing.position}º lugar na temporada` : 'entrou no placar'}
           </Text>
+          </View>
         </Card>
 
         <Button label="Ver o placar da temporada" onPress={() => router.replace('/placar')} />
@@ -99,6 +105,8 @@ const styles = StyleSheet.create({
   voteName: { ...typography.subtitle, fontSize: 14, color: colors.text },
   review: { ...typography.caption, color: colors.textMuted, marginTop: 2 },
   voteScore: { ...typography.score, fontSize: 24, color: colors.primary },
-  points: { alignItems: 'flex-start' },
+  points: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  pointsText: { flex: 1 },
+  allVoted: { ...typography.caption, fontSize: 11, color: colors.textMuted, marginTop: 2 },
   pointsTitle: { ...typography.subtitle, fontSize: 15, color: colors.text },
 });

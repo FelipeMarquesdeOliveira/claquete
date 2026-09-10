@@ -38,3 +38,13 @@ export function roundAverage(round: Round): number | null {
   const total = round.votes.reduce((sum, vote) => sum + vote.score, 0);
   return Math.round((total / round.votes.length) * 10) / 10;
 }
+
+/** This member said they will be at the session. */
+export function hasConfirmed(round: Round, memberId: string): boolean {
+  return round.confirmations.includes(memberId);
+}
+
+/** How many members confirmed presence for the session. */
+export function confirmedCount(round: Round): number {
+  return round.confirmations.length;
+}

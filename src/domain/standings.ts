@@ -63,7 +63,15 @@ export function roundsRemaining(club: Club): number {
 
 /** Who curates the round after the one in play. */
 export function nextCurator(club: Club) {
+  return curatorOf(club, nextRoundNumber(club));
+}
+
+/** And the one after that — the club likes to know when its own turn comes. */
+export function curatorAfterNext(club: Club) {
+  return curatorOf(club, nextRoundNumber(club) + 1);
+}
+
+function nextRoundNumber(club: Club): number {
   const inPlay = club.rounds.find((round) => round.status !== 'closed');
-  const nextNumber = inPlay ? inPlay.number + 1 : club.rounds.length + 1;
-  return curatorOf(club, nextNumber);
+  return inPlay ? inPlay.number + 1 : club.rounds.length + 1;
 }

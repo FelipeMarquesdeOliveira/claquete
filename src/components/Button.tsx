@@ -1,4 +1,6 @@
-import { Pressable, StyleSheet, Text, type ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
+
+import { Icon, type IconName } from './Icon';
 
 import { colors, radius, typography } from '@/theme';
 
@@ -7,10 +9,11 @@ type Props = {
   onPress?: () => void;
   variant?: 'primary' | 'ghost';
   disabled?: boolean;
+  icon?: IconName;
   style?: ViewStyle;
 };
 
-export function Button({ label, onPress, variant = 'primary', disabled, style }: Props) {
+export function Button({ label, onPress, variant = 'primary', disabled, icon, style }: Props) {
   const primary = variant === 'primary';
   return (
     <Pressable
@@ -26,9 +29,12 @@ export function Button({ label, onPress, variant = 'primary', disabled, style }:
         style,
       ]}
     >
-      <Text style={[styles.label, primary ? styles.labelPrimary : styles.labelGhost]}>
-        {label}
-      </Text>
+      <View style={styles.content}>
+        {icon && <Icon name={icon} color={primary ? colors.textInverse : colors.text} size={18} />}
+        <Text style={[styles.label, primary ? styles.labelPrimary : styles.labelGhost]}>
+          {label}
+        </Text>
+      </View>
     </Pressable>
   );
 }
@@ -41,6 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
+  content: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   primary: { backgroundColor: colors.primary },
   ghost: { borderWidth: 1, borderColor: colors.border },
   pressed: { opacity: 0.82 },

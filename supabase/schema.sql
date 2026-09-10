@@ -56,6 +56,15 @@ create table if not exists votes (
   foreign key (club_id, round_number) references rounds (club_id, number) on delete cascade
 );
 
+create table if not exists presences (
+  club_id      text not null,
+  round_number int  not null,
+  member_id    text not null references members (id),
+  created_at   timestamptz not null default now(),
+  primary key (club_id, round_number, member_id),
+  foreign key (club_id, round_number) references rounds (club_id, number) on delete cascade
+);
+
 create index if not exists votes_por_rodada on votes (club_id, round_number);
 
 -- ------------------------------------------------------------------ acesso --
@@ -68,11 +77,12 @@ alter table clubs   enable row level security;
 alter table members enable row level security;
 alter table rounds  enable row level security;
 alter table votes   enable row level security;
+alter table presences enable row level security;
 
 do $$
 declare t text;
 begin
-  foreach t in array array['clubs', 'members', 'rounds', 'votes'] loop
+  foreach t in array array['clubs', 'members', 'rounds', 'votes', 'presences'] loop
     execute format('drop policy if exists prototipo_leitura on %I', t);
     execute format('drop policy if exists prototipo_escrita on %I', t);
     execute format('create policy prototipo_leitura on %I for select using (true)', t);
@@ -109,6 +119,14 @@ insert into rounds (club_id, number, curator_id, movie_id, session_at, pick_dead
   ('clube-cinema-da-galera', 4, 'gabriel', 'cidade-de-deus',    '2026-08-30 20:00+00', '2026-08-28 23:59+00', 'closed'),
   ('clube-cinema-da-galera', 5, 'felipe',  null,                null,                  '2026-09-11 23:59+00', 'awaiting_pick')
 on conflict (club_id, number) do nothing;
+
+insert into presences (club_id, round_number, member_id)
+select 'clube-cinema-da-galera', r.number, m.id
+  from rounds r cross join members m
+ where r.club_id = 'clube-cinema-da-galera'
+   and m.club_id = 'clube-cinema-da-galera'
+   and r.status = 'closed'
+on conflict do nothing;
 
 insert into votes (club_id, round_number, member_id, score, review) values
   ('clube-cinema-da-galera', 1, 'marina',  10, 'Escolhi porque precisava ser visto em grupo.'),

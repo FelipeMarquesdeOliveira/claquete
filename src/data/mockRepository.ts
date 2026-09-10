@@ -28,6 +28,7 @@ function oneWeekAfter(iso: string): string {
  * produces the same verdict and the presenter knows what is coming.
  */
 const SIMULATED_SCORES = [9, 7, 8, 8];
+const SIMULATED_CONFIRMATIONS = 2;
 const SIMULATED_REVIEWS = [
   'Não esperava gostar tanto.',
   'Bom, mas não é meu tipo de filme.',
@@ -57,6 +58,20 @@ export const mockRepository: ClubRepository = {
     round.movieId = movieId;
     round.sessionAt = sessionAt;
     round.status = 'awaiting_session';
+
+    // Prototype only: part of the club confirms right after the pick, so the
+    // presence counter behaves like it would with real members answering.
+    club.members
+      .filter((member) => member.id !== round.curatorId)
+      .slice(0, SIMULATED_CONFIRMATIONS)
+      .forEach((member) => {
+        if (!round.confirmations.includes(member.id)) round.confirmations.push(member.id);
+      });
+  },
+
+  async confirmPresence({ roundNumber, memberId }) {
+    const round = requireRound(roundNumber);
+    if (!round.confirmations.includes(memberId)) round.confirmations.push(memberId);
   },
 
   async openVoting({ roundNumber }) {
@@ -101,6 +116,7 @@ export const mockRepository: ClubRepository = {
       sessionAt: null,
       pickDeadline: oneWeekAfter(round.sessionAt ?? new Date().toISOString()),
       status: 'awaiting_pick',
+      confirmations: [],
       votes: [],
     });
   },

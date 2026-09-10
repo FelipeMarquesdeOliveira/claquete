@@ -2,10 +2,14 @@ import { router } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Avatar, Button, Card, Label, Poster } from '@/components';
+import { Avatar, Button, Card, Icon, Label, Poster } from '@/components';
 import {
+  confirmedCount,
+  curatorAfterNext,
   currentRound,
+  hasConfirmed,
   hasVoted,
+  nextCurator,
   roundAverage,
   scoresRevealed,
   votesMissing,
@@ -14,8 +18,14 @@ import { useClubStore } from '@/store/useClubStore';
 import { colors, spacing, typography } from '@/theme';
 import { countdownLabel, formatSession } from '@/utils/date';
 
+/** "da Marina" / "do Gabriel" — nomes terminados em A levam artigo feminino. */
+function genderedOf(name: string): string {
+  return `${name.trim().toLowerCase().endsWith('a') ? 'da' : 'do'} ${name}`;
+}
+
 export default function ClubScreen() {
-  const { club, movies, currentUserId, loading, openVoting, closeRound } = useClubStore();
+  const { club, movies, currentUserId, loading, confirmPresence, openVoting, closeRound } =
+    useClubStore();
 
   if (loading || !club) {
     return (
@@ -106,16 +116,22 @@ export default function ClubScreen() {
                       </View>
                     )}
                     {round.sessionAt && (
-                      <Text style={styles.meta}>
-                        {formatSession(round.sessionAt)} · {movie.streaming}
-                      </Text>
+                      <View style={styles.sessionRow}>
+                        <Icon name="calendar" color={colors.textMuted} />
+                        <Text style={styles.meta}>
+                          {formatSession(round.sessionAt)} · {movie.streaming}
+                        </Text>
+                      </View>
                     )}
                   </View>
                 </View>
 
-                {round.status === 'awaiting_session' && (
-                  <Button label="Já assistimos" onPress={openVoting} />
-                )}
+                {round.status === 'awaiting_session' &&
+                  (hasConfirmed(round, currentUserId) ? (
+                    <Button label="Já assistimos" variant="ghost" onPress={openVoting} />
+                  ) : (
+                    <Button label="Confirmar presença" onPress={confirmPresence} />
+                  ))}
 
                 {round.status === 'voting' && !revealed && (
                   <Button
@@ -144,6 +160,24 @@ export default function ClubScreen() {
           </Card>
         )}
 
+        {round && round.status === 'awaiting_session' && (
+          <Card style={styles.strip}>
+            <View>
+              <Text style={styles.stripTitle}>
+                {confirmedCount(round)} de {club.members.length} confirmaram
+              </Text>
+              <Text style={styles.meta}>A votação abre depois da sessão</Text>
+            </View>
+            <View style={styles.avatars}>
+              {round.confirmations.slice(0, 3).map((id, i) => (
+                <View key={id} style={i > 0 ? styles.stacked : undefined}>
+                  <Avatar member={memberById(id)} size={26} ringed />
+                </View>
+              ))}
+            </View>
+          </Card>
+        )}
+
         {round && round.status === 'voting' && !scoresRevealed(club, round) && (
           <Card style={styles.strip}>
             <View>
@@ -158,6 +192,22 @@ export default function ClubScreen() {
                   <Avatar member={memberById(vote.memberId)} size={26} ringed />
                 </View>
               ))}
+            </View>
+          </Card>
+        )}
+
+        {round && (
+          <Card outlined style={styles.nextRound}>
+            <Avatar member={nextCurator(club)} size={28} />
+            <View>
+              <Text style={styles.stripTitle}>
+                Rodada {round.number + 1} é {genderedOf(nextCurator(club).name)}
+              </Text>
+              <Text style={styles.meta}>
+                {curatorAfterNext(club).id === currentUserId
+                  ? 'Depois, é a sua vez'
+                  : `Depois, é a vez ${genderedOf(curatorAfterNext(club).name)}`}
+              </Text>
             </View>
           </Card>
         )}
@@ -213,6 +263,8 @@ const styles = StyleSheet.create({
   meta: { ...typography.caption, color: colors.textMuted },
   curatorRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   strip: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  nextRound: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  sessionRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   stripTitle: { ...typography.subtitle, fontSize: 15, color: colors.text },
   shelfHeader: {
     flexDirection: 'row',

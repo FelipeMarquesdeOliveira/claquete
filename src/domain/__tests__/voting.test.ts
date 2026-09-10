@@ -34,6 +34,7 @@ const round = (votes: Vote[]): Round => ({
   sessionAt: '2026-09-05T20:00:00.000Z',
   pickDeadline: '2026-09-03T23:59:00.000Z',
   status: 'voting',
+  confirmations: [],
   votes,
 });
 

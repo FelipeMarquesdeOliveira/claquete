@@ -22,6 +22,7 @@ const round = (overrides: Partial<Round> = {}): Round => ({
   sessionAt: null,
   pickDeadline: '2026-09-11T23:59:00.000Z',
   status: 'awaiting_pick',
+  confirmations: [],
   votes: [],
   ...overrides,
 });

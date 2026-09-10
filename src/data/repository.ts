@@ -23,6 +23,9 @@ export interface ClubRepository {
     sessionAt: string;
   }): Promise<void>;
 
+  /** A member says they will be at the session. */
+  confirmPresence(input: { roundNumber: number; memberId: string }): Promise<void>;
+
   /** The session happened; the round opens for scoring. */
   openVoting(input: { roundNumber: number }): Promise<void>;
 

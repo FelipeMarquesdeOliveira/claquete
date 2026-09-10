@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Button, Card, Label, Poster } from '@/components';
+import { Button, Card, Icon, Label, Poster } from '@/components';
 import { currentRound } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, radius, spacing, typography } from '@/theme';
@@ -102,14 +102,19 @@ export default function CuratorScreen() {
         </View>
 
         <Card style={styles.session}>
-          <View>
-            <Label>Sessão</Label>
-            <Text style={styles.sessionDate}>{formatLongDate(sessionAt)} · 20h</Text>
+          <View style={styles.sessionLeft}>
+            <Icon name="calendar" color={colors.primary} size={20} />
+            <View>
+              <Label>Sessão</Label>
+              <Text style={styles.sessionDate}>{formatLongDate(sessionAt)} · 20h</Text>
+            </View>
           </View>
+          <Text style={styles.alterar}>alterar</Text>
         </Card>
 
         <Button
           label={saving ? 'Salvando…' : 'Bater a claquete'}
+          icon="claquete"
           disabled={!selected || saving}
           onPress={confirm}
         />
@@ -166,4 +171,6 @@ const styles = StyleSheet.create({
   empty: { ...typography.body, color: colors.textMuted, paddingVertical: spacing.md },
   session: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   sessionDate: { ...typography.body, color: colors.text, marginTop: 3 },
+  sessionLeft: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  alterar: { ...typography.caption, color: colors.primary },
 });

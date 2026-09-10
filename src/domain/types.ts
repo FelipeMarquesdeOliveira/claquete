@@ -45,6 +45,8 @@ export type Round = {
   movieId: string | null;
   sessionAt: string | null; // ISO date
   pickDeadline: string; // ISO date
+  /** Members who said they will be at the session. */
+  confirmations: string[];
   votes: Vote[];
   status: RoundStatus;
 };

@@ -21,6 +21,7 @@ type ClubState = {
 
   load: () => Promise<void>;
   pickMovie: (movieId: string, sessionAt: string) => Promise<void>;
+  confirmPresence: () => Promise<void>;
   openVoting: () => Promise<void>;
   castVote: (score: number, review: string) => Promise<void>;
   closeRound: () => Promise<void>;
@@ -67,6 +68,14 @@ export const useClubStore = create<ClubState>((set, get) => ({
       roundNumber: currentRoundNumber(get().club),
       movieId,
       sessionAt,
+    });
+    await get().load();
+  },
+
+  async confirmPresence() {
+    await repository.confirmPresence({
+      roundNumber: currentRoundNumber(get().club),
+      memberId: get().currentUserId,
     });
     await get().load();
   },

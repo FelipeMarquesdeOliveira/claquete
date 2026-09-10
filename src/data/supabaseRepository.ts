@@ -39,6 +39,11 @@ type RoundRow = {
   status: Round['status'];
 };
 
+type PresenceRow = {
+  round_number: number;
+  member_id: string;
+};
+
 type VoteRow = {
   round_number: number;
   member_id: string;
@@ -56,20 +61,24 @@ export const supabaseRepository: ClubRepository = {
   async loadClub(): Promise<Club> {
     const db = getSupabase();
 
-    const [clubResult, membersResult, roundsResult, votesResult] = await Promise.all([
-      db.from('clubs').select('*').eq('id', CLUB_ID).single(),
-      db.from('members').select('*').eq('club_id', CLUB_ID).order('join_order'),
-      db.from('rounds').select('*').eq('club_id', CLUB_ID).order('number'),
-      db.from('votes').select('*').eq('club_id', CLUB_ID).order('created_at'),
-    ]);
+    const [clubResult, membersResult, roundsResult, votesResult, presencesResult] =
+      await Promise.all([
+        db.from('clubs').select('*').eq('id', CLUB_ID).single(),
+        db.from('members').select('*').eq('club_id', CLUB_ID).order('join_order'),
+        db.from('rounds').select('*').eq('club_id', CLUB_ID).order('number'),
+        db.from('votes').select('*').eq('club_id', CLUB_ID).order('created_at'),
+        db.from('presences').select('*').eq('club_id', CLUB_ID),
+      ]);
 
     fail('carregar clube', clubResult.error);
     fail('carregar membros', membersResult.error);
     fail('carregar rodadas', roundsResult.error);
     fail('carregar votos', votesResult.error);
+    fail('carregar presenças', presencesResult.error);
 
     const club = clubResult.data as ClubRow;
     const votes = (votesResult.data ?? []) as VoteRow[];
+    const presences = (presencesResult.data ?? []) as PresenceRow[];
 
     return {
       id: club.id,
@@ -90,6 +99,9 @@ export const supabaseRepository: ClubRepository = {
         sessionAt: row.session_at,
         pickDeadline: row.pick_deadline,
         status: row.status,
+        confirmations: presences
+          .filter((presence) => presence.round_number === row.number)
+          .map((presence) => presence.member_id),
         votes: votes
           .filter((vote) => vote.round_number === row.number)
           .map(
@@ -108,12 +120,42 @@ export const supabaseRepository: ClubRepository = {
   },
 
   async pickMovie({ roundNumber, movieId, sessionAt }) {
-    const { error } = await getSupabase()
+    const db = getSupabase();
+    const { error } = await db
       .from('rounds')
       .update({ movie_id: movieId, session_at: sessionAt, status: 'awaiting_session' })
       .eq('club_id', CLUB_ID)
       .eq('number', roundNumber);
     fail('escolher filme', error);
+
+    // Prototype only: parte do clube confirma logo após a escolha.
+    const { data } = await db.from('rounds').select('curator_id').eq('club_id', CLUB_ID).eq('number', roundNumber).single();
+    const { data: members } = await db
+      .from('members')
+      .select('id')
+      .eq('club_id', CLUB_ID)
+      .neq('id', data?.curator_id ?? '')
+      .limit(2);
+
+    const rows = (members ?? []).map((member) => ({
+      club_id: CLUB_ID,
+      round_number: roundNumber,
+      member_id: member.id,
+    }));
+    if (rows.length > 0) {
+      const { error: presenceError } = await db
+        .from('presences')
+        .upsert(rows, { onConflict: 'club_id,round_number,member_id' });
+      fail('simular presenças', presenceError);
+    }
+  },
+
+  async confirmPresence({ roundNumber, memberId }) {
+    const { error } = await getSupabase().from('presences').upsert(
+      { club_id: CLUB_ID, round_number: roundNumber, member_id: memberId },
+      { onConflict: 'club_id,round_number,member_id' }
+    );
+    fail('confirmar presença', error);
   },
 
   async openVoting({ roundNumber }) {

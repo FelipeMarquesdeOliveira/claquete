@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Button, Card, Label, Poster } from '@/components';
+import { Button, Card, Icon, Label, Poster } from '@/components';
 import { currentRound, everyoneVoted, votesMissing } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, radius, spacing, typography } from '@/theme';
@@ -97,6 +97,7 @@ export default function VotingScreen() {
         </View>
 
         <Card style={styles.lock}>
+          <Icon name="lock" color={colors.primary} size={18} />
           <Text style={styles.lockText}>
             As notas ficam fechadas até todo mundo votar.{'\n'}
             <Text style={styles.lockStrong}>
@@ -155,7 +156,13 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     textAlignVertical: 'top',
   },
-  lock: { backgroundColor: 'rgba(255,197,61,0.08)', borderColor: 'rgba(255,197,61,0.3)' },
-  lockText: { ...typography.caption, color: colors.textMuted, lineHeight: 20 },
+  lock: {
+    backgroundColor: 'rgba(255,197,61,0.08)',
+    borderColor: 'rgba(255,197,61,0.3)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  lockText: { ...typography.caption, color: colors.textMuted, lineHeight: 20, flex: 1 },
   lockStrong: { color: colors.text, fontWeight: '700' },
 });

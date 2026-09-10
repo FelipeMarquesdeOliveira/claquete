@@ -19,6 +19,7 @@ const rodada = (
   sessionAt: '2026-09-05T20:00:00.000Z',
   pickDeadline: '2026-09-03T23:59:00.000Z',
   status,
+  confirmations: [],
   votes: notas.map((score, i) => ({
     memberId: membros[i % membros.length].id,
     score,
