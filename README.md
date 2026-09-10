@@ -12,7 +12,7 @@ O clube de cinema dos seus amigos, com rodízio de curadoria e placar.
 ![React Native](https://img.shields.io/badge/React%20Native-0.86-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
 ![Status](https://img.shields.io/badge/status-CP5%20Prot%C3%B3tipo%20funcional-FFC53D)
-![Testes](https://img.shields.io/badge/testes-36%20passando-4ADE80)
+![Testes](https://img.shields.io/badge/testes-39%20passando-4ADE80)
 
 </div>
 
