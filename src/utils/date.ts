@@ -7,6 +7,9 @@
  */
 
 const WEEKDAYS = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+const WEEKDAYS_LONG = [
+  'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado',
+];
 const MONTHS = [
   'jan', 'fev', 'mar', 'abr', 'mai', 'jun',
   'jul', 'ago', 'set', 'out', 'nov', 'dez',
@@ -31,6 +34,26 @@ export function formatLongDate(iso: string): string {
   ];
   const date = new Date(iso);
   return `${date.getDate()} de ${full[date.getMonth()]}`;
+}
+
+/** "Sábado, 22 de março" — o dia da sessão, escrito por extenso. */
+export function formatFullDate(iso: string): string {
+  const date = new Date(iso);
+  return `${WEEKDAYS_LONG[date.getDay()]}, ${formatLongDate(iso)}`;
+}
+
+/**
+ * "sexta às 23h" — o prazo do curador, do jeito que se combina no grupo.
+ *
+ * O dia vem em minúscula porque a frase da tela é "Escolha até sexta às 23h":
+ * o prazo aparece no meio da frase, não no começo dela.
+ */
+export function deadlineLabel(iso: string): string {
+  const date = new Date(iso);
+  const day = WEEKDAYS_LONG[date.getDay()].toLowerCase();
+  const minutes = date.getMinutes();
+  const time = minutes === 0 ? `${date.getHours()}h` : `${date.getHours()}h${String(minutes).padStart(2, '0')}`;
+  return `${day} às ${time}`;
 }
 
 /** Whole days between now and a date; negative once it is in the past. */

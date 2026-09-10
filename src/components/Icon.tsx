@@ -1,7 +1,7 @@
 import type { ColorValue } from 'react-native';
 import Svg, { Path, Rect } from 'react-native-svg';
 
-export type IconName = 'calendar' | 'clock' | 'trophy' | 'claquete' | 'lock';
+export type IconName = 'calendar' | 'clock' | 'trophy' | 'claquete' | 'lock' | 'search';
 
 type Props = { name: IconName; color: ColorValue; size?: number };
 
@@ -40,6 +40,12 @@ export function Icon({ name, color, size = 16 }: Props) {
         <>
           <Rect x={3} y={4} width={18} height={16} rx={5} {...line} />
           <Path d="M3.4 13.8 20.6 10.2" {...line} />
+        </>
+      )}
+      {name === 'search' && (
+        <>
+          <Path d="M17 10.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" {...line} />
+          <Path d="M15.5 15.5 21 21" {...line} />
         </>
       )}
       {name === 'lock' && (

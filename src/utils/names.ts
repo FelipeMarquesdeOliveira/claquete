@@ -6,7 +6,10 @@
  * acerta os cinco. Quando os membros passarem a ser cadastrados de verdade,
  * isto vira um campo do perfil.
  */
+export function articleFor(name: string): 'do' | 'da' {
+  return name.trim().toLowerCase().endsWith('a') ? 'da' : 'do';
+}
+
 export function withArticle(name: string): string {
-  const feminine = name.trim().toLowerCase().endsWith('a');
-  return `${feminine ? 'da' : 'do'} ${name}`;
+  return `${articleFor(name)} ${name}`;
 }
