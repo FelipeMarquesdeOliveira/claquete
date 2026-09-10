@@ -162,7 +162,7 @@ export default function ClubScreen() {
 
         {round && round.status === 'awaiting_session' && (
           <Card style={styles.strip}>
-            <View>
+            <View style={styles.stripText}>
               <Text style={styles.stripTitle}>
                 {confirmedCount(round)} de {club.members.length} confirmaram
               </Text>
@@ -180,7 +180,7 @@ export default function ClubScreen() {
 
         {round && round.status === 'voting' && !scoresRevealed(club, round) && (
           <Card style={styles.strip}>
-            <View>
+            <View style={styles.stripText}>
               <Text style={styles.stripTitle}>
                 {round.votes.length} de {club.members.length} já votaram
               </Text>
@@ -262,7 +262,8 @@ const styles = StyleSheet.create({
   movieTitle: { ...typography.title, fontSize: 28, color: colors.text },
   meta: { ...typography.caption, color: colors.textMuted },
   curatorRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-  strip: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  strip: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: spacing.sm },
+  stripText: { flex: 1 },
   nextRound: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   sessionRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   stripTitle: { ...typography.subtitle, fontSize: 15, color: colors.text },

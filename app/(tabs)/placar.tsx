@@ -101,7 +101,13 @@ const styles = StyleSheet.create({
   content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl },
   title: { ...typography.title, fontSize: 28, color: colors.text },
   subtitle: { ...typography.caption, color: colors.textMuted, marginTop: 2 },
-  podium: { flexDirection: 'row', alignItems: 'flex-end', gap: spacing.sm, marginTop: spacing.md },
+  podium: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: spacing.sm,
+    marginTop: spacing.md,
+  },
   podiumColumn: { flex: 1, alignItems: 'center', gap: 6 },
   podiumName: { ...typography.caption, color: colors.text, fontWeight: '700' },
   block: {

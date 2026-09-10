@@ -50,8 +50,8 @@
       "number": 1,
       "curatorId": "marina",
       "movieId": "ainda-estou-aqui",
-      "sessionAt": "2026-08-09T20:00:00.000Z",
-      "pickDeadline": "2026-08-07T23:59:00.000Z",
+      "sessionAt": "2026-08-09T20:00:00-03:00",
+      "pickDeadline": "2026-08-07T23:59:00-03:00",
       "status": "closed",
       "confirmations": [
         "marina",
@@ -92,8 +92,8 @@
       "number": 2,
       "curatorId": "bia",
       "movieId": "central-do-brasil",
-      "sessionAt": "2026-08-16T20:00:00.000Z",
-      "pickDeadline": "2026-08-14T23:59:00.000Z",
+      "sessionAt": "2026-08-16T20:00:00-03:00",
+      "pickDeadline": "2026-08-14T23:59:00-03:00",
       "status": "closed",
       "confirmations": [
         "marina",
@@ -134,8 +134,8 @@
       "number": 3,
       "curatorId": "joao",
       "movieId": "tropa-de-elite",
-      "sessionAt": "2026-08-23T20:00:00.000Z",
-      "pickDeadline": "2026-08-21T23:59:00.000Z",
+      "sessionAt": "2026-08-23T20:00:00-03:00",
+      "pickDeadline": "2026-08-21T23:59:00-03:00",
       "status": "closed",
       "confirmations": [
         "marina",
@@ -176,8 +176,8 @@
       "number": 4,
       "curatorId": "gabriel",
       "movieId": "cidade-de-deus",
-      "sessionAt": "2026-08-30T20:00:00.000Z",
-      "pickDeadline": "2026-08-28T23:59:00.000Z",
+      "sessionAt": "2026-08-30T20:00:00-03:00",
+      "pickDeadline": "2026-08-28T23:59:00-03:00",
       "status": "closed",
       "confirmations": [
         "marina",
@@ -219,7 +219,7 @@
       "curatorId": "felipe",
       "movieId": null,
       "sessionAt": null,
-      "pickDeadline": "2026-09-11T23:59:00.000Z",
+      "pickDeadline": "2026-09-11T23:59:00-03:00",
       "status": "awaiting_pick",
       "confirmations": [],
       "votes": []

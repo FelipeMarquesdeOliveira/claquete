@@ -44,6 +44,7 @@ yarn-error.*
 # PDF build (temporario)
 .pdf-build/
 .deck-build/
+.evidence-build/
 
 # configuracoes locais de editor e ferramentas
 .claude/

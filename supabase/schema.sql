@@ -113,11 +113,11 @@ insert into members (id, club_id, name, initials, color, join_order) values
 on conflict (id) do nothing;
 
 insert into rounds (club_id, number, curator_id, movie_id, session_at, pick_deadline, status) values
-  ('clube-cinema-da-galera', 1, 'marina',  'ainda-estou-aqui',  '2026-08-09 20:00+00', '2026-08-07 23:59+00', 'closed'),
-  ('clube-cinema-da-galera', 2, 'bia',     'central-do-brasil', '2026-08-16 20:00+00', '2026-08-14 23:59+00', 'closed'),
-  ('clube-cinema-da-galera', 3, 'joao',    'tropa-de-elite',    '2026-08-23 20:00+00', '2026-08-21 23:59+00', 'closed'),
-  ('clube-cinema-da-galera', 4, 'gabriel', 'cidade-de-deus',    '2026-08-30 20:00+00', '2026-08-28 23:59+00', 'closed'),
-  ('clube-cinema-da-galera', 5, 'felipe',  null,                null,                  '2026-09-11 23:59+00', 'awaiting_pick')
+  ('clube-cinema-da-galera', 1, 'marina',  'ainda-estou-aqui',  '2026-08-09 20:00-03', '2026-08-07 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 2, 'bia',     'central-do-brasil', '2026-08-16 20:00-03', '2026-08-14 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 3, 'joao',    'tropa-de-elite',    '2026-08-23 20:00-03', '2026-08-21 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 4, 'gabriel', 'cidade-de-deus',    '2026-08-30 20:00-03', '2026-08-28 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 5, 'felipe',  null,                null,                  '2026-09-11 23:59-03', 'awaiting_pick')
 on conflict (club_id, number) do nothing;
 
 insert into presences (club_id, round_number, member_id)

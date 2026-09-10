@@ -131,9 +131,15 @@ const styles = StyleSheet.create({
   bigScore: { ...typography.score, fontSize: 72, lineHeight: 74, color: colors.primary },
   outOf: { ...typography.subtitle, color: colors.textMuted, marginBottom: 12 },
   hint: { ...typography.caption, color: colors.textMuted, textAlign: 'center', marginTop: -8 },
-  pills: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, justifyContent: 'center' },
+  pills: {
+    width: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+    justifyContent: 'center',
+  },
   pill: {
-    width: 48,
+    width: 46,
     height: 44,
     borderRadius: radius.md,
     borderWidth: 1,
