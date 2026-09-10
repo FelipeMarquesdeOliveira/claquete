@@ -1,0 +1,159 @@
+-- =============================================================================
+-- Claquete · esquema do banco
+--
+-- Rode este arquivo inteiro no SQL Editor do Supabase, uma vez, ao criar o
+-- projeto. Ele cria as tabelas, libera o acesso do aplicativo e popula o clube
+-- de demonstração com a mesma temporada que está em src/data/mock/club.json.
+--
+-- O catálogo de filmes não fica aqui de propósito: a partir do CP6 ele vem da
+-- API pública do TMDB, então guardá-lo agora seria criar uma tabela para jogar
+-- fora depois.
+-- =============================================================================
+
+-- ------------------------------------------------------------------ tabelas --
+
+create table if not exists clubs (
+  id            text primary key,
+  name          text not null,
+  invite_code   text not null unique,
+  season_number int  not null default 1,
+  total_rounds  int  not null default 8,
+  -- ordem do rodízio: a rodada N é curada por rotation[((N - 1) % tamanho) + 1]
+  rotation      text[] not null,
+  created_at    timestamptz not null default now()
+);
+
+create table if not exists members (
+  id        text primary key,
+  club_id   text not null references clubs (id) on delete cascade,
+  name      text not null,
+  initials  text not null,
+  color     text not null,
+  join_order int  not null
+);
+
+create table if not exists rounds (
+  club_id       text not null references clubs (id) on delete cascade,
+  number        int  not null check (number > 0),
+  curator_id    text not null references members (id),
+  movie_id      text,
+  session_at    timestamptz,
+  pick_deadline timestamptz not null,
+  status        text not null
+                check (status in ('awaiting_pick', 'awaiting_session', 'voting', 'closed')),
+  primary key (club_id, number)
+);
+
+create table if not exists votes (
+  club_id      text not null,
+  round_number int  not null,
+  member_id    text not null references members (id),
+  score        int  not null check (score between 0 and 10),
+  review       text not null default '',
+  created_at   timestamptz not null default now(),
+  -- um voto por pessoa por rodada: é a regra que o placar depende
+  primary key (club_id, round_number, member_id),
+  foreign key (club_id, round_number) references rounds (club_id, number) on delete cascade
+);
+
+create table if not exists presences (
+  club_id      text not null,
+  round_number int  not null,
+  member_id    text not null references members (id),
+  created_at   timestamptz not null default now(),
+  primary key (club_id, round_number, member_id),
+  foreign key (club_id, round_number) references rounds (club_id, number) on delete cascade
+);
+
+create index if not exists votes_por_rodada on votes (club_id, round_number);
+
+-- ------------------------------------------------------------------ acesso --
+-- O protótipo do CP5 não tem login: o aplicativo fala com o banco usando a
+-- chave anônima. As políticas abaixo liberam leitura e escrita para essa chave.
+-- No CP6, com autenticação, elas passam a checar se quem escreve é membro do
+-- clube — por isso o RLS já fica ligado desde agora.
+
+alter table clubs   enable row level security;
+alter table members enable row level security;
+alter table rounds  enable row level security;
+alter table votes   enable row level security;
+alter table presences enable row level security;
+
+do $$
+declare t text;
+begin
+  foreach t in array array['clubs', 'members', 'rounds', 'votes', 'presences'] loop
+    execute format('drop policy if exists prototipo_leitura on %I', t);
+    execute format('drop policy if exists prototipo_escrita on %I', t);
+    execute format('create policy prototipo_leitura on %I for select using (true)', t);
+    execute format('create policy prototipo_escrita on %I for all using (true) with check (true)', t);
+  end loop;
+end $$;
+
+-- ------------------------------------------------------- clube de exemplo --
+
+insert into clubs (id, name, invite_code, season_number, total_rounds, rotation)
+values (
+  'clube-cinema-da-galera',
+  'Cinema da Galera',
+  'GALERA-7X2',
+  1,
+  8,
+  array['bia', 'joao', 'felipe', 'marina', 'gabriel']
+)
+on conflict (id) do update
+  set name = excluded.name, rotation = excluded.rotation;
+
+insert into members (id, club_id, name, initials, color, join_order) values
+  ('marina',  'clube-cinema-da-galera', 'Marina',  'M', '#E23E57', 1),
+  ('gabriel', 'clube-cinema-da-galera', 'Gabriel', 'G', '#FFC53D', 2),
+  ('bia',     'clube-cinema-da-galera', 'Bia',     'B', '#4ADE80', 3),
+  ('felipe',  'clube-cinema-da-galera', 'Felipe',  'F', '#3A3A46', 4),
+  ('joao',    'clube-cinema-da-galera', 'João',    'J', '#8B5CF6', 5)
+on conflict (id) do nothing;
+
+insert into rounds (club_id, number, curator_id, movie_id, session_at, pick_deadline, status) values
+  ('clube-cinema-da-galera', 1, 'bia',     'central-do-brasil',  '2026-08-09 20:00-03', '2026-08-07 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 2, 'joao',    'cidade-dos-homens',  '2026-08-16 20:00-03', '2026-08-14 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 3, 'felipe',  'tropa-de-elite',     '2026-08-23 20:00-03', '2026-08-21 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 4, 'marina',  'ainda-estou-aqui',   '2026-08-30 20:00-03', '2026-08-28 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 5, 'gabriel', 'cidade-de-deus',     '2026-09-19 20:00-03', '2026-09-17 23:59-03', 'awaiting_session')
+on conflict (club_id, number) do nothing;
+
+-- presenças: todo mundo nas rodadas encerradas, três na rodada em jogo
+insert into presences (club_id, round_number, member_id)
+select 'clube-cinema-da-galera', r.number, m.id
+  from rounds r cross join members m
+ where r.club_id = 'clube-cinema-da-galera'
+   and m.club_id = 'clube-cinema-da-galera'
+   and r.status = 'closed'
+on conflict do nothing;
+
+insert into presences (club_id, round_number, member_id) values
+  ('clube-cinema-da-galera', 5, 'marina'),
+  ('clube-cinema-da-galera', 5, 'bia'),
+  ('clube-cinema-da-galera', 5, 'joao')
+on conflict do nothing;
+
+insert into votes (club_id, round_number, member_id, score, review) values
+  ('clube-cinema-da-galera', 1, 'bia',      8, 'Clássico que envelheceu bem.'),
+  ('clube-cinema-da-galera', 1, 'marina',   7, 'O final me pegou de surpresa.'),
+  ('clube-cinema-da-galera', 1, 'gabriel',  7, 'Arrasta um pouco no meio.'),
+  ('clube-cinema-da-galera', 1, 'felipe',   7, 'Nunca tinha visto. Valeu.'),
+  ('clube-cinema-da-galera', 1, 'joao',     7, 'A Fernanda Montenegro não erra.'),
+  ('clube-cinema-da-galera', 2, 'joao',     7, 'Queria que fosse melhor que é.'),
+  ('clube-cinema-da-galera', 2, 'marina',   6, 'Fica na sombra do primeiro.'),
+  ('clube-cinema-da-galera', 2, 'gabriel',  7, 'Os dois protagonistas seguram.'),
+  ('clube-cinema-da-galera', 2, 'bia',      6, 'Bonito, mas esquecível.'),
+  ('clube-cinema-da-galera', 2, 'felipe',   6, 'Esperava mais, confesso.'),
+  ('clube-cinema-da-galera', 3, 'felipe',   8, 'Escolha óbvia, e óbvia por um motivo.'),
+  ('clube-cinema-da-galera', 3, 'marina',   8, 'Ritmo absurdo do começo ao fim.'),
+  ('clube-cinema-da-galera', 3, 'gabriel',  7, 'O roteiro é melhor do que lembravam.'),
+  ('clube-cinema-da-galera', 3, 'bia',      8, 'Não é meu tipo, mas prende.'),
+  ('clube-cinema-da-galera', 3, 'joao',     7, 'Já tinha visto três vezes.'),
+  ('clube-cinema-da-galera', 4, 'marina',  10, 'Escolhi porque precisava ser visto em grupo.'),
+  ('clube-cinema-da-galera', 4, 'gabriel',  9, 'Pesado, mas necessário.'),
+  ('clube-cinema-da-galera', 4, 'bia',      9, 'Saí do sofá sem conseguir falar.'),
+  ('clube-cinema-da-galera', 4, 'felipe',   9, 'Melhor rodada da temporada até agora.'),
+  ('clube-cinema-da-galera', 4, 'joao',     9, 'A atuação carrega o filme inteiro.')
+on conflict (club_id, round_number, member_id) do nothing;
