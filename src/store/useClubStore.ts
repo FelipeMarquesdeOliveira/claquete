@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 
 import { getRepository, type DataSource } from '@/data';
-import { resetMockData } from '@/data';
 import type { Club, Movie } from '@/domain';
 
 /**
@@ -34,6 +33,30 @@ const CURRENT_USER = 'felipe';
 
 const repository = getRepository();
 
+/**
+ * Roda uma escrita e garante que a tela fique sabendo se ela falhou.
+ *
+ * Sem isto a promessa é rejeitada dentro do onPress de um botão, ninguém a
+ * escuta, e a interface recarrega como se tivesse dado certo.
+ */
+async function escrever(
+  set: (parcial: Partial<ClubState>) => void,
+  recarregar: () => Promise<void>,
+  acao: () => Promise<void>
+): Promise<void> {
+  set({ error: null });
+  let falha: string | null = null;
+  try {
+    await acao();
+  } catch (error) {
+    falha = error instanceof Error ? error.message : 'Não consegui salvar';
+  }
+
+  // a recarga limpa o erro ao começar, então o aviso é reposto depois dela
+  await recarregar();
+  if (falha) set({ error: falha });
+}
+
 function currentRoundNumber(club: Club | null): number {
   const round = club?.rounds.find((r) => r.status !== 'closed');
   if (!round) throw new Error('Nenhuma rodada em jogo');
@@ -65,41 +88,42 @@ export const useClubStore = create<ClubState>((set, get) => ({
   },
 
   async pickMovie(movieId, sessionAt) {
-    await repository.pickMovie({
-      roundNumber: currentRoundNumber(get().club),
-      movieId,
-      sessionAt,
-    });
-    await get().load();
+    await escrever(set, get().load, () =>
+      repository.pickMovie({ roundNumber: currentRoundNumber(get().club), movieId, sessionAt })
+    );
   },
 
   async confirmPresence() {
-    await repository.confirmPresence({
-      roundNumber: currentRoundNumber(get().club),
-      memberId: get().currentUserId,
-    });
-    await get().load();
+    await escrever(set, get().load, () =>
+      repository.confirmPresence({
+        roundNumber: currentRoundNumber(get().club),
+        memberId: get().currentUserId,
+      })
+    );
   },
 
   async openVoting() {
     const roundNumber = currentRoundNumber(get().club);
-    await repository.openVoting({ roundNumber });
-    // os outros membros votam aqui, para a regra de revelação poder ser exercida
-    await repository.seedOtherVotes({ roundNumber, exceptMemberId: get().currentUserId });
-    await get().load();
+    await escrever(set, get().load, async () => {
+      await repository.openVoting({ roundNumber });
+      // os outros membros votam aqui, para a regra de revelação poder ser exercida
+      await repository.seedOtherVotes({ roundNumber, exceptMemberId: get().currentUserId });
+    });
   },
 
   async castVote(score, review) {
-    await repository.registerVote({
-      roundNumber: currentRoundNumber(get().club),
-      vote: { memberId: get().currentUserId, score, review },
-    });
-    await get().load();
+    await escrever(set, get().load, () =>
+      repository.registerVote({
+        roundNumber: currentRoundNumber(get().club),
+        vote: { memberId: get().currentUserId, score, review },
+      })
+    );
   },
 
   async closeRound() {
-    await repository.closeRound({ roundNumber: currentRoundNumber(get().club) });
-    await get().load();
+    await escrever(set, get().load, () =>
+      repository.closeRound({ roundNumber: currentRoundNumber(get().club) })
+    );
   },
 
   /**
@@ -113,7 +137,6 @@ export const useClubStore = create<ClubState>((set, get) => ({
   },
 
   async restartDemo() {
-    resetMockData();
-    await get().load();
+    await escrever(set, get().load, () => repository.resetDemo());
   },
 }));

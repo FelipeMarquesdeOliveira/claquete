@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Avatar, Button, Card, Label } from '@/components';
+import { Avatar, Aviso, Button, Card, Label } from '@/components';
 import { roundAverage, seasonStandings, voteOf } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, spacing, typography } from '@/theme';
@@ -30,6 +30,8 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <Aviso />
+
         <View style={styles.header}>
           <Avatar member={me} size={56} />
           <View>

@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Button, Card, Icon, Label, Poster } from '@/components';
+import { Aviso, Button, Card, Icon, Label, Poster } from '@/components';
 import { currentRound } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, radius, spacing, typography } from '@/theme';
@@ -49,6 +49,8 @@ export default function CuratorScreen() {
           </Text>
           <Text style={styles.title}>É COM VOCÊ ESSA SEMANA</Text>
         </View>
+
+        <Aviso />
 
         <Card style={styles.deadline}>
           <Text style={styles.deadlineText}>

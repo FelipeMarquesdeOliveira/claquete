@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Avatar, Button, Card, Icon, Label, Poster } from '@/components';
+import { Avatar, Aviso, Button, Card, Icon, Label, Poster } from '@/components';
 import {
   confirmedCount,
   curatorAfterNext,
@@ -48,6 +48,8 @@ export default function ClubScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <Aviso />
+
         <View style={styles.header}>
           <View>
             <Text style={styles.clubName}>{club.name.toUpperCase()}</Text>

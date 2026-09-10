@@ -4,7 +4,6 @@ import { supabaseConfigured } from '@/services/supabase';
 import type { ClubRepository } from './repository';
 
 export * from './repository';
-export { resetMockData } from './mockRepository';
 export { supabaseConfigured };
 
 /**

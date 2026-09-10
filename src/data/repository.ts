@@ -43,4 +43,13 @@ export interface ClubRepository {
 
   /** Everyone voted: scores are revealed and the next round starts. */
   closeRound(input: { roundNumber: number }): Promise<void>;
+
+  /**
+   * Devolve os dados ao estado inicial da demonstração.
+   *
+   * A tela de perfil oferece isso para que a apresentação possa ser refeita
+   * do zero. Com o banco ligado o reset também precisa acontecer no Postgres,
+   * senão o botão mentiria: a tela recarregaria os mesmos dados já mexidos.
+   */
+  resetDemo(): Promise<void>;
 }

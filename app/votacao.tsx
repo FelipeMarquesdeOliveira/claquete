@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Button, Card, Icon, Label, Poster } from '@/components';
+import { Aviso, Button, Card, Icon, Label, Poster } from '@/components';
 import { currentRound, everyoneVoted, votesMissing } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, radius, spacing, typography } from '@/theme';
@@ -48,6 +48,8 @@ export default function VotingScreen() {
           </Text>
           <Text style={styles.title}>SUA NOTA</Text>
         </View>
+
+        <Aviso />
 
         <Card style={styles.movie}>
           <Poster movieId={movie.id} width={40} />
