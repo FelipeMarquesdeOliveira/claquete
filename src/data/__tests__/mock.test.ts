@@ -3,6 +3,7 @@ import type { Club, Movie } from '@/domain';
 
 import clubSeed from '../mock/club.json';
 import moviesSeed from '../mock/movies.json';
+import { SIMULATED_CONFIRMATIONS, SIMULATED_VOTES } from '../simulation';
 
 const club = clubSeed as unknown as Club;
 const movies = moviesSeed as unknown as Movie[];
@@ -96,5 +97,38 @@ describe('catálogo mockado', () => {
       expect(filme.streaming.length).toBeGreaterThan(0);
       expect(filme.synopsis.length).toBeGreaterThan(20);
     }
+  });
+});
+
+/**
+ * Os votos simulados existem porque a demonstração roda com um usuário só, mas
+ * eles não são enfeite: são o que faz a rodada fechar no mesmo número da tela
+ * conceitual do CP4. Os dois repositórios importam daqui — este teste é o que
+ * garante que uma edição distraída não mude o veredito da apresentação.
+ */
+describe('votos simulados dos outros membros', () => {
+  const NOTA_DO_USUARIO = 8;
+  const USUARIO = 'felipe';
+  const MEDIA_DO_CP4 = 8.2;
+
+  it('cobre todo mundo do clube', () => {
+    club.members.forEach((membro) => {
+      expect(SIMULATED_VOTES[membro.id]).toBeDefined();
+    });
+  });
+
+  it('fecha a rodada na média desenhada no CP4', () => {
+    const votos = club.members.map((membro) => ({
+      memberId: membro.id,
+      score: membro.id === USUARIO ? NOTA_DO_USUARIO : SIMULATED_VOTES[membro.id].score,
+      review: '',
+    }));
+
+    expect(roundAverage({ votes: votos } as Club['rounds'][number])).toBe(MEDIA_DO_CP4);
+  });
+
+  it('confirma menos gente do que o clube inteiro, senão a rodada já nasceria cheia', () => {
+    expect(SIMULATED_CONFIRMATIONS).toBeGreaterThan(0);
+    expect(SIMULATED_CONFIRMATIONS).toBeLessThan(club.members.length - 1);
   });
 });

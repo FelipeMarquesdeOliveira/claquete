@@ -1,8 +1,10 @@
 import { curatorOf, type Club, type Movie, type Round, type Vote } from '@/domain';
 import { getSupabase } from '@/services/supabase';
 
+import clubSeed from './mock/club.json';
 import moviesSeed from './mock/movies.json';
 import type { ClubRepository } from './repository';
+import { SIMULATED_CONFIRMATIONS, SIMULATED_VOTES } from './simulation';
 
 /**
  * Repository backed by Postgres, through Supabase.
@@ -135,7 +137,7 @@ export const supabaseRepository: ClubRepository = {
       .select('id')
       .eq('club_id', CLUB_ID)
       .neq('id', data?.curator_id ?? '')
-      .limit(2);
+      .limit(SIMULATED_CONFIRMATIONS);
 
     const rows = (members ?? []).map((member) => ({
       club_id: CLUB_ID,
@@ -191,26 +193,79 @@ export const supabaseRepository: ClubRepository = {
       .neq('id', exceptMemberId);
     fail('listar membros', error);
 
-    const scores = [9, 7, 8, 8];
-    const reviews = [
-      'Não esperava gostar tanto.',
-      'Bom, mas não é meu tipo de filme.',
-      'A segunda metade salva.',
-      'Boa escolha, sério.',
-    ];
+    const { data: jaVotaram } = await db
+      .from('votes')
+      .select('member_id')
+      .eq('club_id', CLUB_ID)
+      .eq('round_number', roundNumber);
+    const votantes = new Set((jaVotaram ?? []).map((linha) => linha.member_id));
 
-    const rows = (data ?? []).map((member, index) => ({
-      club_id: CLUB_ID,
-      round_number: roundNumber,
-      member_id: member.id,
-      score: scores[index % scores.length],
-      review: reviews[index % reviews.length],
-    }));
+    // As notas vêm de simulation.ts, as mesmas do repositório local, para que a
+    // rodada feche em 8.2 com o banco ligado — igual à tela desenhada no CP4.
+    const rows = (data ?? [])
+      .filter((member) => SIMULATED_VOTES[member.id] && !votantes.has(member.id))
+      .map((member) => ({
+        club_id: CLUB_ID,
+        round_number: roundNumber,
+        member_id: member.id,
+        ...SIMULATED_VOTES[member.id],
+      }));
+    if (rows.length === 0) return;
 
     const { error: insertError } = await db
       .from('votes')
       .upsert(rows, { onConflict: 'club_id,round_number,member_id' });
     fail('simular votos', insertError);
+  },
+
+  async resetDemo() {
+    const db = getSupabase();
+    const semente = clubSeed as unknown as Club;
+
+    // A ordem importa: presenças e votos apontam para as rodadas.
+    for (const tabela of ['votes', 'presences', 'rounds'] as const) {
+      const { error } = await db.from(tabela).delete().eq('club_id', CLUB_ID);
+      fail(`limpar ${tabela}`, error);
+    }
+
+    const { error: roundsError } = await db.from('rounds').insert(
+      semente.rounds.map((round) => ({
+        club_id: CLUB_ID,
+        number: round.number,
+        curator_id: round.curatorId,
+        movie_id: round.movieId,
+        session_at: round.sessionAt,
+        pick_deadline: round.pickDeadline,
+        status: round.status,
+      }))
+    );
+    fail('recriar rodadas', roundsError);
+
+    const presencas = semente.rounds.flatMap((round) =>
+      round.confirmations.map((memberId) => ({
+        club_id: CLUB_ID,
+        round_number: round.number,
+        member_id: memberId,
+      }))
+    );
+    if (presencas.length > 0) {
+      const { error } = await db.from('presences').insert(presencas);
+      fail('recriar presenças', error);
+    }
+
+    const votos = semente.rounds.flatMap((round) =>
+      round.votes.map((vote) => ({
+        club_id: CLUB_ID,
+        round_number: round.number,
+        member_id: vote.memberId,
+        score: vote.score,
+        review: vote.review,
+      }))
+    );
+    if (votos.length > 0) {
+      const { error } = await db.from('votes').insert(votos);
+      fail('recriar votos', error);
+    }
   },
 
   async closeRound({ roundNumber }) {

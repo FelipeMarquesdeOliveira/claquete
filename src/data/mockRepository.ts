@@ -3,6 +3,7 @@ import { curatorOf, type Club, type Movie, type Vote } from '@/domain';
 import clubSeed from './mock/club.json';
 import moviesSeed from './mock/movies.json';
 import type { ClubRepository } from './repository';
+import { SIMULATED_CONFIRMATIONS, SIMULATED_VOTES } from './simulation';
 
 /**
  * In-memory repository backed by the JSON files in `mock/`.
@@ -23,22 +24,6 @@ function oneWeekAfter(iso: string): string {
   return date.toISOString();
 }
 
-/**
- * Votos dos membros simulados, fixos de propósito.
- *
- * São os mesmos do veredito desenhado no CP4 (docs/markdown/04-telas.md): com o
- * usuário dando 8, a rodada fecha em 8.2 — exatamente a média da tela conceitual.
- * Toda execução da demonstração chega ao mesmo resultado.
- */
-const SIMULATED_VOTES: Record<string, { score: number; review: string }> = {
-  marina: { score: 9, review: 'Melhor coisa que vi no clube até agora' },
-  gabriel: { score: 9, review: 'Eu avisei que valia a pena' },
-  bia: { score: 8, review: 'A fotografia é absurda, mas é pesado' },
-  felipe: { score: 8, review: 'Já tinha visto e valeu de novo' },
-  joao: { score: 7, review: 'Dormi no meio, culpa minha' },
-};
-
-const SIMULATED_CONFIRMATIONS = 2;
 
 function requireRound(roundNumber: number) {
   const round = club.rounds.find((r) => r.number === roundNumber);
@@ -102,6 +87,10 @@ export const mockRepository: ClubRepository = {
       });
   },
 
+  async resetDemo() {
+    resetMockData();
+  },
+
   async closeRound({ roundNumber }) {
     const round = requireRound(roundNumber);
     round.status = 'closed';
@@ -124,7 +113,7 @@ export const mockRepository: ClubRepository = {
   },
 };
 
-/** Puts the demo back to the seed state. Used by the profile screen. */
-export function resetMockData() {
+/** Puts the demo back to the seed state, discarding whatever the run changed. */
+function resetMockData() {
   club = clone(clubSeed as unknown as Club);
 }
