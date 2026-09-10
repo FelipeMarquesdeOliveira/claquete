@@ -23,6 +23,18 @@ function oneWeekAfter(iso: string): string {
   return date.toISOString();
 }
 
+/**
+ * Fixed scores and reviews for the simulated members, so every run of the demo
+ * produces the same verdict and the presenter knows what is coming.
+ */
+const SIMULATED_SCORES = [9, 7, 8, 8];
+const SIMULATED_REVIEWS = [
+  'Não esperava gostar tanto.',
+  'Bom, mas não é meu tipo de filme.',
+  'A segunda metade salva.',
+  'Boa escolha, sério.',
+];
+
 function requireRound(roundNumber: number) {
   const round = club.rounds.find((r) => r.number === roundNumber);
   if (!round) throw new Error(`Round ${roundNumber} not found`);
@@ -57,6 +69,20 @@ export const mockRepository: ClubRepository = {
     const existing = round.votes.findIndex((v) => v.memberId === vote.memberId);
     if (existing >= 0) round.votes[existing] = vote;
     else round.votes.push(vote);
+  },
+
+  async seedOtherVotes({ roundNumber, exceptMemberId }) {
+    const round = requireRound(roundNumber);
+    club.members
+      .filter((member) => member.id !== exceptMemberId)
+      .forEach((member, index) => {
+        if (round.votes.some((vote) => vote.memberId === member.id)) return;
+        round.votes.push({
+          memberId: member.id,
+          score: SIMULATED_SCORES[index % SIMULATED_SCORES.length],
+          review: SIMULATED_REVIEWS[index % SIMULATED_REVIEWS.length],
+        });
+      });
   },
 
   async closeRound({ roundNumber }) {

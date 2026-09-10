@@ -29,6 +29,15 @@ export interface ClubRepository {
   /** One member scores the film. Re-voting replaces the previous score. */
   registerVote(input: { roundNumber: number; vote: Vote }): Promise<void>;
 
+  /**
+   * Prototype only: the other members cast their votes.
+   *
+   * The demo runs with a single user, so without this the reveal rule could
+   * never be exercised — the round would sit forever waiting for four people
+   * who do not exist. Documented in docs/markdown/07-prototipo.md.
+   */
+  seedOtherVotes(input: { roundNumber: number; exceptMemberId: string }): Promise<void>;
+
   /** Everyone voted: scores are revealed and the next round starts. */
   closeRound(input: { roundNumber: number }): Promise<void>;
 }

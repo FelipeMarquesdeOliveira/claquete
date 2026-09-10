@@ -72,7 +72,10 @@ export const useClubStore = create<ClubState>((set, get) => ({
   },
 
   async openVoting() {
-    await repository.openVoting({ roundNumber: currentRoundNumber(get().club) });
+    const roundNumber = currentRoundNumber(get().club);
+    await repository.openVoting({ roundNumber });
+    // os outros membros votam aqui, para a regra de revelação poder ser exercida
+    await repository.seedOtherVotes({ roundNumber, exceptMemberId: get().currentUserId });
     await get().load();
   },
 
