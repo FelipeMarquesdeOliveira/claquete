@@ -1,0 +1,85 @@
+{
+  "id": "clube-cinema-da-galera",
+  "name": "Cinema da Galera",
+  "inviteCode": "GALERA-7X2",
+  "members": [
+    { "id": "marina", "name": "Marina", "initials": "M", "color": "#E23E57" },
+    { "id": "bia", "name": "Bia", "initials": "B", "color": "#4ADE80" },
+    { "id": "joao", "name": "João", "initials": "J", "color": "#8B5CF6" },
+    { "id": "gabriel", "name": "Gabriel", "initials": "G", "color": "#FFC53D" },
+    { "id": "felipe", "name": "Felipe", "initials": "F", "color": "#3A3A46" }
+  ],
+  "rotation": ["marina", "bia", "joao", "gabriel", "felipe"],
+  "season": { "number": 1, "totalRounds": 8 },
+  "rounds": [
+    {
+      "number": 1,
+      "curatorId": "marina",
+      "movieId": "ainda-estou-aqui",
+      "sessionAt": "2026-08-09T20:00:00.000Z",
+      "pickDeadline": "2026-08-07T23:59:00.000Z",
+      "status": "closed",
+      "votes": [
+        { "memberId": "marina", "score": 10, "review": "Escolhi porque precisava ser visto em grupo." },
+        { "memberId": "bia", "score": 9, "review": "Saí do sofá sem conseguir falar." },
+        { "memberId": "joao", "score": 9, "review": "A atuação carrega o filme inteiro." },
+        { "memberId": "gabriel", "score": 9, "review": "Pesado, mas necessário." },
+        { "memberId": "felipe", "score": 9, "review": "Melhor abertura de temporada possível." }
+      ]
+    },
+    {
+      "number": 2,
+      "curatorId": "bia",
+      "movieId": "central-do-brasil",
+      "sessionAt": "2026-08-16T20:00:00.000Z",
+      "pickDeadline": "2026-08-14T23:59:00.000Z",
+      "status": "closed",
+      "votes": [
+        { "memberId": "bia", "score": 9, "review": "Clássico que envelheceu bem." },
+        { "memberId": "marina", "score": 8, "review": "O final me pegou de surpresa." },
+        { "memberId": "joao", "score": 9, "review": "A Fernanda Montenegro não erra." },
+        { "memberId": "gabriel", "score": 8, "review": "Arrasta um pouco no meio." },
+        { "memberId": "felipe", "score": 8, "review": "Nunca tinha visto. Valeu." }
+      ]
+    },
+    {
+      "number": 3,
+      "curatorId": "joao",
+      "movieId": "tropa-de-elite",
+      "sessionAt": "2026-08-23T20:00:00.000Z",
+      "pickDeadline": "2026-08-21T23:59:00.000Z",
+      "status": "closed",
+      "votes": [
+        { "memberId": "joao", "score": 8, "review": "Escolha óbvia, e óbvia por um motivo." },
+        { "memberId": "marina", "score": 7, "review": "Bom, mas não é meu tipo de filme." },
+        { "memberId": "bia", "score": 8, "review": "Ritmo absurdo do começo ao fim." },
+        { "memberId": "gabriel", "score": 8, "review": "O roteiro é melhor do que lembravam." },
+        { "memberId": "felipe", "score": 7, "review": "Já tinha visto três vezes." }
+      ]
+    },
+    {
+      "number": 4,
+      "curatorId": "gabriel",
+      "movieId": "cidade-de-deus",
+      "sessionAt": "2026-08-30T20:00:00.000Z",
+      "pickDeadline": "2026-08-28T23:59:00.000Z",
+      "status": "closed",
+      "votes": [
+        { "memberId": "gabriel", "score": 9, "review": "Eu avisei que valia a pena." },
+        { "memberId": "marina", "score": 9, "review": "Melhor coisa que vi no clube até agora." },
+        { "memberId": "bia", "score": 8, "review": "A fotografia é absurda, mas é pesado." },
+        { "memberId": "joao", "score": 8, "review": "Dormi no meio, culpa minha." },
+        { "memberId": "felipe", "score": 7, "review": "Já tinha visto e valeu de novo." }
+      ]
+    },
+    {
+      "number": 5,
+      "curatorId": "felipe",
+      "movieId": null,
+      "sessionAt": null,
+      "pickDeadline": "2026-09-11T23:59:00.000Z",
+      "status": "awaiting_pick",
+      "votes": []
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+[
+  {
+    "id": "cidade-de-deus",
+    "title": "Cidade de Deus",
+    "year": 2002,
+    "genres": ["Drama", "Crime"],
+    "runtimeMinutes": 130,
+    "streaming": "Netflix",
+    "synopsis": "Dois garotos crescem na mesma favela do Rio e seguem caminhos opostos: um pega a câmera, o outro pega a arma."
+  },
+  {
+    "id": "ainda-estou-aqui",
+    "title": "Ainda Estou Aqui",
+    "year": 2024,
+    "genres": ["Drama", "História"],
+    "runtimeMinutes": 137,
+    "streaming": "Globoplay",
+    "synopsis": "Uma família é desfeita por um ato de violência da ditadura, e a mãe sustenta a casa e a memória por décadas."
+  },
+  {
+    "id": "tropa-de-elite",
+    "title": "Tropa de Elite",
+    "year": 2007,
+    "genres": ["Ação", "Drama"],
+    "runtimeMinutes": 115,
+    "streaming": "Netflix",
+    "synopsis": "Um capitão do BOPE procura quem o substitua enquanto a corrupção aperta de todos os lados."
+  },
+  {
+    "id": "central-do-brasil",
+    "title": "Central do Brasil",
+    "year": 1998,
+    "genres": ["Drama"],
+    "runtimeMinutes": 110,
+    "streaming": "Globoplay",
+    "synopsis": "Uma escrevente de cartas de estação e um menino órfão atravessam o país atrás de um pai que talvez não exista."
+  },
+  {
+    "id": "cidade-dos-homens",
+    "title": "Cidade dos Homens",
+    "year": 2007,
+    "genres": ["Drama"],
+    "runtimeMinutes": 106,
+    "streaming": "Globoplay",
+    "synopsis": "Dois amigos de infância enfrentam a paternidade cedo demais, no meio de uma guerra que não escolheram."
+  },
+  {
+    "id": "cidade-baixa",
+    "title": "Cidade Baixa",
+    "year": 2005,
+    "genres": ["Drama", "Romance"],
+    "runtimeMinutes": 98,
+    "streaming": "Prime Video",
+    "synopsis": "Dois amigos que dividem tudo descobrem que não conseguem dividir a mesma mulher."
+  },
+  {
+    "id": "bacurau",
+    "title": "Bacurau",
+    "year": 2019,
+    "genres": ["Drama", "Faroeste"],
+    "runtimeMinutes": 131,
+    "streaming": "Prime Video",
+    "synopsis": "Um povoado do sertão some do mapa, literalmente, e a cidade descobre que virou alvo de uma caçada."
+  },
+  {
+    "id": "auto-da-compadecida",
+    "title": "O Auto da Compadecida",
+    "year": 2000,
+    "genres": ["Comédia", "Aventura"],
+    "runtimeMinutes": 104,
+    "streaming": "Globoplay",
+    "synopsis": "Dois amarelos do sertão enganam padre, padeiro e cangaceiro até esbarrarem no julgamento final."
+  },
+  {
+    "id": "que-horas-ela-volta",
+    "title": "Que Horas Ela Volta?",
+    "year": 2015,
+    "genres": ["Drama"],
+    "runtimeMinutes": 112,
+    "streaming": "Prime Video",
+    "synopsis": "Uma empregada doméstica vê as regras invisíveis da casa desabarem quando a filha chega para o vestibular."
+  }
+]
