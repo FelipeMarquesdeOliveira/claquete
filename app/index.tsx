@@ -1,11 +1,13 @@
+import { router } from 'expo-router';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { colors, spacing, radius, typography } from '@/theme';
+import { Button } from '@/components';
+import { colors, spacing, typography } from '@/theme';
 
 /**
  * Claquete brand mark: a solid block opened by a single diagonal cut - the same
- * gesture that slices the wordmark. See docs/02-marca.md.
+ * gesture that slices the wordmark. See docs/markdown/02-marca.md.
  */
 function ClaqueteMark() {
   return (
@@ -47,8 +49,7 @@ export default function Home() {
           </Text>
         </View>
 
-        <View style={styles.card}>
-          <Text style={styles.cardLabel}>COMO FUNCIONA</Text>
+        <View style={styles.steps}>
           {STEPS.map((step, i) => (
             <View key={step.title} style={styles.step}>
               <Text style={styles.stepNumber}>{i + 1}</Text>
@@ -60,9 +61,15 @@ export default function Home() {
           ))}
         </View>
 
-        <Text style={styles.footer}>
-          CP4 · Idealização{'\n'}FIAP · Mobile Development & IoT
-        </Text>
+        <View style={styles.actions}>
+          <Button label="Criar meu clube" onPress={() => router.replace('/clube')} />
+          <Button
+            label="Entrar com um código"
+            variant="ghost"
+            onPress={() => router.replace('/clube')}
+          />
+          <Text style={styles.footer}>Grátis para clubes de até 6 pessoas.</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -100,28 +107,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     maxWidth: 280,
   },
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.lg,
-    gap: spacing.lg,
-  },
-  cardLabel: { ...typography.label, color: colors.primary },
+  steps: { gap: spacing.lg },
   step: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
   stepNumber: {
     ...typography.title,
     fontSize: 22,
+    lineHeight: 21,
     color: colors.secondary,
-    width: 22,
+    width: 16,
   },
   stepBody: { flex: 1 },
   stepTitle: { ...typography.subtitle, fontSize: 15, color: colors.text },
   stepDetail: { ...typography.caption, color: colors.textMuted, marginTop: 3 },
+  actions: { gap: spacing.sm + 4 },
   footer: {
     ...typography.caption,
     color: colors.textMuted,
     textAlign: 'center',
+    marginTop: 4,
   },
 });
