@@ -10,36 +10,36 @@
       "color": "#E23E57"
     },
     {
-      "id": "bia",
-      "name": "Bia",
-      "initials": "B",
-      "color": "#4ADE80"
-    },
-    {
-      "id": "joao",
-      "name": "João",
-      "initials": "J",
-      "color": "#8B5CF6"
-    },
-    {
       "id": "gabriel",
       "name": "Gabriel",
       "initials": "G",
       "color": "#FFC53D"
     },
     {
+      "id": "bia",
+      "name": "Bia",
+      "initials": "B",
+      "color": "#4ADE80"
+    },
+    {
       "id": "felipe",
       "name": "Felipe",
       "initials": "F",
       "color": "#3A3A46"
+    },
+    {
+      "id": "joao",
+      "name": "João",
+      "initials": "J",
+      "color": "#8B5CF6"
     }
   ],
   "rotation": [
-    "marina",
     "bia",
     "joao",
-    "gabriel",
-    "felipe"
+    "felipe",
+    "marina",
+    "gabriel"
   ],
   "season": {
     "number": 1,
@@ -48,17 +48,143 @@
   "rounds": [
     {
       "number": 1,
-      "curatorId": "marina",
-      "movieId": "ainda-estou-aqui",
+      "curatorId": "bia",
+      "movieId": "central-do-brasil",
       "sessionAt": "2026-08-09T20:00:00-03:00",
       "pickDeadline": "2026-08-07T23:59:00-03:00",
       "status": "closed",
       "confirmations": [
-        "marina",
         "bia",
-        "joao",
+        "marina",
         "gabriel",
+        "felipe",
+        "joao"
+      ],
+      "votes": [
+        {
+          "memberId": "bia",
+          "score": 8,
+          "review": "Clássico que envelheceu bem."
+        },
+        {
+          "memberId": "marina",
+          "score": 7,
+          "review": "O final me pegou de surpresa."
+        },
+        {
+          "memberId": "gabriel",
+          "score": 7,
+          "review": "Arrasta um pouco no meio."
+        },
+        {
+          "memberId": "felipe",
+          "score": 7,
+          "review": "Nunca tinha visto. Valeu."
+        },
+        {
+          "memberId": "joao",
+          "score": 7,
+          "review": "A Fernanda Montenegro não erra."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "curatorId": "joao",
+      "movieId": "cidade-dos-homens",
+      "sessionAt": "2026-08-16T20:00:00-03:00",
+      "pickDeadline": "2026-08-14T23:59:00-03:00",
+      "status": "closed",
+      "confirmations": [
+        "joao",
+        "marina",
+        "gabriel",
+        "bia",
         "felipe"
+      ],
+      "votes": [
+        {
+          "memberId": "joao",
+          "score": 7,
+          "review": "Queria que fosse melhor que é."
+        },
+        {
+          "memberId": "marina",
+          "score": 6,
+          "review": "Fica na sombra do primeiro."
+        },
+        {
+          "memberId": "gabriel",
+          "score": 7,
+          "review": "Os dois protagonistas seguram."
+        },
+        {
+          "memberId": "bia",
+          "score": 6,
+          "review": "Bonito, mas esquecível."
+        },
+        {
+          "memberId": "felipe",
+          "score": 6,
+          "review": "Esperava mais, confesso."
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "curatorId": "felipe",
+      "movieId": "tropa-de-elite",
+      "sessionAt": "2026-08-23T20:00:00-03:00",
+      "pickDeadline": "2026-08-21T23:59:00-03:00",
+      "status": "closed",
+      "confirmations": [
+        "felipe",
+        "marina",
+        "gabriel",
+        "bia",
+        "joao"
+      ],
+      "votes": [
+        {
+          "memberId": "felipe",
+          "score": 8,
+          "review": "Escolha óbvia, e óbvia por um motivo."
+        },
+        {
+          "memberId": "marina",
+          "score": 8,
+          "review": "Ritmo absurdo do começo ao fim."
+        },
+        {
+          "memberId": "gabriel",
+          "score": 7,
+          "review": "O roteiro é melhor do que lembravam."
+        },
+        {
+          "memberId": "bia",
+          "score": 8,
+          "review": "Não é meu tipo, mas prende."
+        },
+        {
+          "memberId": "joao",
+          "score": 7,
+          "review": "Já tinha visto três vezes."
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "curatorId": "marina",
+      "movieId": "ainda-estou-aqui",
+      "sessionAt": "2026-08-30T20:00:00-03:00",
+      "pickDeadline": "2026-08-28T23:59:00-03:00",
+      "status": "closed",
+      "confirmations": [
+        "marina",
+        "gabriel",
+        "bia",
+        "felipe",
+        "joao"
       ],
       "votes": [
         {
@@ -67,161 +193,39 @@
           "review": "Escolhi porque precisava ser visto em grupo."
         },
         {
-          "memberId": "bia",
-          "score": 9,
-          "review": "Saí do sofá sem conseguir falar."
-        },
-        {
-          "memberId": "joao",
-          "score": 9,
-          "review": "A atuação carrega o filme inteiro."
-        },
-        {
           "memberId": "gabriel",
           "score": 9,
           "review": "Pesado, mas necessário."
         },
         {
-          "memberId": "felipe",
-          "score": 9,
-          "review": "Melhor abertura de temporada possível."
-        }
-      ]
-    },
-    {
-      "number": 2,
-      "curatorId": "bia",
-      "movieId": "central-do-brasil",
-      "sessionAt": "2026-08-16T20:00:00-03:00",
-      "pickDeadline": "2026-08-14T23:59:00-03:00",
-      "status": "closed",
-      "confirmations": [
-        "marina",
-        "bia",
-        "joao",
-        "gabriel",
-        "felipe"
-      ],
-      "votes": [
-        {
           "memberId": "bia",
           "score": 9,
-          "review": "Clássico que envelheceu bem."
+          "review": "Saí do sofá sem conseguir falar."
         },
         {
-          "memberId": "marina",
-          "score": 8,
-          "review": "O final me pegou de surpresa."
+          "memberId": "felipe",
+          "score": 9,
+          "review": "Melhor rodada da temporada até agora."
         },
         {
           "memberId": "joao",
           "score": 9,
-          "review": "A Fernanda Montenegro não erra."
-        },
-        {
-          "memberId": "gabriel",
-          "score": 8,
-          "review": "Arrasta um pouco no meio."
-        },
-        {
-          "memberId": "felipe",
-          "score": 8,
-          "review": "Nunca tinha visto. Valeu."
-        }
-      ]
-    },
-    {
-      "number": 3,
-      "curatorId": "joao",
-      "movieId": "tropa-de-elite",
-      "sessionAt": "2026-08-23T20:00:00-03:00",
-      "pickDeadline": "2026-08-21T23:59:00-03:00",
-      "status": "closed",
-      "confirmations": [
-        "marina",
-        "bia",
-        "joao",
-        "gabriel",
-        "felipe"
-      ],
-      "votes": [
-        {
-          "memberId": "joao",
-          "score": 8,
-          "review": "Escolha óbvia, e óbvia por um motivo."
-        },
-        {
-          "memberId": "marina",
-          "score": 7,
-          "review": "Bom, mas não é meu tipo de filme."
-        },
-        {
-          "memberId": "bia",
-          "score": 8,
-          "review": "Ritmo absurdo do começo ao fim."
-        },
-        {
-          "memberId": "gabriel",
-          "score": 8,
-          "review": "O roteiro é melhor do que lembravam."
-        },
-        {
-          "memberId": "felipe",
-          "score": 7,
-          "review": "Já tinha visto três vezes."
-        }
-      ]
-    },
-    {
-      "number": 4,
-      "curatorId": "gabriel",
-      "movieId": "cidade-de-deus",
-      "sessionAt": "2026-08-30T20:00:00-03:00",
-      "pickDeadline": "2026-08-28T23:59:00-03:00",
-      "status": "closed",
-      "confirmations": [
-        "marina",
-        "bia",
-        "joao",
-        "gabriel",
-        "felipe"
-      ],
-      "votes": [
-        {
-          "memberId": "gabriel",
-          "score": 9,
-          "review": "Eu avisei que valia a pena."
-        },
-        {
-          "memberId": "marina",
-          "score": 9,
-          "review": "Melhor coisa que vi no clube até agora."
-        },
-        {
-          "memberId": "bia",
-          "score": 8,
-          "review": "A fotografia é absurda, mas é pesado."
-        },
-        {
-          "memberId": "joao",
-          "score": 8,
-          "review": "Dormi no meio, culpa minha."
-        },
-        {
-          "memberId": "felipe",
-          "score": 7,
-          "review": "Já tinha visto e valeu de novo."
+          "review": "A atuação carrega o filme inteiro."
         }
       ]
     },
     {
       "number": 5,
-      "curatorId": "felipe",
-      "movieId": null,
-      "sessionAt": null,
-      "pickDeadline": "2026-09-11T23:59:00-03:00",
-      "status": "awaiting_pick",
-      "confirmations": [],
+      "curatorId": "gabriel",
+      "movieId": "cidade-de-deus",
+      "sessionAt": "2026-09-19T20:00:00-03:00",
+      "pickDeadline": "2026-09-17T23:59:00-03:00",
+      "status": "awaiting_session",
+      "confirmations": [
+        "marina",
+        "bia",
+        "joao"
+      ],
       "votes": []
     }
   ]

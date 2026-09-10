@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Avatar, Button, Card, Label } from '@/components';
@@ -8,7 +8,7 @@ import { useClubStore } from '@/store/useClubStore';
 import { colors, spacing, typography } from '@/theme';
 
 export default function ProfileScreen() {
-  const { club, movies, currentUserId, source, restartDemo } = useClubStore();
+  const { club, movies, currentUserId, source, setCurrentUser, restartDemo } = useClubStore();
   if (!club) return null;
 
   const me = club.members.find((m) => m.id === currentUserId)!;
@@ -81,6 +81,30 @@ export default function ProfileScreen() {
         <Card outlined style={styles.demo}>
           <Label>Protótipo</Label>
           <Text style={styles.meta}>
+            O Claquete é um produto de grupo. Para demonstrar em um aparelho só,
+            dá para ver o aplicativo como qualquer membro do clube.
+          </Text>
+          <View style={styles.membros}>
+            {club.members.map((member) => {
+              const ativo = member.id === currentUserId;
+              return (
+                <Pressable
+                  key={member.id}
+                  onPress={() => setCurrentUser(member.id)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Ver como ${member.name}`}
+                  accessibilityState={{ selected: ativo }}
+                  style={[styles.membro, ativo && styles.membroAtivo]}
+                >
+                  <Avatar member={member} size={30} />
+                  <Text style={[styles.membroNome, ativo && styles.membroNomeAtivo]}>
+                    {member.name}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+          <Text style={styles.meta}>
             Fonte de dados:{' '}
             <Text style={styles.strong}>
               {source === 'mock' ? 'JSON local' : 'Supabase'}
@@ -119,5 +143,18 @@ const styles = StyleSheet.create({
   review: { ...typography.caption, color: colors.textMuted, fontStyle: 'italic' },
   score: { ...typography.score, fontSize: 26, color: colors.primary },
   demo: { gap: spacing.sm },
+  membros: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginTop: 4 },
+  membro: {
+    alignItems: 'center',
+    gap: 4,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.sm,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  membroAtivo: { borderColor: colors.primary, backgroundColor: colors.surface },
+  membroNome: { ...typography.caption, fontSize: 11, color: colors.textMuted },
+  membroNomeAtivo: { color: colors.primary },
   reset: { height: 44, marginTop: spacing.sm },
 });

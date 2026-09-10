@@ -99,27 +99,28 @@ values (
   'GALERA-7X2',
   1,
   8,
-  array['marina', 'bia', 'joao', 'gabriel', 'felipe']
+  array['bia', 'joao', 'felipe', 'marina', 'gabriel']
 )
 on conflict (id) do update
   set name = excluded.name, rotation = excluded.rotation;
 
 insert into members (id, club_id, name, initials, color, join_order) values
   ('marina',  'clube-cinema-da-galera', 'Marina',  'M', '#E23E57', 1),
-  ('bia',     'clube-cinema-da-galera', 'Bia',     'B', '#4ADE80', 2),
-  ('joao',    'clube-cinema-da-galera', 'João',    'J', '#8B5CF6', 3),
-  ('gabriel', 'clube-cinema-da-galera', 'Gabriel', 'G', '#FFC53D', 4),
-  ('felipe',  'clube-cinema-da-galera', 'Felipe',  'F', '#3A3A46', 5)
+  ('gabriel', 'clube-cinema-da-galera', 'Gabriel', 'G', '#FFC53D', 2),
+  ('bia',     'clube-cinema-da-galera', 'Bia',     'B', '#4ADE80', 3),
+  ('felipe',  'clube-cinema-da-galera', 'Felipe',  'F', '#3A3A46', 4),
+  ('joao',    'clube-cinema-da-galera', 'João',    'J', '#8B5CF6', 5)
 on conflict (id) do nothing;
 
 insert into rounds (club_id, number, curator_id, movie_id, session_at, pick_deadline, status) values
-  ('clube-cinema-da-galera', 1, 'marina',  'ainda-estou-aqui',  '2026-08-09 20:00-03', '2026-08-07 23:59-03', 'closed'),
-  ('clube-cinema-da-galera', 2, 'bia',     'central-do-brasil', '2026-08-16 20:00-03', '2026-08-14 23:59-03', 'closed'),
-  ('clube-cinema-da-galera', 3, 'joao',    'tropa-de-elite',    '2026-08-23 20:00-03', '2026-08-21 23:59-03', 'closed'),
-  ('clube-cinema-da-galera', 4, 'gabriel', 'cidade-de-deus',    '2026-08-30 20:00-03', '2026-08-28 23:59-03', 'closed'),
-  ('clube-cinema-da-galera', 5, 'felipe',  null,                null,                  '2026-09-11 23:59-03', 'awaiting_pick')
+  ('clube-cinema-da-galera', 1, 'bia',     'central-do-brasil',  '2026-08-09 20:00-03', '2026-08-07 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 2, 'joao',    'cidade-dos-homens',  '2026-08-16 20:00-03', '2026-08-14 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 3, 'felipe',  'tropa-de-elite',     '2026-08-23 20:00-03', '2026-08-21 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 4, 'marina',  'ainda-estou-aqui',   '2026-08-30 20:00-03', '2026-08-28 23:59-03', 'closed'),
+  ('clube-cinema-da-galera', 5, 'gabriel', 'cidade-de-deus',     '2026-09-19 20:00-03', '2026-09-17 23:59-03', 'awaiting_session')
 on conflict (club_id, number) do nothing;
 
+-- presenças: todo mundo nas rodadas encerradas, três na rodada em jogo
 insert into presences (club_id, round_number, member_id)
 select 'clube-cinema-da-galera', r.number, m.id
   from rounds r cross join members m
@@ -128,25 +129,31 @@ select 'clube-cinema-da-galera', r.number, m.id
    and r.status = 'closed'
 on conflict do nothing;
 
+insert into presences (club_id, round_number, member_id) values
+  ('clube-cinema-da-galera', 5, 'marina'),
+  ('clube-cinema-da-galera', 5, 'bia'),
+  ('clube-cinema-da-galera', 5, 'joao')
+on conflict do nothing;
+
 insert into votes (club_id, round_number, member_id, score, review) values
-  ('clube-cinema-da-galera', 1, 'marina',  10, 'Escolhi porque precisava ser visto em grupo.'),
-  ('clube-cinema-da-galera', 1, 'bia',      9, 'Saí do sofá sem conseguir falar.'),
-  ('clube-cinema-da-galera', 1, 'joao',     9, 'A atuação carrega o filme inteiro.'),
-  ('clube-cinema-da-galera', 1, 'gabriel',  9, 'Pesado, mas necessário.'),
-  ('clube-cinema-da-galera', 1, 'felipe',   9, 'Melhor abertura de temporada possível.'),
-  ('clube-cinema-da-galera', 2, 'bia',      9, 'Clássico que envelheceu bem.'),
-  ('clube-cinema-da-galera', 2, 'marina',   8, 'O final me pegou de surpresa.'),
-  ('clube-cinema-da-galera', 2, 'joao',     9, 'A Fernanda Montenegro não erra.'),
-  ('clube-cinema-da-galera', 2, 'gabriel',  8, 'Arrasta um pouco no meio.'),
-  ('clube-cinema-da-galera', 2, 'felipe',   8, 'Nunca tinha visto. Valeu.'),
-  ('clube-cinema-da-galera', 3, 'joao',     8, 'Escolha óbvia, e óbvia por um motivo.'),
-  ('clube-cinema-da-galera', 3, 'marina',   7, 'Bom, mas não é meu tipo de filme.'),
-  ('clube-cinema-da-galera', 3, 'bia',      8, 'Ritmo absurdo do começo ao fim.'),
-  ('clube-cinema-da-galera', 3, 'gabriel',  8, 'O roteiro é melhor do que lembravam.'),
-  ('clube-cinema-da-galera', 3, 'felipe',   7, 'Já tinha visto três vezes.'),
-  ('clube-cinema-da-galera', 4, 'gabriel',  9, 'Eu avisei que valia a pena.'),
-  ('clube-cinema-da-galera', 4, 'marina',   9, 'Melhor coisa que vi no clube até agora.'),
-  ('clube-cinema-da-galera', 4, 'bia',      8, 'A fotografia é absurda, mas é pesado.'),
-  ('clube-cinema-da-galera', 4, 'joao',     8, 'Dormi no meio, culpa minha.'),
-  ('clube-cinema-da-galera', 4, 'felipe',   7, 'Já tinha visto e valeu de novo.')
+  ('clube-cinema-da-galera', 1, 'bia',      8, 'Clássico que envelheceu bem.'),
+  ('clube-cinema-da-galera', 1, 'marina',   7, 'O final me pegou de surpresa.'),
+  ('clube-cinema-da-galera', 1, 'gabriel',  7, 'Arrasta um pouco no meio.'),
+  ('clube-cinema-da-galera', 1, 'felipe',   7, 'Nunca tinha visto. Valeu.'),
+  ('clube-cinema-da-galera', 1, 'joao',     7, 'A Fernanda Montenegro não erra.'),
+  ('clube-cinema-da-galera', 2, 'joao',     7, 'Queria que fosse melhor que é.'),
+  ('clube-cinema-da-galera', 2, 'marina',   6, 'Fica na sombra do primeiro.'),
+  ('clube-cinema-da-galera', 2, 'gabriel',  7, 'Os dois protagonistas seguram.'),
+  ('clube-cinema-da-galera', 2, 'bia',      6, 'Bonito, mas esquecível.'),
+  ('clube-cinema-da-galera', 2, 'felipe',   6, 'Esperava mais, confesso.'),
+  ('clube-cinema-da-galera', 3, 'felipe',   8, 'Escolha óbvia, e óbvia por um motivo.'),
+  ('clube-cinema-da-galera', 3, 'marina',   8, 'Ritmo absurdo do começo ao fim.'),
+  ('clube-cinema-da-galera', 3, 'gabriel',  7, 'O roteiro é melhor do que lembravam.'),
+  ('clube-cinema-da-galera', 3, 'bia',      8, 'Não é meu tipo, mas prende.'),
+  ('clube-cinema-da-galera', 3, 'joao',     7, 'Já tinha visto três vezes.'),
+  ('clube-cinema-da-galera', 4, 'marina',  10, 'Escolhi porque precisava ser visto em grupo.'),
+  ('clube-cinema-da-galera', 4, 'gabriel',  9, 'Pesado, mas necessário.'),
+  ('clube-cinema-da-galera', 4, 'bia',      9, 'Saí do sofá sem conseguir falar.'),
+  ('clube-cinema-da-galera', 4, 'felipe',   9, 'Melhor rodada da temporada até agora.'),
+  ('clube-cinema-da-galera', 4, 'joao',     9, 'A atuação carrega o filme inteiro.')
 on conflict (club_id, round_number, member_id) do nothing;

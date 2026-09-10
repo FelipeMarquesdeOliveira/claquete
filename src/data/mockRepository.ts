@@ -24,17 +24,21 @@ function oneWeekAfter(iso: string): string {
 }
 
 /**
- * Fixed scores and reviews for the simulated members, so every run of the demo
- * produces the same verdict and the presenter knows what is coming.
+ * Votos dos membros simulados, fixos de propósito.
+ *
+ * São os mesmos do veredito desenhado no CP4 (docs/markdown/04-telas.md): com o
+ * usuário dando 8, a rodada fecha em 8.2 — exatamente a média da tela conceitual.
+ * Toda execução da demonstração chega ao mesmo resultado.
  */
-const SIMULATED_SCORES = [9, 7, 8, 8];
+const SIMULATED_VOTES: Record<string, { score: number; review: string }> = {
+  marina: { score: 9, review: 'Melhor coisa que vi no clube até agora' },
+  gabriel: { score: 9, review: 'Eu avisei que valia a pena' },
+  bia: { score: 8, review: 'A fotografia é absurda, mas é pesado' },
+  felipe: { score: 8, review: 'Já tinha visto e valeu de novo' },
+  joao: { score: 7, review: 'Dormi no meio, culpa minha' },
+};
+
 const SIMULATED_CONFIRMATIONS = 2;
-const SIMULATED_REVIEWS = [
-  'Não esperava gostar tanto.',
-  'Bom, mas não é meu tipo de filme.',
-  'A segunda metade salva.',
-  'Boa escolha, sério.',
-];
 
 function requireRound(roundNumber: number) {
   const round = club.rounds.find((r) => r.number === roundNumber);
@@ -90,13 +94,11 @@ export const mockRepository: ClubRepository = {
     const round = requireRound(roundNumber);
     club.members
       .filter((member) => member.id !== exceptMemberId)
-      .forEach((member, index) => {
+      .forEach((member) => {
         if (round.votes.some((vote) => vote.memberId === member.id)) return;
-        round.votes.push({
-          memberId: member.id,
-          score: SIMULATED_SCORES[index % SIMULATED_SCORES.length],
-          review: SIMULATED_REVIEWS[index % SIMULATED_REVIEWS.length],
-        });
+        const simulado = SIMULATED_VOTES[member.id];
+        if (!simulado) return;
+        round.votes.push({ memberId: member.id, ...simulado });
       });
   },
 

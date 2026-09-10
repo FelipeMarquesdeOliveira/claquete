@@ -67,7 +67,14 @@ describe('dados mockados do clube', () => {
   it('deixa exatamente uma rodada em jogo, para a demonstração começar em um ponto conhecido', () => {
     const emJogo = club.rounds.filter((r) => r.status !== 'closed');
     expect(emJogo).toHaveLength(1);
-    expect(emJogo[0].status).toBe('awaiting_pick');
+
+    // a demonstração começa na tela 2 do CP4: filme já escolhido, parte do
+    // clube confirmada e o usuário ainda por confirmar
+    const rodada = emJogo[0];
+    expect(rodada.status).toBe('awaiting_session');
+    expect(rodada.movieId).toBe('cidade-de-deus');
+    expect(rodada.confirmations).toHaveLength(3);
+    expect(rodada.votes).toHaveLength(0);
   });
 
   it('não passa do total de rodadas da temporada', () => {

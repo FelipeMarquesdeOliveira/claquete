@@ -25,6 +25,7 @@ type ClubState = {
   openVoting: () => Promise<void>;
   castVote: (score: number, review: string) => Promise<void>;
   closeRound: () => Promise<void>;
+  setCurrentUser: (memberId: string) => void;
   restartDemo: () => Promise<void>;
 };
 
@@ -99,6 +100,16 @@ export const useClubStore = create<ClubState>((set, get) => ({
   async closeRound() {
     await repository.closeRound({ roundNumber: currentRoundNumber(get().club) });
     await get().load();
+  },
+
+  /**
+   * Prototype only: troca de quem é a vez de usar o aplicativo.
+   *
+   * O Claquete é um produto de grupo demonstrado em um aparelho só. Sem isto,
+   * telas que só existem para o curador ficariam inalcançáveis na apresentação.
+   */
+  setCurrentUser(memberId) {
+    set({ currentUserId: memberId });
   },
 
   async restartDemo() {
