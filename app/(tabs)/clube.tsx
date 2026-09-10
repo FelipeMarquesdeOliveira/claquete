@@ -15,9 +15,9 @@ import {
   votesMissing,
 } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
-import { colors, spacing, typography } from '@/theme';
+import { colors, fonts, spacing, typography } from '@/theme';
 import { countdownLabel, formatSession } from '@/utils/date';
-import { withArticle } from '@/utils/names';
+import { articleFor, withArticle } from '@/utils/names';
 
 export default function ClubScreen() {
   const { club, movies, currentUserId, loading, confirmPresence, openVoting, closeRound } =
@@ -58,11 +58,17 @@ export default function ClubScreen() {
             </Text>
           </View>
           <View style={styles.avatars}>
-            {club.members.slice(0, 3).map((member, i) => (
+            {club.members.slice(0, 2).map((member, i) => (
               <View key={member.id} style={i > 0 ? styles.stacked : undefined}>
                 <Avatar member={member} size={30} ringed />
               </View>
             ))}
+            {/* o resto do clube cabe em um número, como na tela do CP4 */}
+            {club.members.length > 2 && (
+              <View style={[styles.stacked, styles.restante]}>
+                <Text style={styles.restanteTexto}>+{club.members.length - 2}</Text>
+              </View>
+            )}
           </View>
         </View>
 
@@ -109,7 +115,14 @@ export default function ClubScreen() {
                       <View style={styles.curatorRow}>
                         <Avatar member={curator} size={22} />
                         <Text style={styles.body}>
-                          escolha {curator.id === currentUserId ? 'sua' : withArticle(curator.name)}
+                          {curator.id === currentUserId ? (
+                            'escolha sua'
+                          ) : (
+                            <>
+                              escolha {articleFor(curator.name)}{' '}
+                              <Text style={styles.curatorName}>{curator.name}</Text>
+                            </>
+                          )}
                         </Text>
                       </View>
                     )}
@@ -249,6 +262,18 @@ const styles = StyleSheet.create({
   subtitle: { ...typography.caption, color: colors.textMuted, marginTop: 2 },
   avatars: { flexDirection: 'row' },
   stacked: { marginLeft: -10 },
+  restante: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: colors.surfaceAlt,
+    borderWidth: 2,
+    borderColor: colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  restanteTexto: { ...typography.caption, fontSize: 11, color: colors.text, fontWeight: '700' },
+  curatorName: { fontFamily: fonts.bodyBold, color: colors.text },
   roundCard: { padding: spacing.lg, gap: spacing.md },
   roundHeader: { flexDirection: 'row', justifyContent: 'space-between' },
   roundNumber: { color: colors.primary },

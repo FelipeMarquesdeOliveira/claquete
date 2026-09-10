@@ -6,8 +6,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Aviso, Button, Card, Icon, Label, Poster } from '@/components';
 import { currentRound } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
-import { colors, radius, spacing, typography } from '@/theme';
-import { countdownLabel, formatLongDate, nextSessionSlot } from '@/utils/date';
+import { colors, fonts, radius, spacing, typography } from '@/theme';
+import { deadlineLabel, formatFullDate, nextSessionSlot } from '@/utils/date';
 
 export default function CuratorScreen() {
   const { club, movies, pickMovie } = useClubStore();
@@ -53,14 +53,17 @@ export default function CuratorScreen() {
         <Aviso />
 
         <Card style={styles.deadline}>
+          <Icon name="clock" color={colors.secondary} size={20} />
           <Text style={styles.deadlineText}>
-            Escolha {countdownLabel(round.pickDeadline)} ou a vez passa
+            Escolha até <Text style={styles.deadlineStrong}>{deadlineLabel(round.pickDeadline)}</Text>{' '}
+            ou a vez passa
           </Text>
         </Card>
 
         <View>
           <Label style={styles.sectionLabel}>O filme da rodada {round.number}</Label>
           <View style={styles.search}>
+            <Icon name="search" color={colors.textMuted} size={18} />
             <TextInput
               value={query}
               onChangeText={setQuery}
@@ -108,7 +111,7 @@ export default function CuratorScreen() {
             <Icon name="calendar" color={colors.primary} size={20} />
             <View>
               <Label>Sessão</Label>
-              <Text style={styles.sessionDate}>{formatLongDate(sessionAt)} · 20h</Text>
+              <Text style={styles.sessionDate}>{formatFullDate(sessionAt)} · 20h</Text>
             </View>
           </View>
           <Text style={styles.alterar}>alterar</Text>
@@ -134,11 +137,18 @@ const styles = StyleSheet.create({
   deadline: {
     backgroundColor: 'rgba(226,62,87,0.12)',
     borderColor: colors.secondary,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
   },
-  deadlineText: { ...typography.body, color: colors.text },
+  deadlineText: { ...typography.body, color: colors.text, flex: 1 },
+  deadlineStrong: { fontFamily: fonts.bodyBold },
   sectionLabel: { marginBottom: spacing.sm },
   search: {
     height: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm + 2,
     borderRadius: radius.md,
     backgroundColor: colors.surface,
     borderWidth: 1,
@@ -146,7 +156,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: spacing.md,
   },
-  input: { ...typography.body, color: colors.text },
+  input: { ...typography.body, color: colors.text, flex: 1 },
   list: { gap: spacing.sm },
   option: {
     flexDirection: 'row',

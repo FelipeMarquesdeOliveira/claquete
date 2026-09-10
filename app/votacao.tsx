@@ -99,6 +99,8 @@ export default function VotingScreen() {
           />
         </View>
 
+        <View style={styles.spacer} />
+
         <Card style={styles.lock}>
           <Icon name="lock" color={colors.primary} size={18} />
           <Text style={styles.lockText}>
@@ -122,7 +124,8 @@ export default function VotingScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
-  content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl },
+  content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl, flexGrow: 1 },
+  spacer: { flex: 1, minHeight: spacing.md },
   header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   back: { color: colors.text, fontSize: 30, lineHeight: 32 },
   title: { ...typography.title, fontSize: 26, color: colors.text },
@@ -139,10 +142,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: spacing.sm,
-    justifyContent: 'center',
   },
   pill: {
-    width: 46,
+    // 6 por linha ocupando a largura útil da tela, como na tela do CP4
+    width: 50,
     height: 44,
     borderRadius: radius.md,
     borderWidth: 1,
@@ -151,8 +154,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pillActive: { backgroundColor: colors.primary, borderColor: colors.primary },
-  pillText: { ...typography.subtitle, fontSize: 16, color: colors.text },
-  pillTextActive: { color: colors.textInverse, fontWeight: '700' },
+  pillText: { ...typography.score, fontSize: 22, lineHeight: 24, color: colors.textMuted },
+  pillTextActive: { color: colors.textInverse },
   reviewLabel: { marginBottom: spacing.sm },
   review: {
     ...typography.body,
@@ -167,7 +170,7 @@ const styles = StyleSheet.create({
   },
   lock: {
     backgroundColor: 'rgba(255,197,61,0.08)',
-    borderColor: 'rgba(255,197,61,0.3)',
+    borderColor: colors.border,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,

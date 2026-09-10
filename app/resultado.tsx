@@ -22,6 +22,9 @@ export default function VerdictScreen() {
   const standing = seasonStandings(club).find((row) => row.member.id === curator.id);
   const memberById = (id: string) => club.members.find((m) => m.id === id)!;
 
+  // da maior nota para a menor: o veredito se lê como um ranking
+  const votos = [...round.votes].sort((a, b) => b.score - a.score);
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -38,21 +41,24 @@ export default function VerdictScreen() {
               Rodada {round.number} · escolha{' '}
               {curator.id === currentUserId ? 'sua' : withArticle(curator.name)}
             </Text>
+            <View style={styles.votedRow}>
+              <Avatar member={curator} size={24} />
+              <Text style={styles.allVoted}>
+                {round.votes.length} de {club.members.length} votaram
+              </Text>
+            </View>
           </View>
           <View style={styles.averageBox}>
             <Text style={styles.average}>{average?.toFixed(1)}</Text>
             <Label>Média</Label>
-            <Text style={styles.allVoted}>
-              {round.votes.length} de {club.members.length} votaram
-            </Text>
           </View>
         </Card>
 
         <View style={styles.votes}>
-          {round.votes.map((vote) => {
+          {votos.map((vote, index) => {
             const member = memberById(vote.memberId);
             return (
-              <View key={vote.memberId} style={styles.voteRow}>
+              <View key={vote.memberId} style={[styles.voteRow, index > 0 && styles.voteDivider]}>
                 <Avatar member={member} size={30} />
                 <View style={styles.voteInfo}>
                   <Text style={styles.voteName}>
@@ -69,6 +75,8 @@ export default function VerdictScreen() {
           })}
         </View>
 
+        <View style={styles.spacer} />
+
         <Card style={styles.points}>
           <Icon name="trophy" color={colors.primary} size={20} />
           <View style={styles.pointsText}>
@@ -82,8 +90,11 @@ export default function VerdictScreen() {
           </View>
         </Card>
 
-        <Button label="Ver o placar da temporada" onPress={() => router.replace('/placar')} />
-        <Button label="Voltar ao clube" variant="ghost" onPress={() => router.replace('/clube')} />
+        <Button
+          label="Ver placar da temporada"
+          variant="ghost"
+          onPress={() => router.replace('/placar')}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -91,24 +102,27 @@ export default function VerdictScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
-  content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl },
+  content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl, flexGrow: 1 },
+  spacer: { flex: 1, minHeight: spacing.md },
   badge: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.primary },
   badgeText: { color: colors.primary },
   summary: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  votedRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginTop: spacing.sm },
   summaryInfo: { flex: 1 },
-  movieTitle: { ...typography.title, fontSize: 24, color: colors.text },
+  movieTitle: { ...typography.title, fontSize: 28, lineHeight: 30, color: colors.text },
   meta: { ...typography.caption, color: colors.textMuted, marginTop: 4 },
   averageBox: { alignItems: 'center' },
   average: { ...typography.score, fontSize: 44, lineHeight: 46, color: colors.primary },
-  votes: { gap: spacing.sm },
-  voteRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  votes: {},
+  voteRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.sm },
+  voteDivider: { borderTopWidth: 1, borderTopColor: colors.border },
   voteInfo: { flex: 1 },
   voteName: { ...typography.subtitle, fontSize: 14, color: colors.text },
   review: { ...typography.caption, color: colors.textMuted, marginTop: 2 },
   voteScore: { ...typography.score, fontSize: 24, color: colors.primary },
-  points: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  points: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: colors.surfaceAlt },
   pointsText: { flex: 1 },
-  allVoted: { ...typography.caption, fontSize: 11, color: colors.textMuted, marginTop: 2 },
+  allVoted: { ...typography.caption, color: colors.textMuted },
   pointsTitle: { ...typography.subtitle, fontSize: 15, color: colors.text },
 });

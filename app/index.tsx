@@ -44,8 +44,9 @@ export default function Home() {
             resizeMode="contain"
             accessibilityLabel="Claquete"
           />
+          {/* a quebra é fixa: a frase é dita em duas partes, como na tela do CP4 */}
           <Text style={styles.tagline}>
-            Toda semana um escolhe. Todo mundo julga.
+            Toda semana um escolhe.{'\n'}Todo mundo julga.
           </Text>
         </View>
 
