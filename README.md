@@ -198,13 +198,15 @@ Com o servidor no ar, escolha como abrir:
 npm test
 ```
 
-São 36 testes cobrindo as regras de negócio (rodízio de curadoria, revelação
+São 39 testes cobrindo as regras de negócio (rodízio de curadoria, revelação
 das notas, placar da temporada) e a coerência dos dados mockados.
 
 ### Banco de dados
 
 O aplicativo roda com **dados locais** por padrão. Para ligá-lo ao Supabase,
-rode [`supabase/schema.sql`](supabase/schema.sql) no seu projeto, copie
+crie o esquema no seu projeto — por `npx supabase db push`, com as migrações de
+[`supabase/migrations/`](supabase/migrations), ou rodando
+[`supabase/schema.sql`](supabase/schema.sql) no SQL Editor —, copie
 `.env.example` para `.env` e preencha as duas chaves. O passo a passo completo
 está na [documentação do protótipo](docs/07-prototipo.pdf).
 
@@ -212,7 +214,7 @@ está na [documentação do protótipo](docs/07-prototipo.pdf).
 
 ```bash
 node scripts/generate-brand-icons.mjs   # ícones da marca a partir dos tokens
-node scripts/capture-evidence.mjs       # captura as telas do app em execução
+node scripts/capture-evidence.mjs       # percorre a demonstração e fotografa as telas
 ```
 
 ## 🗺️ Roadmap dos checkpoints
