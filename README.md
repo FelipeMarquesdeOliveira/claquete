@@ -11,7 +11,8 @@ O clube de cinema dos seus amigos, com rodízio de curadoria e placar.
 ![Expo](https://img.shields.io/badge/Expo-SDK%2057-000020?logo=expo&logoColor=white)
 ![React Native](https://img.shields.io/badge/React%20Native-0.86-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
-![Status](https://img.shields.io/badge/status-CP4%20Idealiza%C3%A7%C3%A3o-FFC53D)
+![Status](https://img.shields.io/badge/status-CP5%20Prot%C3%B3tipo%20funcional-FFC53D)
+![Testes](https://img.shields.io/badge/testes-36%20passando-4ADE80)
 
 </div>
 
@@ -57,20 +58,21 @@ O detalhamento está no [documento de escopo](docs/01-escopo.pdf).
 | 6. Revelação | As notas só aparecem quando **todos** votam — sem efeito manada |
 | 7. Placar | A média da rodada é o ponto do curador na temporada |
 
-## 📱 Telas conceituais
+## 📱 O aplicativo
 
 <div align="center">
 
-<img src="docs/telas/mockups/mockup-2-rodada-da-semana.png" width="260" alt="Rodada da semana" /> <img src="docs/telas/mockups/mockup-4-votacao.png" width="260" alt="Votação" /> <img src="docs/telas/mockups/mockup-6-placar.png" width="260" alt="Placar da temporada" />
+<img src="docs/evidencias/2-rodada-da-semana.png" width="240" alt="Rodada da semana" /> <img src="docs/evidencias/4-votacao.png" width="240" alt="Votação" /> <img src="docs/evidencias/7-placar.png" width="240" alt="Placar da temporada" />
 
 </div>
 
-São seis telas, com a identidade visual já aplicada. Nesta etapa elas são
-**conceituais** — representam a interface pretendida, mas ainda não são
-funcionais; a implementação começa no CP5.
+Capturas do aplicativo **em execução** — não são mockups. O protótipo é
+navegável de ponta a ponta: dá para receber a vez, escolher o filme, confirmar
+presença, dar a nota, ver o veredito e encontrar a rodada refletida no placar.
 
-A descrição de cada tela, o fluxo de navegação e as demais imagens estão no
-[documento de telas](docs/04-telas.pdf).
+Todas as telas e o fluxo de navegação estão no
+[documento de telas](docs/04-telas.pdf); as capturas ficam em
+[`docs/evidencias/`](docs/evidencias).
 
 ## 📚 Documentação
 
@@ -82,6 +84,7 @@ A descrição de cada tela, o fluxo de navegação e as demais imagens estão no
 | 04 | [**Telas**](docs/04-telas.pdf) | Telas conceituais e fluxo de navegação | [`04-telas.md`](docs/markdown/04-telas.md) |
 | 05 | [**Equipe**](docs/05-equipe.pdf) | Integrantes e papéis de cada um no projeto | [`05-equipe.md`](docs/markdown/05-equipe.md) |
 | 06 | [**Roteiro do pitch**](docs/06-roteiro-pitch.pdf) | Roteiro de apresentação, slide a slide, com tempos e perguntas prováveis | [`06-roteiro-pitch.md`](docs/markdown/06-roteiro-pitch.md) |
+| 07 | [**Protótipo**](docs/07-prototipo.pdf) | Arquitetura, decisões técnicas, dados mockados, testes e banco de dados | [`07-prototipo.md`](docs/markdown/07-prototipo.md) |
 
 ### 🎤 Pitch deck
 
@@ -115,6 +118,9 @@ node scripts/build-deck-formats.mjs   # deck em PPTX e imagens dos slides
 | Navegação | **Expo Router** | Rotas baseadas em arquivos, com tipagem automática das rotas |
 | Tipografia | **@expo-google-fonts** | Fontes da marca embarcadas no bundle, sem depender de rede |
 | Design tokens | Módulo próprio em `src/theme` | Cor e tipografia definidas em um lugar só, direto do manual da marca |
+| Estado | **Zustand** | O estado é pequeno e quase todo derivado; Context re-renderizaria demais e Redux traria cerimônia sem contrapartida |
+| Banco de dados | **Supabase** (Postgres) | Funciona no Expo sem configuração nativa, e o modelo em SQL é inspecionável no painel |
+| Testes | **Jest** em ambiente Node | As regras de negócio são funções puras, então não precisam de emulador para serem testadas |
 
 ## 📁 Estrutura de pastas
 
@@ -122,16 +128,21 @@ node scripts/build-deck-formats.mjs   # deck em PPTX e imagens dos slides
 claquete/
 ├── app/                     # Rotas do Expo Router (cada arquivo é uma tela)
 │   ├── _layout.tsx          # Layout raiz: fontes, tema e navegação
-│   └── index.tsx            # Tela de abertura da marca
+│   ├── index.tsx            # Abertura da marca
+│   ├── (tabs)/              # Clube, Estante, Placar e Perfil
+│   ├── curadoria.tsx        # Escolha do filme pelo curador
+│   ├── votacao.tsx          # Nota e resenha
+│   └── resultado.tsx        # Veredito da rodada
 ├── src/
-│   ├── theme/               # Design tokens: cores, tipografia, espaçamento
+│   ├── domain/              # Regras de negócio puras, com testes
+│   ├── data/                # Contrato de repositório, JSON local e Supabase
+│   ├── store/               # Estado da aplicação (Zustand)
 │   ├── components/          # Componentes reutilizáveis de interface
-│   ├── features/            # Módulos por funcionalidade (clube, rodada, notas)
-│   ├── data/                # Dados mockados, a partir do CP5
-│   ├── hooks/               # Hooks compartilhados
-│   ├── services/            # Integrações externas (ex.: TMDB)
-│   ├── types/               # Tipos e contratos de dados
+│   ├── services/            # Integrações externas (Supabase, e TMDB no CP6)
+│   ├── theme/               # Design tokens: cores, tipografia, espaçamento
 │   └── utils/               # Funções utilitárias
+├── supabase/
+│   └── schema.sql           # Tabelas, políticas de acesso e clube de exemplo
 ├── assets/
 │   ├── brand/               # Logo, assinatura e símbolo
 │   ├── mock/posters/        # Pôsteres usados nas telas conceituais
@@ -146,10 +157,11 @@ claquete/
 │   ├── pdf/                       # Estilo de impressão dos documentos
 │   └── mockup-3d/                 # Cena 3D que gera os mockups de aparelho
 └── docs/
-    ├── 01-escopo.pdf … 06-roteiro-pitch.pdf   # Documentação (entrega)
+    ├── 01-escopo.pdf … 07-prototipo.pdf  # Documentação (entrega)
     ├── markdown/                     # Fonte da documentação
     ├── pitch-deck/                   # Deck em PDF, PPTX e imagens
-    └── telas/                        # Telas conceituais e mockups
+    ├── telas/                        # Telas conceituais do CP4
+    └── evidencias/                   # Capturas do aplicativo em execução
 ```
 
 ## 🚀 Como rodar
@@ -180,18 +192,35 @@ Com o servidor no ar, escolha como abrir:
 | `npm run ios` | Simulador iOS (somente macOS, requer Xcode) |
 | `npm run web` | Navegador, em `http://localhost:8081` |
 
-Para regerar os ícones da marca depois de mudar a paleta:
+### Testes
 
 ```bash
-node scripts/generate-brand-icons.mjs
+npm test
+```
+
+São 36 testes cobrindo as regras de negócio (rodízio de curadoria, revelação
+das notas, placar da temporada) e a coerência dos dados mockados.
+
+### Banco de dados
+
+O aplicativo roda com **dados locais** por padrão. Para ligá-lo ao Supabase,
+rode [`supabase/schema.sql`](supabase/schema.sql) no seu projeto, copie
+`.env.example` para `.env` e preencha as duas chaves. O passo a passo completo
+está na [documentação do protótipo](docs/07-prototipo.pdf).
+
+### Outros comandos
+
+```bash
+node scripts/generate-brand-icons.mjs   # ícones da marca a partir dos tokens
+node scripts/capture-evidence.mjs       # captura as telas do app em execução
 ```
 
 ## 🗺️ Roadmap dos checkpoints
 
 | Checkpoint | Entrega | Status |
 |---|---|---|
-| **CP4** | Idealização: marca, escopo, pitch e setup do projeto | ✅ Em entrega |
-| **CP5** | Protótipo funcional com dados mockados e testes | ⏳ Planejado |
+| **CP4** | Idealização: marca, escopo, pitch e setup do projeto | ✅ Entregue |
+| **CP5** | Protótipo funcional, testes e banco de dados | ✅ Em entrega |
 | **CP6** | App final e APK instalável via EAS Build | ⏳ Planejado |
 
 ## 👥 Equipe

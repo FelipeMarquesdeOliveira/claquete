@@ -27,6 +27,7 @@ const DOCS = [
   { file: 'docs/markdown/04-telas.md', out: '04-telas.pdf', label: 'Checkpoint 4 · Telas conceituais' },
   { file: 'docs/markdown/05-equipe.md', out: '05-equipe.pdf', label: 'Checkpoint 4 · Equipe e papéis' },
   { file: 'docs/markdown/06-roteiro-pitch.md', out: '06-roteiro-pitch.pdf', label: 'Checkpoint 4 · Roteiro do pitch' },
+  { file: 'docs/markdown/07-prototipo.md', out: '07-prototipo.pdf', label: 'Checkpoint 5 · Protótipo funcional' },
 ];
 
 const FOOTER =

@@ -36,6 +36,7 @@ flowchart TD
     A -->|entrar com código| B
     B -->|é a sua vez| C[3 · Vez do curador]
     C -->|bater a claquete| B
+    B -->|confirmar presença| B
     B -->|sessão aconteceu| D[4 · Votação]
     D -->|todos votaram| E[5 · Veredito]
     E --> F[6 · Placar da temporada]
@@ -102,7 +103,30 @@ demais.
 | **Ícones** | Traço de 2 px em grade de 24 px, sem emoji |
 | **Área de toque** | Mínimo de 44 px em qualquer elemento tocável |
 
-## 6. Sobre as imagens de pôster
+## 6. O aplicativo em execução
+
+As imagens acima são as telas conceituais do CP4. A partir do CP5 elas existem
+de verdade: as capturas abaixo saíram do aplicativo rodando, servido pelo Expo,
+com os dados vindos do repositório configurado.
+
+| | | |
+|:---:|:---:|:---:|
+| ![Abertura](../evidencias/1-abertura.png) | ![Rodada da semana](../evidencias/2-rodada-da-semana.png) | ![Vez do curador](../evidencias/3-vez-do-curador.png) |
+| **1 · Abertura** | **2 · Rodada da semana** | **3 · Vez do curador** |
+| ![Votação](../evidencias/4-votacao.png) | ![Veredito](../evidencias/5-veredito.png) | ![Placar](../evidencias/7-placar.png) |
+| **4 · Votação** | **5 · Veredito** | **7 · Placar da temporada** |
+| ![Em votação](../evidencias/2b-rodada-em-votacao.png) | ![Estante](../evidencias/6-estante.png) | ![Perfil](../evidencias/8-perfil.png) |
+| **2b · Rodada em votação** | **6 · Estante** | **8 · Perfil** |
+
+As capturas são geradas por
+[`scripts/capture-evidence.mjs`](../../scripts/capture-evidence.mjs), que abre o
+aplicativo em execução e fotografa cada rota — não são montagens.
+
+> **Duas telas a mais que no CP4.** A *Estante* e o *Perfil* estavam previstas
+> na barra de navegação do conceito, mas não tinham sido desenhadas. O protótipo
+> as implementou seguindo os mesmos padrões das demais.
+
+## 7. Sobre as imagens de pôster
 
 Os pôsteres que aparecem nas telas vêm do **The Movie Database (TMDB)** e estão
 guardados em [`assets/mock/posters/`](../../assets/mock/posters) apenas para as
@@ -121,7 +145,7 @@ a luz, botões laterais e sombra de contato. A cena está em
 [`scripts/mockup-3d/`](../../scripts/mockup-3d) e usa as medidas físicas do
 iPhone X, com a tela entrando como textura.
 
-## 7. O que ainda não foi desenhado
+## 8. O que ainda não foi desenhado
 
 Telas previstas para o CP5 e o CP6, fora do escopo desta entrega:
 
