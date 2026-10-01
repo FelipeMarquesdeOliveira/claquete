@@ -52,3 +52,11 @@ yarn-error.*
 .idea/
 CLAUDE.md
 AGENTS.md
+
+# Chave de assinatura do APK: fica fora do Git, mas precisa ser a mesma
+# entre builds, senão o Android recusa atualizar um app já instalado.
+/.keystore
+
+# O APK acompanha a entrega e pode ser regerado por scripts/build-apk.mjs;
+# 57 MB de binário não precisam viver no histórico do repositório.
+/docs/apk
