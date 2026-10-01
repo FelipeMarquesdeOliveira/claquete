@@ -4,6 +4,7 @@ import { getSupabase } from '@/services/supabase';
 import clubSeed from './mock/club.json';
 import moviesSeed from './mock/movies.json';
 import type { ClubRepository } from './repository';
+import { rebaseSeason } from './season';
 import { SIMULATED_CONFIRMATIONS, SIMULATED_VOTES } from './simulation';
 import {
   completeMovie,
@@ -279,7 +280,7 @@ export const supabaseRepository: ClubRepository = {
 
   async resetDemo() {
     const db = getSupabase();
-    const semente = clubSeed as unknown as Club;
+    const semente = rebaseSeason(clubSeed as unknown as Club);
 
     // A ordem importa: presenças e votos apontam para as rodadas.
     for (const tabela of ['votes', 'presences', 'rounds'] as const) {

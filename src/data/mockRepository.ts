@@ -2,6 +2,7 @@ import { curatorOf, type Club, type Movie, type Vote } from '@/domain';
 
 import clubSeed from './mock/club.json';
 import moviesSeed from './mock/movies.json';
+import { rebaseSeason } from './season';
 import type { ClubRepository } from './repository';
 import {
   completeMovie,
@@ -19,7 +20,7 @@ import { SIMULATED_CONFIRMATIONS, SIMULATED_VOTES } from './simulation';
  */
 const clone = <T,>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 
-let club: Club = clone(clubSeed as unknown as Club);
+let club: Club = rebaseSeason(clone(clubSeed as unknown as Club));
 const movies = clone(moviesSeed as unknown as Movie[]);
 
 /** One week after the given date, at the same time. */
@@ -133,5 +134,5 @@ export const mockRepository: ClubRepository = {
 
 /** Puts the demo back to the seed state, discarding whatever the run changed. */
 function resetMockData() {
-  club = clone(clubSeed as unknown as Club);
+  club = rebaseSeason(clone(clubSeed as unknown as Club));
 }
