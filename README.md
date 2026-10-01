@@ -11,7 +11,8 @@ O clube de cinema dos seus amigos, com rodízio de curadoria e placar.
 ![Expo](https://img.shields.io/badge/Expo-SDK%2057-000020?logo=expo&logoColor=white)
 ![React Native](https://img.shields.io/badge/React%20Native-0.86-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
-![Status](https://img.shields.io/badge/status-CP5%20Prot%C3%B3tipo%20funcional-FFC53D)
+![Status](https://img.shields.io/badge/status-CP6%20Entrega%20final-FFC53D)
+![APK](https://img.shields.io/badge/APK-dispon%C3%ADvel%20em%20releases-4ADE80)
 ![Testes](https://img.shields.io/badge/testes-39%20passando-4ADE80)
 
 </div>
@@ -85,6 +86,8 @@ Todas as telas e o fluxo de navegação estão no
 | 05 | [**Equipe**](docs/05-equipe.pdf) | Integrantes e papéis de cada um no projeto | [`05-equipe.md`](docs/markdown/05-equipe.md) |
 | 06 | [**Roteiro do pitch**](docs/06-roteiro-pitch.pdf) | Roteiro de apresentação, slide a slide, com tempos e perguntas prováveis | [`06-roteiro-pitch.md`](docs/markdown/06-roteiro-pitch.md) |
 | 07 | [**Protótipo**](docs/07-prototipo.pdf) | Arquitetura, decisões técnicas, dados mockados, testes e banco de dados | [`07-prototipo.md`](docs/markdown/07-prototipo.md) |
+| 08 | [**Manual de uso**](docs/08-manual.pdf) | Como instalar o APK e usar o aplicativo, tela a tela | [`08-manual.md`](docs/markdown/08-manual.md) |
+| 09 | [**Entrega final**](docs/09-entrega-final.pdf) | O que mudou do CP5 para o CP6, decisões finais e geração do APK | [`09-entrega-final.md`](docs/markdown/09-entrega-final.md) |
 
 ### 🎤 Pitch deck
 
@@ -120,6 +123,8 @@ node scripts/build-deck-formats.mjs   # deck em PPTX e imagens dos slides
 | Design tokens | Módulo próprio em `src/theme` | Cor e tipografia definidas em um lugar só, direto do manual da marca |
 | Estado | **Zustand** | O estado é pequeno e quase todo derivado; Context re-renderizaria demais e Redux traria cerimônia sem contrapartida |
 | Banco de dados | **Supabase** (Postgres) | Funciona no Expo sem configuração nativa, e o modelo em SQL é inspecionável no painel |
+| Catálogo de filmes | **API pública do TMDB** | O acervo inteiro em português, com pôsteres e provedores de streaming do Brasil |
+| Distribuição | **EAS Build** | Gera o APK instalável na nuvem, sem exigir Android Studio na máquina |
 | Testes | **Jest** em ambiente Node | As regras de negócio são funções puras, então não precisam de emulador para serem testadas |
 
 ## 📁 Estrutura de pastas
@@ -138,7 +143,7 @@ claquete/
 │   ├── data/                # Contrato de repositório, JSON local e Supabase
 │   ├── store/               # Estado da aplicação (Zustand)
 │   ├── components/          # Componentes reutilizáveis de interface
-│   ├── services/            # Integrações externas (Supabase, e TMDB no CP6)
+│   ├── services/            # Integrações externas (Supabase e TMDB)
 │   ├── theme/               # Design tokens: cores, tipografia, espaçamento
 │   └── utils/               # Funções utilitárias
 ├── supabase/
@@ -192,6 +197,23 @@ Com o servidor no ar, escolha como abrir:
 | `npm run ios` | Simulador iOS (somente macOS, requer Xcode) |
 | `npm run web` | Navegador, em `http://localhost:8081` |
 
+### Instalar pelo APK
+
+O APK está na [página de releases](https://github.com/FelipeMarquesdeOliveira/claquete/releases).
+Copie para o celular, toque no arquivo e autorize a instalação fora da loja. O
+passo a passo com imagens está no [manual de uso](docs/08-manual.pdf).
+
+Para gerar um APK novo:
+
+```bash
+npx eas-cli login
+npx eas-cli build --platform android --profile preview
+```
+
+O perfil `preview` produz um APK de distribuição interna. As variáveis de
+ambiente precisam existir no EAS — os comandos estão na
+[documentação da entrega final](docs/09-entrega-final.pdf).
+
 ### Testes
 
 ```bash
@@ -222,8 +244,8 @@ node scripts/capture-evidence.mjs       # percorre a demonstração e fotografa 
 | Checkpoint | Entrega | Status |
 |---|---|---|
 | **CP4** | Idealização: marca, escopo, pitch e setup do projeto | ✅ Entregue |
-| **CP5** | Protótipo funcional, testes e banco de dados | ✅ Em entrega |
-| **CP6** | App final e APK instalável via EAS Build | ⏳ Planejado |
+| **CP5** | Protótipo funcional, testes e banco de dados | ✅ Entregue |
+| **CP6** | App final, catálogo via API do TMDB e APK instalável | ✅ Em entrega |
 
 ## 👥 Equipe
 
@@ -237,7 +259,7 @@ A divisão detalhada do trabalho por checkpoint está em
 
 ## 🎬 Créditos
 
-Os pôsteres usados nas telas conceituais vêm do
+Os dados e as imagens dos filmes vêm do
 **[The Movie Database (TMDB)](https://www.themoviedb.org)**. Este produto usa a
 API do TMDB, mas não é endossado nem certificado pelo TMDB.
 
