@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { getRepository, type DataSource } from '@/data';
+import { fallBackToLocal, getRepository, type DataSource } from '@/data';
 import type { Club, Movie } from '@/domain';
 
 /**
@@ -30,8 +30,6 @@ type ClubState = {
 
 /** Whoever is using the app in this demo. */
 const CURRENT_USER = 'felipe';
-
-const repository = getRepository();
 
 /**
  * Roda uma escrita e garante que a tela fique sabendo se ela falhou.
@@ -67,7 +65,7 @@ export const useClubStore = create<ClubState>((set, get) => ({
   club: null,
   movies: [],
   currentUserId: CURRENT_USER,
-  source: repository.source,
+  source: getRepository().source,
   loading: true,
   error: null,
 
@@ -75,11 +73,28 @@ export const useClubStore = create<ClubState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const [club, movies] = await Promise.all([
-        repository.loadClub(),
-        repository.listMovies(),
+        getRepository().loadClub(),
+        getRepository().listMovies(),
       ]);
-      set({ club, movies, loading: false });
+      set({ club, movies, loading: false, source: getRepository().source });
+      return;
     } catch (error) {
+      // Banco fora do ar: segue com os dados locais em vez de mostrar tela vazia.
+      if (getRepository().source === 'supabase') {
+        fallBackToLocal();
+        const [club, movies] = await Promise.all([
+          getRepository().loadClub(),
+          getRepository().listMovies(),
+        ]);
+        set({
+          club,
+          movies,
+          loading: false,
+          source: getRepository().source,
+          error: 'Banco indisponível. Mostrando os dados locais do protótipo.',
+        });
+        return;
+      }
       set({
         loading: false,
         error: error instanceof Error ? error.message : 'Falha ao carregar o clube',
@@ -89,13 +104,13 @@ export const useClubStore = create<ClubState>((set, get) => ({
 
   async pickMovie(movieId, sessionAt) {
     await escrever(set, get().load, () =>
-      repository.pickMovie({ roundNumber: currentRoundNumber(get().club), movieId, sessionAt })
+      getRepository().pickMovie({ roundNumber: currentRoundNumber(get().club), movieId, sessionAt })
     );
   },
 
   async confirmPresence() {
     await escrever(set, get().load, () =>
-      repository.confirmPresence({
+      getRepository().confirmPresence({
         roundNumber: currentRoundNumber(get().club),
         memberId: get().currentUserId,
       })
@@ -105,15 +120,15 @@ export const useClubStore = create<ClubState>((set, get) => ({
   async openVoting() {
     const roundNumber = currentRoundNumber(get().club);
     await escrever(set, get().load, async () => {
-      await repository.openVoting({ roundNumber });
+      await getRepository().openVoting({ roundNumber });
       // os outros membros votam aqui, para a regra de revelação poder ser exercida
-      await repository.seedOtherVotes({ roundNumber, exceptMemberId: get().currentUserId });
+      await getRepository().seedOtherVotes({ roundNumber, exceptMemberId: get().currentUserId });
     });
   },
 
   async castVote(score, review) {
     await escrever(set, get().load, () =>
-      repository.registerVote({
+      getRepository().registerVote({
         roundNumber: currentRoundNumber(get().club),
         vote: { memberId: get().currentUserId, score, review },
       })
@@ -122,7 +137,7 @@ export const useClubStore = create<ClubState>((set, get) => ({
 
   async closeRound() {
     await escrever(set, get().load, () =>
-      repository.closeRound({ roundNumber: currentRoundNumber(get().club) })
+      getRepository().closeRound({ roundNumber: currentRoundNumber(get().club) })
     );
   },
 
@@ -137,6 +152,6 @@ export const useClubStore = create<ClubState>((set, get) => ({
   },
 
   async restartDemo() {
-    await escrever(set, get().load, () => repository.resetDemo());
+    await escrever(set, get().load, () => getRepository().resetDemo());
   },
 }));

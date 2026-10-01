@@ -15,6 +15,21 @@ export { supabaseConfigured };
  * has never seen the credentials — a missing .env should never be the reason a
  * demonstration fails.
  */
+let ativo: ClubRepository = supabaseConfigured ? supabaseRepository : mockRepository;
+
 export function getRepository(): ClubRepository {
-  return supabaseConfigured ? supabaseRepository : mockRepository;
+  return ativo;
+}
+
+/**
+ * Desce para os dados locais quando o banco não responde.
+ *
+ * O Supabase gratuito suspende projetos parados por uma semana, e um APK na
+ * mão de outra pessoa pode ser aberto muito depois da última vez que alguém
+ * mexeu no banco. Um aplicativo que mostra tela vazia nessa hora parece
+ * quebrado; descer para o catálogo local mantém tudo navegável, com um aviso
+ * dizendo o que aconteceu.
+ */
+export function fallBackToLocal(): void {
+  ativo = mockRepository;
 }
