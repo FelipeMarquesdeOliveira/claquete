@@ -28,6 +28,8 @@ const DOCS = [
   { file: 'docs/markdown/05-equipe.md', out: '05-equipe.pdf', label: 'Checkpoint 4 · Equipe e papéis' },
   { file: 'docs/markdown/06-roteiro-pitch.md', out: '06-roteiro-pitch.pdf', label: 'Checkpoint 4 · Roteiro do pitch' },
   { file: 'docs/markdown/07-prototipo.md', out: '07-prototipo.pdf', label: 'Checkpoint 5 · Protótipo funcional' },
+  { file: 'docs/markdown/08-manual.md', out: '08-manual.pdf', label: 'Checkpoint 6 · Manual de uso' },
+  { file: 'docs/markdown/09-entrega-final.md', out: '09-entrega-final.pdf', label: 'Checkpoint 6 · Entrega final' },
 ];
 
 const FOOTER =
