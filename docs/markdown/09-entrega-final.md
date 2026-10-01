@@ -75,21 +75,37 @@ vale para qualquer falha de rede, não só para a pausa.
 
 ## 3. Como o APK é gerado
 
-O build roda na nuvem do Expo, a partir de [`eas.json`](../../eas.json).
+```bash
+node scripts/build-apk.mjs
+```
+
+Um comando, e o APK sai em `docs/apk/claquete.apk` — **57 MB**, assinado e
+instalável. O script existe porque a pasta `android/` **não** está no
+repositório: ela é gerada pelo `expo prebuild` a partir do `app.json`, que é a
+fonte da verdade sobre ícone, nome, pacote e tema. O preço dessa escolha é que
+toda configuração nativa precisa ser reaplicada a cada geração, e é isso que o
+script automatiza — a assinatura, o SDK, as arquiteturas e o encolhimento.
+
+Três decisões ficaram registradas ali:
+
+| Decisão | Por quê |
+|---|---|
+| A chave de assinatura mora em `.keystore/`, fora de `android/` | O prebuild apaga a pasta nativa inteira. Trocar de chave entre builds faria o Android recusar a atualização de um aplicativo já instalado |
+| Só `arm64-v8a` e `x86_64` | Cobre qualquer celular Android atual e o emulador do Android Studio. Incluir as duas arquiteturas de 32 bits levava o APK de 57 MB para 103 MB, para atender aparelhos que praticamente não existem mais |
+| `minifyEnabled` e `shrinkResources` ligados | Removem código e recursos não usados |
+
+### 3.1 Pela nuvem, sem Android SDK na máquina
+
+O [`eas.json`](../../eas.json) está configurado e o caminho da nuvem funciona
+igual, para quem não tem o SDK instalado:
 
 ```bash
 npx eas-cli login
 npx eas-cli build --platform android --profile preview
 ```
 
-O perfil `preview` produz um **APK de distribuição interna** — instalável
-direto, sem passar pela Play Store. O `production` também gera APK, pelo mesmo
-motivo do enunciado.
-
-### 3.1 As variáveis de ambiente
-
-O `.env` não vai para o repositório, e por isso também não sobe para o servidor
-de build. As duas chaves precisam existir no ambiente do EAS:
+Nesse caminho o `.env` não sobe junto, então as três chaves precisam existir no
+ambiente do EAS:
 
 ```bash
 npx eas-cli env:create --environment production --name EXPO_PUBLIC_SUPABASE_URL --value "https://SEU-PROJETO.supabase.co"
@@ -100,7 +116,12 @@ npx eas-cli env:create --environment production --name EXPO_PUBLIC_TMDB_API_KEY 
 > As três são chaves de cliente: o Supabase protege o acesso pelas políticas de
 > RLS, não por esconder a chave anônima. A `service_role` nunca entra aqui.
 
----
+### 3.2 O que foi verificado no APK
+
+O APK foi instalado no emulador do Android Studio (`Issy_API35`, Android 15) e
+percorrido tela a tela. As capturas estão em
+[`docs/evidencias/apk/`](../evidencias/apk). Instala, abre e lê o banco: zero
+erros no `logcat`.
 
 ## 4. O que ficou de fora, e por quê
 
@@ -120,3 +141,9 @@ Registrar isto é parte da entrega: um produto honesto diz onde termina.
 - **Notificações** — "sua vez de escolher" e "sessão hoje" estavam previstas no
   escopo como *importantes*, não essenciais. O produto funciona sem elas; com
   elas, funcionaria melhor.
+- **Fontes muito ampliadas quebram o layout** — com a fonte do sistema no dobro
+  do tamanho (ajuste de acessibilidade do Android), textos se sobrepõem em
+  algumas telas. Foi descoberto testando o APK num emulador que estava nessa
+  configuração. No tamanho padrão, que é o de praticamente todo aparelho, o
+  layout está correto. Corrigir direito pede tipografia responsiva em todas as
+  telas — trabalho real, não ajuste de véspera.

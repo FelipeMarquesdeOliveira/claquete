@@ -12,8 +12,8 @@ O clube de cinema dos seus amigos, com rodízio de curadoria e placar.
 ![React Native](https://img.shields.io/badge/React%20Native-0.86-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
 ![Status](https://img.shields.io/badge/status-CP6%20Entrega%20final-FFC53D)
-![APK](https://img.shields.io/badge/APK-dispon%C3%ADvel%20em%20releases-4ADE80)
-![Testes](https://img.shields.io/badge/testes-39%20passando-4ADE80)
+![APK](https://img.shields.io/badge/APK-instal%C3%A1vel%20(57%20MB)-4ADE80)
+![Testes](https://img.shields.io/badge/testes-45%20passando-4ADE80)
 
 </div>
 
@@ -197,21 +197,18 @@ Com o servidor no ar, escolha como abrir:
 | `npm run ios` | Simulador iOS (somente macOS, requer Xcode) |
 | `npm run web` | Navegador, em `http://localhost:8081` |
 
-### Instalar pelo APK
-
-O APK está na [página de releases](https://github.com/FelipeMarquesdeOliveira/claquete/releases).
-Copie para o celular, toque no arquivo e autorize a instalação fora da loja. O
-passo a passo com imagens está no [manual de uso](docs/08-manual.pdf).
-
-Para gerar um APK novo:
+### Gerar o APK
 
 ```bash
-npx eas-cli login
-npx eas-cli build --platform android --profile preview
+node scripts/build-apk.mjs
 ```
 
-O perfil `preview` produz um APK de distribuição interna. As variáveis de
-ambiente precisam existir no EAS — os comandos estão na
+Sai em `docs/apk/claquete.apk` — 57 MB, assinado e instalável. Requer Android
+SDK e Java 17. Sem eles, o mesmo APK sai pela nuvem com
+`npx eas-cli build --platform android --profile preview`.
+
+Como instalar no celular está no [manual de uso](docs/08-manual.pdf); as
+decisões por trás do build, na
 [documentação da entrega final](docs/09-entrega-final.pdf).
 
 ### Testes
@@ -220,7 +217,7 @@ ambiente precisam existir no EAS — os comandos estão na
 npm test
 ```
 
-São 39 testes cobrindo as regras de negócio (rodízio de curadoria, revelação
+São 45 testes cobrindo as regras de negócio (rodízio de curadoria, revelação
 das notas, placar da temporada) e a coerência dos dados mockados.
 
 ### Banco de dados
@@ -235,6 +232,7 @@ está na [documentação do protótipo](docs/07-prototipo.pdf).
 ### Outros comandos
 
 ```bash
+node scripts/build-apk.mjs              # gera o APK assinado
 node scripts/generate-brand-icons.mjs   # ícones da marca a partir dos tokens
 node scripts/capture-evidence.mjs       # percorre a demonstração e fotografa as telas
 ```

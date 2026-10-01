@@ -12,8 +12,8 @@
 
 ### Android, pelo APK
 
-O APK está no repositório, na [página de releases](https://github.com/FelipeMarquesdeOliveira/claquete/releases),
-e também junto desta entrega.
+O arquivo `claquete.apk` acompanha esta entrega. Para gerar um novo a partir
+do código, veja a [documentação da entrega final](09-entrega-final.md).
 
 1. Copie o arquivo `claquete.apk` para o celular (cabo, Drive, WhatsApp — tanto faz)
 2. Toque no arquivo. O Android vai avisar que o aplicativo não veio da Play Store
@@ -21,7 +21,8 @@ e também junto desta entrega.
 4. Volte e toque em **Instalar**
 
 > Esse aviso é normal: aplicativos distribuídos fora da loja sempre pedem essa
-> autorização. O APK é assinado pelo EAS Build com uma chave de desenvolvimento.
+> autorização. O APK é assinado com uma chave de desenvolvimento própria do
+> projeto, não com a de uma loja.
 
 ### Sem instalar nada, pelo navegador
 
