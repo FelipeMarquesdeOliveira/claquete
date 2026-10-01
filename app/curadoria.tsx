@@ -7,7 +7,7 @@ import { Aviso, Button, Card, Icon, Label, Poster } from '@/components';
 import { currentRound, type Movie } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, fonts, radius, spacing, typography } from '@/theme';
-import { deadlineLabel, formatFullDate, nextSessionSlot } from '@/utils/date';
+import { deadlineLabel, formatFullDate, nextSessionSlot, sessionOptions } from '@/utils/date';
 
 export default function CuratorScreen() {
   const { club, movies, pickMovie, searchMovies } = useClubStore();
@@ -17,7 +17,9 @@ export default function CuratorScreen() {
   const [selected, setSelected] = useState<Movie | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const sessionAt = useMemo(() => nextSessionSlot(), []);
+  const [sessionAt, setSessionAt] = useState(() => nextSessionSlot());
+  const [changingSession, setChangingSession] = useState(false);
+  const sessionSlots = useMemo(() => sessionOptions(), []);
   const round = club ? currentRound(club) : null;
 
   // Films the club already watched are out: the point is to see something new.
@@ -141,8 +143,38 @@ export default function CuratorScreen() {
               <Text style={styles.sessionDate}>{formatFullDate(sessionAt)} · 20h</Text>
             </View>
           </View>
-          <Text style={styles.alterar}>alterar</Text>
+          <Text
+            style={styles.alterar}
+            onPress={() => setChangingSession((aberto) => !aberto)}
+            accessibilityRole="button"
+            accessibilityLabel="Alterar a data da sessão"
+          >
+            {changingSession ? 'fechar' : 'alterar'}
+          </Text>
         </Card>
+
+        {changingSession && (
+          <View style={styles.slots}>
+            {sessionSlots.map((slot) => {
+              const escolhido = slot === sessionAt;
+              return (
+                <Pressable
+                  key={slot}
+                  onPress={() => {
+                    setSessionAt(slot);
+                    setChangingSession(false);
+                  }}
+                  accessibilityRole="button"
+                  style={[styles.slot, escolhido && styles.slotAtivo]}
+                >
+                  <Text style={[styles.slotTexto, escolhido && styles.slotTextoAtivo]}>
+                    {formatFullDate(slot)} · 20h
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        )}
 
         <Button
           label={saving ? 'Salvando…' : 'Bater a claquete'}
@@ -212,4 +244,15 @@ const styles = StyleSheet.create({
   sessionDate: { ...typography.body, color: colors.text, marginTop: 3 },
   sessionLeft: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   alterar: { ...typography.caption, color: colors.primary },
+  slots: { gap: spacing.sm },
+  slot: {
+    paddingVertical: spacing.sm + 4,
+    paddingHorizontal: spacing.md,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  slotAtivo: { borderColor: colors.primary, backgroundColor: colors.surface },
+  slotTexto: { ...typography.body, color: colors.textMuted },
+  slotTextoAtivo: { color: colors.text },
 });

@@ -78,10 +78,36 @@ export function countdownLabel(iso: string, now = new Date()): string {
   return `faltam ${days} dias`;
 }
 
-/** Same weekday, one week ahead, at 20h — the club's default session slot. */
+/**
+ * As datas que o curador pode marcar para a sessão: sexta, sábado e domingo do
+ * próximo fim de semana, sempre às 20h.
+ *
+ * Fim de semana porque é quando um clube de cinema consegue se reunir, e nunca
+ * antes de dois dias porque o resto do grupo precisa de tempo para confirmar
+ * presença.
+ */
+const HORA_DA_SESSAO = 20;
+const DIAS_MINIMOS = 2;
+
+export function sessionOptions(now = new Date()): string[] {
+  const minimo = new Date(now.getTime() + DIAS_MINIMOS * 24 * 60 * 60 * 1000);
+
+  return [5, 6, 0]
+    .map((diaDaSemana) => {
+      const data = new Date(now);
+      data.setHours(HORA_DA_SESSAO, 0, 0, 0);
+      data.setDate(data.getDate() + ((diaDaSemana - data.getDay() + 7) % 7));
+      if (data < minimo) data.setDate(data.getDate() + 7);
+      return data.toISOString();
+    })
+    // Em ordem: um dia empurrado para a semana seguinte por ser cedo demais
+    // não pode aparecer antes de datas que vêm primeiro.
+    .sort();
+}
+
+/** O sábado mais próximo que ainda dá tempo: o que o aplicativo sugere sozinho. */
 export function nextSessionSlot(now = new Date()): string {
-  const date = new Date(now);
-  date.setDate(date.getDate() + 7);
-  date.setHours(20, 0, 0, 0);
-  return date.toISOString();
+  const opcoes = sessionOptions(now);
+  const sabado = opcoes.find((iso) => new Date(iso).getDay() === 6);
+  return sabado ?? opcoes[0];
 }

@@ -1,5 +1,7 @@
 import type { Club } from '@/domain';
 
+import { nextSessionSlot, sessionOptions } from '@/utils/date';
+
 import clubSeed from '../mock/club.json';
 import { rebaseSeason } from '../season';
 
@@ -56,5 +58,37 @@ describe('rebase da temporada', () => {
     expect(ajustada.rounds.map((r) => r.curatorId)).toEqual(semente.rounds.map((r) => r.curatorId));
     expect(ajustada.rounds.map((r) => r.status)).toEqual(semente.rounds.map((r) => r.status));
     expect(ajustada.members).toEqual(semente.members);
+  });
+});
+
+/**
+ * As datas que o curador pode marcar precisam fazer sentido para um clube:
+ * fim de semana, com folga para o grupo confirmar, e em ordem de calendário.
+ */
+describe('datas que o curador pode marcar', () => {
+  const quinta = new Date('2026-10-01T13:00:00-03:00');
+  const opcoes = sessionOptions(quinta);
+
+  it('oferece sexta, sábado e domingo', () => {
+    expect(opcoes.map((iso) => new Date(iso).getDay()).sort()).toEqual([0, 5, 6]);
+  });
+
+  it('todas às 20h', () => {
+    opcoes.forEach((iso) => expect(new Date(iso).getHours()).toBe(20));
+  });
+
+  it('nenhuma antes de dois dias, para dar tempo de confirmar presença', () => {
+    opcoes.forEach((iso) => {
+      expect(new Date(iso).getTime() - quinta.getTime()).toBeGreaterThanOrEqual(2 * DIA);
+    });
+  });
+
+  it('em ordem de calendário, mesmo quando um dia pula para a semana seguinte', () => {
+    const tempos = opcoes.map((iso) => new Date(iso).getTime());
+    expect([...tempos].sort((a, b) => a - b)).toEqual(tempos);
+  });
+
+  it('sugere um sábado por padrão', () => {
+    expect(new Date(nextSessionSlot(quinta)).getDay()).toBe(6);
   });
 });
