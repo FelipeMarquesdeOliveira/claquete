@@ -19,7 +19,8 @@ type ClubState = {
   error: string | null;
 
   load: () => Promise<void>;
-  pickMovie: (movieId: string, sessionAt: string) => Promise<void>;
+  pickMovie: (movie: Movie, sessionAt: string) => Promise<void>;
+  searchMovies: (term: string) => Promise<Movie[]>;
   confirmPresence: () => Promise<void>;
   openVoting: () => Promise<void>;
   castVote: (score: number, review: string) => Promise<void>;
@@ -102,10 +103,19 @@ export const useClubStore = create<ClubState>((set, get) => ({
     }
   },
 
-  async pickMovie(movieId, sessionAt) {
+  async pickMovie(movie, sessionAt) {
     await escrever(set, get().load, () =>
-      getRepository().pickMovie({ roundNumber: currentRoundNumber(get().club), movieId, sessionAt })
+      getRepository().pickMovie({ roundNumber: currentRoundNumber(get().club), movie, sessionAt })
     );
+  },
+
+  async searchMovies(term) {
+    try {
+      return await getRepository().searchMovies(term);
+    } catch (error) {
+      set({ error: error instanceof Error ? error.message : 'Falha ao buscar filmes' });
+      return [];
+    }
   },
 
   async confirmPresence() {

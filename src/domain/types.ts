@@ -21,6 +21,11 @@ export type Movie = {
   runtimeMinutes: number;
   streaming: string;
   synopsis: string;
+  /**
+   * Pôster vindo do TMDB. Os nove filmes herdados do CP4 não têm: a arte deles
+   * está no repositório, mapeada por id em data/mock/posters.ts.
+   */
+  posterUrl?: string;
 };
 
 export type Vote = {

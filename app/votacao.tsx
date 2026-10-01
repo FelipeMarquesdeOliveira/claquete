@@ -52,7 +52,7 @@ export default function VotingScreen() {
         <Aviso />
 
         <Card style={styles.movie}>
-          <Poster movieId={movie.id} width={40} />
+          <Poster movieId={movie.id} posterUrl={movie.posterUrl} width={40} />
           <View style={styles.movieInfo}>
             <Text style={styles.movieTitle}>{movie.title}</Text>
             <Text style={styles.meta}>

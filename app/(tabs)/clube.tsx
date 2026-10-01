@@ -104,7 +104,7 @@ export default function ClubScreen() {
             {round.status !== 'awaiting_pick' && movie && (
               <View style={styles.gap}>
                 <View style={styles.movieRow}>
-                  <Poster movieId={movie.id} width={92} />
+                  <Poster movieId={movie.id} posterUrl={movie.posterUrl} width={92} />
                   <View style={styles.movieInfo}>
                     <Text style={styles.movieTitle}>{movie.title.toUpperCase()}</Text>
                     <Text style={styles.meta}>
@@ -235,7 +235,7 @@ export default function ClubScreen() {
               const shelfMovie = movieById(item.movieId);
               return (
                 <View key={item.number} style={styles.shelfRow}>
-                  <Poster movieId={item.movieId} width={26} />
+                  <Poster movieId={item.movieId} posterUrl={shelfMovie?.posterUrl} width={26} />
                   <View style={styles.shelfInfo}>
                     <Text style={styles.shelfTitle}>{shelfMovie?.title}</Text>
                     <Text style={styles.shelfMeta}>

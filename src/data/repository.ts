@@ -16,10 +16,23 @@ export interface ClubRepository {
   loadClub(): Promise<Club>;
   listMovies(): Promise<Movie[]>;
 
-  /** The curator picks the film of the round and sets the session date. */
+  /**
+   * Procura filmes para o curador escolher.
+   *
+   * Com a chave do TMDB no ambiente, procura no acervo da API; sem ela, filtra
+   * o catálogo local. A tela não sabe a diferença — é a mesma lista de filmes.
+   */
+  searchMovies(term: string): Promise<Movie[]>;
+
+  /**
+   * The curator picks the film of the round and sets the session date.
+   *
+   * Recebe o filme inteiro, e não só o id, porque um filme vindo do TMDB ainda
+   * não existe no catálogo: escolher é também guardá-lo.
+   */
   pickMovie(input: {
     roundNumber: number;
-    movieId: string;
+    movie: Movie;
     sessionAt: string;
   }): Promise<void>;
 

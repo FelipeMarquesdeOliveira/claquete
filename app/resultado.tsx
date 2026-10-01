@@ -34,7 +34,7 @@ export default function VerdictScreen() {
         </View>
 
         <Card style={styles.summary}>
-          <Poster movieId={round.movieId} width={52} />
+          <Poster movieId={round.movieId} posterUrl={movie?.posterUrl} width={52} />
           <View style={styles.summaryInfo}>
             <Text style={styles.movieTitle}>{movie?.title.toUpperCase()}</Text>
             <Text style={styles.meta}>

@@ -5,6 +5,11 @@ import clubSeed from './mock/club.json';
 import moviesSeed from './mock/movies.json';
 import type { ClubRepository } from './repository';
 import { SIMULATED_CONFIRMATIONS, SIMULATED_VOTES } from './simulation';
+import {
+  completeMovie,
+  searchMovies as searchOnTmdb,
+  tmdbConfigured,
+} from '@/services/tmdb';
 
 /**
  * Repository backed by Postgres, through Supabase.
@@ -39,6 +44,17 @@ type RoundRow = {
   session_at: string | null;
   pick_deadline: string;
   status: Round['status'];
+};
+
+type MovieRow = {
+  id: string;
+  title: string;
+  year: number;
+  genres: string[] | null;
+  runtime_minutes: number;
+  streaming: string;
+  synopsis: string;
+  poster_url: string | null;
 };
 
 type PresenceRow = {
@@ -118,14 +134,57 @@ export const supabaseRepository: ClubRepository = {
   },
 
   async listMovies(): Promise<Movie[]> {
-    return moviesSeed as unknown as Movie[];
+    const { data, error } = await getSupabase().from('movies').select('*');
+    fail('listar filmes', error);
+
+    const linhas = (data ?? []) as MovieRow[];
+    // Catálogo vazio significa migração não aplicada: o app não fica sem filmes.
+    if (linhas.length === 0) return moviesSeed as unknown as Movie[];
+
+    return linhas.map((linha) => ({
+      id: linha.id,
+      title: linha.title,
+      year: linha.year,
+      genres: linha.genres ?? [],
+      runtimeMinutes: linha.runtime_minutes,
+      streaming: linha.streaming,
+      synopsis: linha.synopsis,
+      posterUrl: linha.poster_url ?? undefined,
+    }));
   },
 
-  async pickMovie({ roundNumber, movieId, sessionAt }) {
+  async searchMovies(term) {
+    if (tmdbConfigured) return searchOnTmdb(term);
+    const busca = term.trim().toLowerCase();
+    const todos = await this.listMovies();
+    if (!busca) return todos;
+    return todos.filter((movie) => movie.title.toLowerCase().includes(busca));
+  },
+
+  async pickMovie({ roundNumber, movie, sessionAt }) {
     const db = getSupabase();
+
+    // Filme do TMDB entra no catálogo antes de virar a rodada: a rodada aponta
+    // para o filme, então ele precisa existir primeiro.
+    const completo = await completeMovie(movie);
+    const { error: catalogoError } = await db.from('movies').upsert(
+      {
+        id: completo.id,
+        title: completo.title,
+        year: completo.year,
+        genres: completo.genres,
+        runtime_minutes: completo.runtimeMinutes,
+        streaming: completo.streaming,
+        synopsis: completo.synopsis,
+        poster_url: completo.posterUrl ?? null,
+      },
+      { onConflict: 'id' }
+    );
+    fail('guardar o filme', catalogoError);
+
     const { error } = await db
       .from('rounds')
-      .update({ movie_id: movieId, session_at: sessionAt, status: 'awaiting_session' })
+      .update({ movie_id: completo.id, session_at: sessionAt, status: 'awaiting_session' })
       .eq('club_id', CLUB_ID)
       .eq('number', roundNumber);
     fail('escolher filme', error);

@@ -3,6 +3,11 @@ import { curatorOf, type Club, type Movie, type Vote } from '@/domain';
 import clubSeed from './mock/club.json';
 import moviesSeed from './mock/movies.json';
 import type { ClubRepository } from './repository';
+import {
+  completeMovie,
+  searchMovies as searchOnTmdb,
+  tmdbConfigured,
+} from '@/services/tmdb';
 import { SIMULATED_CONFIRMATIONS, SIMULATED_VOTES } from './simulation';
 
 /**
@@ -42,9 +47,22 @@ export const mockRepository: ClubRepository = {
     return clone(movies);
   },
 
-  async pickMovie({ roundNumber, movieId, sessionAt }) {
+  async searchMovies(term) {
+    if (tmdbConfigured) return searchOnTmdb(term);
+    const busca = term.trim().toLowerCase();
+    if (!busca) return clone(movies);
+    return clone(movies.filter((movie) => movie.title.toLowerCase().includes(busca)));
+  },
+
+  async pickMovie({ roundNumber, movie, sessionAt }) {
     const round = requireRound(roundNumber);
-    round.movieId = movieId;
+
+    // Filme vindo do TMDB ainda não está no catálogo: entra agora, completo.
+    if (!movies.some((m) => m.id === movie.id)) {
+      movies.push(await completeMovie(movie));
+    }
+
+    round.movieId = movie.id;
     round.sessionAt = sessionAt;
     round.status = 'awaiting_session';
 

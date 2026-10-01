@@ -38,7 +38,7 @@ export default function ShelfScreen() {
           const curator = club.members.find((m) => m.id === round.curatorId)!;
           return (
             <Card key={round.number} style={styles.row}>
-              <Poster movieId={round.movieId} width={56} />
+              <Poster movieId={round.movieId} posterUrl={movie?.posterUrl} width={56} />
               <View style={styles.info}>
                 <Label>Rodada {round.number}</Label>
                 <Text style={styles.movieTitle}>{movie?.title}</Text>

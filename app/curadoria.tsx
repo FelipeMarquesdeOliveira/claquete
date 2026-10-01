@@ -1,18 +1,20 @@
 import { router } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Aviso, Button, Card, Icon, Label, Poster } from '@/components';
-import { currentRound } from '@/domain';
+import { currentRound, type Movie } from '@/domain';
 import { useClubStore } from '@/store/useClubStore';
 import { colors, fonts, radius, spacing, typography } from '@/theme';
 import { deadlineLabel, formatFullDate, nextSessionSlot } from '@/utils/date';
 
 export default function CuratorScreen() {
-  const { club, movies, pickMovie } = useClubStore();
+  const { club, movies, pickMovie, searchMovies } = useClubStore();
   const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState<string | null>(null);
+  const [found, setFound] = useState<Movie[] | null>(null);
+  const [searching, setSearching] = useState(false);
+  const [selected, setSelected] = useState<Movie | null>(null);
   const [saving, setSaving] = useState(false);
 
   const sessionAt = useMemo(() => nextSessionSlot(), []);
@@ -24,12 +26,34 @@ export default function CuratorScreen() {
     [club]
   );
 
-  const results = useMemo(() => {
-    const term = query.trim().toLowerCase();
-    return movies
-      .filter((movie) => !watched.has(movie.id))
-      .filter((movie) => (term ? movie.title.toLowerCase().includes(term) : true));
-  }, [movies, query, watched]);
+  /**
+   * A busca espera a digitação parar antes de sair para a rede.
+   *
+   * Sem isso, "cidade de deus" dispararia catorze buscas no TMDB e a lista
+   * piscaria a cada letra. Com o campo vazio, mostra o catálogo que o clube já
+   * tem — não uma tela em branco.
+   */
+  useEffect(() => {
+    const term = query.trim();
+    if (term.length < 2) {
+      setFound(null);
+      setSearching(false);
+      return;
+    }
+
+    setSearching(true);
+    const timer = setTimeout(async () => {
+      const resultados = await searchMovies(term);
+      setFound(resultados);
+      setSearching(false);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [query, searchMovies]);
+
+  const results = useMemo(
+    () => (found ?? movies).filter((movie) => !watched.has(movie.id)),
+    [found, movies, watched]
+  );
 
   async function confirm() {
     if (!selected) return;
@@ -77,21 +101,23 @@ export default function CuratorScreen() {
 
         <View style={styles.list}>
           {results.map((movie) => {
-            const active = selected === movie.id;
+            const active = selected?.id === movie.id;
             return (
               <Pressable
                 key={movie.id}
-                onPress={() => setSelected(movie.id)}
+                onPress={() => setSelected(movie)}
                 accessibilityRole="button"
                 style={[styles.option, active && styles.optionActive]}
               >
-                <Poster movieId={movie.id} width={44} />
+                <Poster movieId={movie.id} posterUrl={movie.posterUrl} width={44} />
                 <View style={styles.optionInfo}>
                   <Text style={styles.optionTitle}>{movie.title}</Text>
                   <Text style={styles.optionMeta}>
                     {movie.year} · {movie.genres.join(', ')}
                   </Text>
-                  <Text style={styles.optionMeta}>Disponível na {movie.streaming}</Text>
+                  {movie.streaming.length > 0 && (
+                    <Text style={styles.optionMeta}>Disponível na {movie.streaming}</Text>
+                  )}
                 </View>
                 {active && (
                   <View style={styles.check}>
@@ -101,7 +127,8 @@ export default function CuratorScreen() {
               </Pressable>
             );
           })}
-          {results.length === 0 && (
+          {searching && <Text style={styles.empty}>Procurando…</Text>}
+          {!searching && results.length === 0 && (
             <Text style={styles.empty}>Nenhum filme encontrado com esse nome.</Text>
           )}
         </View>
